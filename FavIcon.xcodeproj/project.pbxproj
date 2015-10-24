@@ -9,14 +9,14 @@
 /* Begin PBXBuildFile section */
 		2E18521F1BDAE5160065F877 /* FavIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E18521E1BDAE5160065F877 /* FavIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1852261BDAE5160065F877 /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; };
-		2E18522B1BDAE5160065F877 /* FavIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* FavIconTests.swift */; };
+		2E18522B1BDAE5160065F877 /* HTMLDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */; };
 		2E1852441BDAE5300065F877 /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E1852521BDAE5CD0065F877 /* FavIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E18521E1BDAE5160065F877 /* FavIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852531BDAE7190065F877 /* FavIcon.swift */; };
 		2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852531BDAE7190065F877 /* FavIcon.swift */; };
-		2E1852661BDAE95D0065F877 /* HtmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852651BDAE95D0065F877 /* HtmlParser.swift */; };
+		2E1852661BDAE95D0065F877 /* HTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852651BDAE95D0065F877 /* HTMLDocument.swift */; };
 		2E1852871BDB47CE0065F877 /* LibXML2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E1852781BDB44CE0065F877 /* LibXML2.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		2EC4AEEA1BDB4CFF00C650B9 /* HtmlParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852651BDAE95D0065F877 /* HtmlParser.swift */; };
+		2EC4AEEA1BDB4CFF00C650B9 /* HTMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852651BDAE95D0065F877 /* HTMLDocument.swift */; };
 		2EC4AEFA1BDB4D8E00C650B9 /* LibXML2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EC4AEF01BDB4D3000C650B9 /* LibXML2.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -56,12 +56,12 @@
 		2E18521E1BDAE5160065F877 /* FavIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavIcon.h; sourceTree = "<group>"; };
 		2E1852201BDAE5160065F877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E1852251BDAE5160065F877 /* FavIcon-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FavIcon-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E18522A1BDAE5160065F877 /* FavIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
+		2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLDocumentTests.swift; sourceTree = "<group>"; };
 		2E18522C1BDAE5160065F877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E18523A1BDAE5300065F877 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852431BDAE5300065F877 /* FavIcon-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FavIcon-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852531BDAE7190065F877 /* FavIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIcon.swift; sourceTree = "<group>"; };
-		2E1852651BDAE95D0065F877 /* HtmlParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HtmlParser.swift; sourceTree = "<group>"; };
+		2E1852651BDAE95D0065F877 /* HTMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLDocument.swift; sourceTree = "<group>"; };
 		2E1852781BDB44CE0065F877 /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E18527C1BDB44CE0065F877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E1852801BDB44F30065F877 /* LibXML2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LibXML2.xcconfig; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 			children = (
 				2E18521E1BDAE5160065F877 /* FavIcon.h */,
 				2E1852531BDAE7190065F877 /* FavIcon.swift */,
-				2E1852651BDAE95D0065F877 /* HtmlParser.swift */,
+				2E1852651BDAE95D0065F877 /* HTMLDocument.swift */,
 				2E1852201BDAE5160065F877 /* Info.plist */,
 			);
 			path = FavIcon;
@@ -155,7 +155,7 @@
 		2E1852291BDAE5160065F877 /* FavIconTests */ = {
 			isa = PBXGroup;
 			children = (
-				2E18522A1BDAE5160065F877 /* FavIconTests.swift */,
+				2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */,
 				2E18522C1BDAE5160065F877 /* Info.plist */,
 			);
 			path = FavIconTests;
@@ -419,7 +419,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */,
-				2E1852661BDAE95D0065F877 /* HtmlParser.swift in Sources */,
+				2E1852661BDAE95D0065F877 /* HTMLDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,7 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E18522B1BDAE5160065F877 /* FavIconTests.swift in Sources */,
+				2E18522B1BDAE5160065F877 /* HTMLDocumentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -436,7 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */,
-				2EC4AEEA1BDB4CFF00C650B9 /* HtmlParser.swift in Sources */,
+				2EC4AEEA1BDB4CFF00C650B9 /* HTMLDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +626,7 @@
 		2E1852331BDAE5160065F877 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.FavIconTests;
@@ -636,6 +637,7 @@
 		2E1852341BDAE5160065F877 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.FavIconTests;
@@ -692,6 +694,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -706,6 +709,7 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -861,6 +865,7 @@
 				2EC4AEF71BDB4D3000C650B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

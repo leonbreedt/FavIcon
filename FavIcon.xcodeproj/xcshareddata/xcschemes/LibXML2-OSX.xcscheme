@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
-               BuildableName = "LibXML2-OSX.framework"
+               BuildableName = "LibXML2.framework"
                BlueprintName = "LibXML2-OSX"
                ReferencedContainer = "container:FavIcon.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
-            BuildableName = "LibXML2-OSX.framework"
+            BuildableName = "LibXML2.framework"
             BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
-            BuildableName = "LibXML2-OSX.framework"
+            BuildableName = "LibXML2.framework"
             BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">
          </BuildableReference>
