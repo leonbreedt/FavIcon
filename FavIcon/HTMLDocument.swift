@@ -18,6 +18,57 @@
 import Foundation
 import LibXML2
 
+class HTMLDocument {
+    var htmlDocument: htmlDocPtr
+    
+    private init(htmlDocument: htmlDocPtr) {
+        self.htmlDocument = htmlDocument
+    }
+    
+    init(data: NSData) {
+        self.htmlDocument =
+            htmlReadMemory(
+                UnsafePointer(data.bytes),
+                Int32(data.length),
+                "",
+                nil,
+                Int32(HTML_PARSE_NOWARNING.rawValue) | Int32(HTML_PARSE_NOERROR.rawValue))
+    }
+    
+    convenience init(string: String) {
+        self.init(data: string.dataUsingEncoding(NSUTF8StringEncoding)!)
+    }
+    
+    lazy var children: [HTMLElement] = {
+        return makeHTMLElementArray(self.htmlDocument.memory.children)
+    }()
+    
+    func query(xpath: String) -> [HTMLElement] {
+        var context = xmlXPathNewContext(htmlDocument)
+        if context == nil { return [] }
+        defer { xmlXPathFreeContext(context) }
+        
+        var object = xmlXPathEvalExpression(xpath, context)
+        if object == nil { return [] }
+        defer { xmlXPathFreeObject(object) }
+        
+        var elements: [HTMLElement] = []
+        
+        let nodes = object.memory.nodesetval
+        if nodes == nil { return [] }
+        for i in 0..<(nodes.memory.nodeNr) {
+            let node = nodes.memory.nodeTab[Int(i)]
+            elements.append(HTMLElement(htmlNode: node))
+        }
+        
+        return elements
+    }
+    
+    deinit {
+        xmlFreeDoc(htmlDocument)
+    }
+}
+
 class HTMLElement {
     var htmlNode: htmlNodePtr
     
@@ -54,57 +105,6 @@ class HTMLElement {
     lazy var children: [HTMLElement] = {
         return makeHTMLElementArray(self.htmlNode.memory.children)
     }()
-}
-
-class HTMLDocument {
-    var htmlDocument: htmlDocPtr
-    
-    private init(htmlDocument: htmlDocPtr) {
-        self.htmlDocument = htmlDocument
-    }
-    
-    init(data: NSData) {
-        self.htmlDocument =
-            htmlReadMemory(
-                UnsafePointer(data.bytes),
-                Int32(data.length),
-                "",
-                nil,
-                Int32(HTML_PARSE_NOWARNING.rawValue) | Int32(HTML_PARSE_NOERROR.rawValue))
-    }
-    
-    convenience init(string: String) {
-        self.init(data: string.dataUsingEncoding(NSUTF8StringEncoding)!)
-    }
-
-    lazy var children: [HTMLElement] = {
-        return makeHTMLElementArray(self.htmlDocument.memory.children)
-    }()
-    
-    func query(xpath: String) -> [HTMLElement] {
-        var context = xmlXPathNewContext(htmlDocument)
-        if context == nil { return [] }
-        defer { xmlXPathFreeContext(context) }
-        
-        var object = xmlXPathEvalExpression(xpath, context)
-        if object == nil { return [] }
-        defer { xmlXPathFreeObject(object) }
-        
-        var elements: [HTMLElement] = []
-        
-        let nodes = object.memory.nodesetval
-        if nodes == nil { return [] }
-        for i in 0..<(nodes.memory.nodeNr) {
-            let node = nodes.memory.nodeTab[Int(i)]
-            elements.append(HTMLElement(htmlNode: node))
-        }
-        
-        return elements
-    }
-    
-    deinit {
-        xmlFreeDoc(htmlDocument)
-    }
 }
 
 private func makeHTMLElementArray(startingNode: xmlNodePtr) -> [HTMLElement] {
