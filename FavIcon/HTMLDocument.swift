@@ -40,7 +40,7 @@ class HTMLDocument {
     }
     
     lazy var children: [HTMLElement] = {
-        return makeHTMLElementArray(self.htmlDocument.memory.children)
+        return makeHTMLElementArray(self, startingNode: self.htmlDocument.memory.children)
     }()
     
     func query(xpath: String) -> [HTMLElement] {
@@ -58,7 +58,7 @@ class HTMLDocument {
         if nodes == nil { return [] }
         for i in 0..<(nodes.memory.nodeNr) {
             let node = nodes.memory.nodeTab[Int(i)]
-            elements.append(HTMLElement(htmlNode: node))
+            elements.append(HTMLElement(document: self, htmlNode: node))
         }
         
         return elements
@@ -70,14 +70,21 @@ class HTMLDocument {
 }
 
 class HTMLElement {
+    var document: HTMLDocument?
     var htmlNode: htmlNodePtr
     
-    private init(htmlNode: htmlNodePtr) {
+    private init(document: HTMLDocument, htmlNode: htmlNodePtr) {
+        self.document = document
         self.htmlNode = htmlNode
     }
     
+    deinit {
+        self.htmlNode = nil
+        self.document = nil
+    }
+    
     lazy var name: String = {
-        return String.fromCString(UnsafePointer(self.htmlNode.memory.name)) ?? ""
+        return String.fromCString(UnsafePointer(self.htmlNode.memory.name))?.lowercaseString ?? ""
     }()
     
     lazy var attributes: [String: String] = {
@@ -86,7 +93,7 @@ class HTMLElement {
         if currentAttr != nil {
             repeat {
                 let namePtr = currentAttr.memory.name
-                let name = String.fromCString(UnsafePointer(namePtr))
+                let name = String.fromCString(UnsafePointer(namePtr))?.lowercaseString
                 let valuePtr = xmlNodeGetContent(UnsafePointer(currentAttr))
                 var value: String? = nil
                 if valuePtr != nil {
@@ -103,17 +110,17 @@ class HTMLElement {
     }()
     
     lazy var children: [HTMLElement] = {
-        return makeHTMLElementArray(self.htmlNode.memory.children)
+        return makeHTMLElementArray(self.document!, startingNode: self.htmlNode.memory.children)
     }()
 }
 
-private func makeHTMLElementArray(startingNode: xmlNodePtr) -> [HTMLElement] {
+private func makeHTMLElementArray(document: HTMLDocument, startingNode: xmlNodePtr) -> [HTMLElement] {
     var results: [HTMLElement] = []
     var currentChild = startingNode
     if currentChild != nil {
         repeat {
             if currentChild.memory.type == XML_ELEMENT_NODE {
-                results.append(HTMLElement(htmlNode: currentChild))
+                results.append(HTMLElement(document: document, htmlNode: currentChild))
             }
             currentChild = currentChild.memory.next
         } while (currentChild != nil)

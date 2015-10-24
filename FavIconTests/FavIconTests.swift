@@ -20,14 +20,25 @@ import XCTest
 
 class FavIconTests : XCTestCase {
     func testDetector() {
-        do {
-            try FavIconDetector.detect(url: "https://google.co.nz") { icons in
-                for icon in icons {
-                    print("detected icon: \(icon)")
+        performWebRequest("detect icons") { completion in
+            do {
+                try FavIconDetector.detect(url: "https://google.co.nz") { icons in
+                    for icon in icons {
+                        print("detected icon: \(icon)")
+                    }
+                    completion()
                 }
+            } catch let error {
+                XCTFail("failed to detect icons: \(error)")
             }
-        } catch let error {
-            XCTFail("failed to detect icons: \(error)")
         }
+    }
+}
+
+private extension XCTestCase {
+    func performWebRequest(description: String, timeout: NSTimeInterval = 5.0, callback: (() -> Void) -> Void) {
+        let expectation = expectationWithDescription(description)
+        callback(expectation.fulfill)
+        waitForExpectationsWithTimeout(timeout, handler: nil)
     }
 }

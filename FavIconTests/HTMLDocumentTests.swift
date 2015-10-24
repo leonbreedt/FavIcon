@@ -67,4 +67,15 @@ class HTMLDocumentTests : XCTestCase {
         XCTAssertEqual(1, elements[0].children.count)
         XCTAssertEqual("p", elements[0].children[0].name)
     }
+    
+    func testGoogleHTML() {
+        let document = HTMLDocument(string: "<!doctype html><html lang=\"en-NZ\"><head><meta content=\"/images/branding/googleg/1x/googleg_standard_color_128dp.png\" itemprop=\"image\"><link href=\"/images/branding/product/ico/googleg_lodp.ico\" rel=\"shortcut icon\">")
+        let links = document.query("/html/head/link")
+        
+        XCTAssertEqual(1, links.count)
+        XCTAssertEqual("link", links[0].name)
+        XCTAssertEqual(2, links[0].attributes.count)
+        XCTAssertEqual("/images/branding/product/ico/googleg_lodp.ico", links[0].attributes["href"])
+        XCTAssertEqual("shortcut icon", links[0].attributes["rel"])
+    }
 }
