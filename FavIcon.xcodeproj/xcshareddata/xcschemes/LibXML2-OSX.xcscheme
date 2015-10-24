@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E18521A1BDAE5160065F877"
-               BuildableName = "FavIcon.framework"
-               BlueprintName = "FavIcon-iOS"
+               BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+               BuildableName = "LibXML2-OSX.framework"
+               BlueprintName = "LibXML2-OSX"
                ReferencedContainer = "container:FavIcon.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,26 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2E1852241BDAE5160065F877"
-               BuildableName = "FavIcon-iOSTests.xctest"
-               BlueprintName = "FavIcon-iOSTests"
-               ReferencedContainer = "container:FavIcon.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E18521A1BDAE5160065F877"
-            BuildableName = "FavIcon.framework"
-            BlueprintName = "FavIcon-iOS"
-            ReferencedContainer = "container:FavIcon.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -64,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E18521A1BDAE5160065F877"
-            BuildableName = "FavIcon.framework"
-            BlueprintName = "FavIcon-iOS"
+            BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+            BuildableName = "LibXML2-OSX.framework"
+            BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -82,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2E18521A1BDAE5160065F877"
-            BuildableName = "FavIcon.framework"
-            BlueprintName = "FavIcon-iOS"
+            BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+            BuildableName = "LibXML2-OSX.framework"
+            BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
