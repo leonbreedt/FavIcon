@@ -26,7 +26,7 @@ import Foundation
 #endif
 
 /// Represents a detected icon.
-public enum FavIcon {
+public enum FavIconType {
     /// An icon referenced by a `<link rel="shortcut icon">` element.
     /// - Parameters:
     ///   - url: The URL the icon can be retrieved from.
@@ -37,25 +37,8 @@ public enum FavIcon {
     case FavIconICO(url: NSURL)
 }
 
-/// Represents an error while attempting to detect icons.
-public enum FavIconDetectionError : ErrorType {
-    /// The base URL is not valid.
-    case InvalidBaseURL
-    /// No data for response, or missing response.
-    case MissingResponse
-    /// Unsupported encoding for response.
-    case InvalidResponseEncoding
-    /// File was not found (HTTP 404).
-    case NotFound
-    /// File exists, but is not text.
-    case NotPlainText
-    /// An HTTP error occurred while attempting to detect icons.
-    case HTTPError(response: NSHTTPURLResponse)
-}
-
 /// Responsible for detecting all of the different icons supported by a given site.
-public class FavIconDetector {
-    
+public class FavIcons {
     /// Interrogates a base URL, attempting to determine all of the supported icons.
     /// It will check whether known file names exist, and if present, it will parse 
     /// the Google and Microsoft specific JSON and XML files to find files if necessary. 
@@ -68,7 +51,7 @@ public class FavIconDetector {
     ///                 must not make any assumptions about which dispatch queue the completion
     ///                 will be invoked on.
     /// - Returns: The list of `FavIcon` objects representing the icons that were found.
-    public static func detect(url: NSURL, completion: [FavIcon] -> Void) {
+    public static func detect(url: NSURL, completion: [FavIconType] -> Void) {
         let queue = NSOperationQueue()
         queue.suspended = true
         queue.maxConcurrentOperationCount = 2 // Only 2 concurrent connections to server (be a good citizen).
@@ -76,7 +59,7 @@ public class FavIconDetector {
         let baseURLTextOperation = DownloadTextOperation(url: url)
         let icoFileExistsOperation = CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL)
         let processResultsOperation = NSBlockOperation {
-            var icons: [FavIcon] = []
+            var icons: [FavIconType] = []
             
             if let result = baseURLTextOperation.result {
                 switch result {
@@ -86,7 +69,7 @@ public class FavIconDetector {
                             if let rel = link.attributes["rel"], href = link.attributes["href"], url = NSURL(string: href, relativeToURL: actualURL) {
                                 switch rel.lowercaseString {
                                 case "shortcut icon":
-                                    icons.append(FavIcon.ShortcutIcon(url: url.absoluteURL))
+                                    icons.append(.ShortcutIcon(url: url.absoluteURL))
                                     break
                                 default:
                                     break
@@ -102,7 +85,7 @@ public class FavIconDetector {
             if let result = icoFileExistsOperation.result {
                 switch result {
                 case .Success(let actualURL):
-                    icons.append(FavIcon.FavIconICO(url: actualURL))
+                    icons.append(.FavIconICO(url: actualURL))
                 default:
                     break
                 }
@@ -121,41 +104,58 @@ public class FavIconDetector {
         queue.suspended = false
     }
 
-    /// Interrogates a base URL, attempting to determine all of the supported icons.
-    /// It will check whether known file names exist, and if present, it will parse
-    /// the Google and Microsoft specific JSON and XML files to find files if necessary.
-    /// It will also attempt to parse the response of the `url` as HTML to try and find
-    /// relevant `<link>` elements.
-    ///
-    /// - Parameters:
-    ///   - url: The URL to interrogate for the presence of icons.
-    ///   - completion: The callback to invoke when detection has completed. The caller
-    ///                 must not make any assumptions about which dispatch queue the completion
-    ///                 will be invoked on.
-    /// - Returns: The list of `FavIcon` objects representing the icons that were found.
-    public static func detect(url urlString: String, completion: [FavIcon] -> Void) throws {
-        guard let url = NSURL(string: urlString) else { throw FavIconDetectionError.InvalidBaseURL }
-        detect(url, completion: completion)
-    }
-
     private init () {
     }
 }
 
-public enum URLResult {
-    case TextDownloaded(url: NSURL, text: String, contentType: String)
+/// Enumerates errors that can be thrown while detecting icons.
+public enum FavIconError : ErrorType {
+    /// The base URL specified is not a valid URL.
+    case InvalidBaseURL
+}
+
+extension FavIcons {
+    public static func detect(url urlString: String, completion: [FavIconType] -> Void) throws {
+        guard let url = NSURL(string: urlString) else { throw FavIconError.InvalidBaseURL }
+        detect(url, completion: completion)
+    }
+}
+
+/// Enumerates the possible results of a `URLRequestOperation`.
+enum URLResult {
+    /// Plain text content was downloaded successfully.
+    /// - Parameters:
+    ///   - url: The actual URL the content was downloaded from, after any redirects.
+    ///   - text: The text content.
+    ///   - mimeType: The MIME type of the text content (e.g. `application/json`).
+    case TextDownloaded(url: NSURL, text: String, mimeType: String)
+    /// The URL request was successful (HTTP 200 response).
+    /// - Parameters:
+    ///   - url: The actual URL, after any redirects.
     case Success(url: NSURL)
+    /// The URL request failed for some reason.
+    /// - Parameters:
+    ///   - error: The error that occurred.
     case Failed(error: ErrorType)
 }
 
-public enum URLRequestError : ErrorType {
+/// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
+enum URLRequestError : ErrorType {
+    /// No response was received from the server.
     case MissingResponse
+    /// The file was not found (HTTP 404 response).
     case FileNotFound
+    /// The request succeeded, but the content was not plain text when it was expected to be.
     case NotPlainText
+    /// The request succeeded, but the content encoding could not be determined, or was malformed.
     case InvalidTextEncoding
+    /// An unexpected HTTP error response was returned.
+    /// - Parameters:
+    ///   - response: The `NSHTTPURLResponse` that can be consulted for further information.
     case HTTPError(response: NSHTTPURLResponse)
 }
 
+/// Checks whether a URL exists, and returns `URLResult.Success` as the result if it does.
 class CheckURLExistsOperation : URLRequestOperation {
     override func prepareRequest() {
         urlRequest.HTTPMethod = "HEAD"
@@ -174,6 +174,7 @@ class CheckURLExistsOperation : URLRequestOperation {
     }
 }
 
+/// Attempts to download the text content for a URL, and returns `URLResult.TextDownloaded` as the result if it does.
 class DownloadTextOperation : URLRequestOperation {
     override func processResult(data: NSData?, response: NSURLResponse?, error: NSError?) -> URLResult {
         guard error == nil else { return .Failed(error: error!)}
@@ -187,18 +188,18 @@ class DownloadTextOperation : URLRequestOperation {
             return .Failed(error: URLRequestError.HTTPError(response: response))
         }
         
-        var contentType = "application/octet-stream"
+        var mimeType = "application/octet-stream"
         var encoding: UInt?
         if let contentTypeHeader = response.allHeaderFields["Content-Type"] as? String {
             let (type, enc) = contentTypeHeader.parseAsHTTPContentTypeHeader()
-            contentType = type
+            mimeType = type
             encoding = enc
         }
         
-        switch contentType {
+        switch mimeType {
         case "application/json", hasPrefix("text/"):
             if let text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
-                return .TextDownloaded(url: response.URL!, text: text, contentType: contentType)
+                return .TextDownloaded(url: response.URL!, text: text, mimeType: mimeType)
             }
             return .Failed(error: URLRequestError.InvalidTextEncoding)
         default:
@@ -207,6 +208,7 @@ class DownloadTextOperation : URLRequestOperation {
     }
 }
 
+/// Base class for performing URL requests in the context of an `NSOperation`.
 class URLRequestOperation : NSOperation {
     let urlRequest: NSMutableURLRequest
     var result: URLResult?

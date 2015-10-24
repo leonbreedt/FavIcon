@@ -22,7 +22,7 @@ class FavIconTests : XCTestCase {
     func testDetector() {
         performWebRequest("detect icons") { completion in
             do {
-                try FavIconDetector.detect(url: "https://google.co.nz") { icons in
+                try FavIcons.detect(url: "https://soundcloud.com") { icons in
                     for icon in icons {
                         print("detected icon: \(icon)")
                     }
