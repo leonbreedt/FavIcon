@@ -75,14 +75,7 @@ public class FavIconDetector {
         
         let baseURLTextOperation = DownloadTextOperation(url: url)
         let icoFileExistsOperation = CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL)
-        queue.addOperation(baseURLTextOperation)
-        queue.addOperation(icoFileExistsOperation)
-        
-        queue.suspended = false
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-            queue.waitUntilAllOperationsAreFinished()
-
+        let processResultsOperation = NSBlockOperation {
             var icons: [FavIcon] = []
             
             if let result = baseURLTextOperation.result {
@@ -117,6 +110,15 @@ public class FavIconDetector {
             
             completion(icons)
         }
+        
+        processResultsOperation.addDependency(baseURLTextOperation)
+        processResultsOperation.addDependency(icoFileExistsOperation)
+        
+        queue.addOperation(baseURLTextOperation)
+        queue.addOperation(icoFileExistsOperation)
+        queue.addOperation(processResultsOperation)
+        
+        queue.suspended = false
     }
 
     /// Interrogates a base URL, attempting to determine all of the supported icons.
