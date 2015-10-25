@@ -17,16 +17,37 @@
 
 import Foundation
 
+/// Enumerates the types of detected icons.
+public enum DetectedIconType : UInt {
+    /// A shortcut icon.
+    case Shortcut
+    /// A classic favicon style icon (usually in the range 16x16 to 48x48).
+    case FavIcon
+    /// A Google TV icon.
+    case GoogleTV
+    /// An icon used by Chrome on Android
+    case GoogleAndroidChrome
+    /// An icon used by Safari on OS X.
+    case AppleOSXSafari
+}
+
 /// Represents a detected icon.
-public enum DetectedIcon {
-    /// An icon referenced by a `<link rel="shortcut icon">` element.
-    /// - Parameters:
-    ///   - url: The URL the icon can be retrieved from.
-    case Shortcut(url: NSURL)
-    /// A favicon.ico file.
-    /// - Parameters:
-    ///   - url: The URL the icon can be retrieved from.
-    case FavIcon(url: NSURL)
+public struct DetectedIcon {
+    /// The absolute URL for the icon file.
+    let url: NSURL
+    /// The type of the icon.
+    let type: DetectedIconType
+    /// The width of the icon, if known, in pixels.
+    let width: Int?
+    /// The height of the icon, if known, in pixels.
+    let height: Int?
+    
+    init(url: NSURL, type: DetectedIconType, width: Int? = nil, height: Int? = nil) {
+        self.url = url
+        self.type = type
+        self.width = width
+        self.height = height
+    }
 }
 
 #if os(iOS)
@@ -77,17 +98,7 @@ public class FavIcons {
             switch results[0] {
             case .TextDownloaded(let actualURL, let text, let contentType):
                 if contentType == "text/html" {
-                    for link in HTMLDocument(string: text).query("/html/head/link") {
-                        if let rel = link.attributes["rel"], href = link.attributes["href"], url = NSURL(string: href, relativeToURL: actualURL) {
-                            switch rel.lowercaseString {
-                            case "shortcut icon":
-                                icons.append(.Shortcut(url: url.absoluteURL))
-                                break
-                            default:
-                                break
-                            }
-                        }
-                    }
+                    icons.appendContentsOf(extractHTMLHeadIcons(HTMLDocument(string: text), baseURL: actualURL))
                 }
                 break
             default: break
@@ -95,7 +106,7 @@ public class FavIcons {
             
             switch results[1] {
             case .Success(let actualURL):
-                icons.append(.FavIcon(url: actualURL))
+                icons.append(DetectedIcon(url: actualURL, type: .FavIcon))
                 break
             default: break
             }
@@ -110,12 +121,7 @@ public class FavIcons {
     ///   - completion: A completion handler to invoke when the download results are available. This can be called on any queue.
     public static func download(url: NSURL, completion: [IconDownloadResult] -> Void) {
         detect(url) { icons in
-            let operations: [DownloadImageOperation] = icons.map { icon in
-                switch icon {
-                case .FavIcon(let url): return DownloadImageOperation(url: url)
-                case .Shortcut(let url): return DownloadImageOperation(url: url)
-                }
-            }
+            let operations: [DownloadImageOperation] = icons.map { DownloadImageOperation(url: $0.url) }
             
             executeURLOperations(operations) { results in
                 let downloadResults: [IconDownloadResult] = results.map { result in
@@ -149,9 +155,10 @@ public class FavIcons {
             
             let rankedIcons = icons.sort { a, b in
                 if let sizeA = a.dimensions, let sizeB = b.dimensions {
-                    return sizeA.height > sizeB.height && sizeA.width > sizeB.width
+                    let isWidthACloser = abs(preferredWidth - sizeA.width) < abs(preferredWidth - sizeB.width)
+                    let isHeightACloser = abs(preferredHeight - sizeA.height) < abs(preferredHeight - sizeB.height)
+                    return isWidthACloser && isHeightACloser
                 }
-                
                 if let _ = a.dimensions {
                     return true
                 }
@@ -160,25 +167,19 @@ public class FavIcons {
                     return false
                 }
 
-                switch a {
+                switch a.type {
                 case .Shortcut:
-                    switch b {
+                    switch b.type {
                     case .FavIcon: return true
                     default: return false
                     }
-                case .FavIcon: return false
+                default: return false
                 }
             }
             
             let icon = rankedIcons.first!
             
-            let operation: DownloadImageOperation
-            switch icon {
-            case .FavIcon(let url): operation = DownloadImageOperation(url: url)
-            case .Shortcut(let url): operation = DownloadImageOperation(url: url)
-            }
-            
-            executeURLOperations([operation]) { results in
+            executeURLOperations([DownloadImageOperation(url: icon.url)]) { results in
                 let downloadResults: [IconDownloadResult] = results.map { result in
                     switch result {
                     case .ImageDownloaded(_, let image):
@@ -227,6 +228,51 @@ public class FavIcons {
         queue.suspended = false
     }
     
+    /// Extracts a list of icons from the `<head>` section of an HTML document.
+    static func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIcon] {
+        var icons: [DetectedIcon] = []
+        
+        for link in document.query("/html/head/link") {
+            if let rel = link.attributes["rel"], href = link.attributes["href"], url = NSURL(string: href, relativeToURL: baseURL) {
+                switch rel.lowercaseString {
+                case "shortcut icon":
+                    icons.append(DetectedIcon(url: url.absoluteURL, type:.Shortcut))
+                    break
+                case "icon":
+                    if let type = link.attributes["type"] where type.lowercaseString == "image/png", let sizes = link.attributes["sizes"]?.lowercaseString
+                    {
+                        for size in sizes.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) {
+                            let parts = size.componentsSeparatedByString("x")
+                            if parts.count != 2 { continue }
+                            if let width = Int(parts[0]), let height = Int(parts[1]) {
+                                switch (width, height) {
+                                case (16, 16):
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon, width: width, height: height))
+                                    break
+                                case (32, 32):
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafari, width: width, height: height))
+                                    break
+                                case (96, 96):
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleTV, width: width, height: height))
+                                    break
+                                case (192, 192), (196, 196):
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleAndroidChrome, width: width, height: height))
+                                    break
+                                default:
+                                    break
+                                }
+                            }
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+        }
+        
+        return icons
+    }
+    
     private init () {
     }
 }
@@ -258,12 +304,10 @@ extension FavIcons {
 extension DetectedIcon {
     /// The dimensions of a detected icon, if known.
     var dimensions: (width: Int, height: Int)? {
-        switch self {
-        case .FavIcon:
-            return nil
-        case .Shortcut:
-            return nil
+        if let width = width, height = height {
+            return (width: width, height: height)
         }
+        return nil
     }
 }
 
