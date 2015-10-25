@@ -19,20 +19,40 @@ import XCTest
 @testable import FavIcon
 
 class FavIconTests : XCTestCase {
-    func testDetector() {
+    func testDetection() {
         performWebRequest("detect icons") { completion in
             do {
                 try FavIcons.detect(url: "https://soundcloud.com") { icons in
+                    completion()
+                    
                     for icon in icons {
                         print("detected icon: \(icon)")
                     }
-                    completion()
                 }
             } catch let error {
                 XCTFail("failed to detect icons: \(error)")
+                completion()
             }
         }
     }
+    
+    func testDownloading() {
+        self.performWebRequest("download icons") { completion in
+            do {
+                try FavIcons.download(url: "https://soundcloud.com") { results in
+                    completion()
+                    
+                    for result in results {
+                        print("downloaded icon: \(result)")
+                    }
+                }
+            } catch let error {
+                XCTFail("failed to download icons: \(error)")
+                completion()
+            }
+        }
+    }
+    
 }
 
 private extension XCTestCase {
