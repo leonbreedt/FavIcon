@@ -28,7 +28,9 @@ public enum DetectedIconType : UInt {
     /// An icon used by Chrome on Android
     case GoogleAndroidChrome
     /// An icon used by Safari on OS X.
-    case AppleOSXSafari
+    case AppleOSXSafariTabIcon
+    /// An icon used iOS for Web Clips on home screen.
+    case AppleIOSWebClip
 }
 
 /// Represents a detected icon.
@@ -239,30 +241,39 @@ public class FavIcons {
                     icons.append(DetectedIcon(url: url.absoluteURL, type:.Shortcut))
                     break
                 case "icon":
-                    if let type = link.attributes["type"] where type.lowercaseString == "image/png", let sizes = link.attributes["sizes"]?.lowercaseString
-                    {
-                        for size in sizes.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) {
-                            let parts = size.componentsSeparatedByString("x")
-                            if parts.count != 2 { continue }
-                            if let width = Int(parts[0]), let height = Int(parts[1]) {
-                                switch (width, height) {
+                    if let type = link.attributes["type"] where type.lowercaseString == "image/png" {
+                        let sizes = parseHTMLIconSizes(link.attributes["sizes"])
+                        if sizes.count > 0 {
+                            for size in sizes {
+                                switch size {
                                 case (16, 16):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon, width: width, height: height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon, width: size.width, height: size.height))
                                     break
                                 case (32, 32):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafari, width: width, height: height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafariTabIcon, width: size.width, height: size.height))
                                     break
                                 case (96, 96):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleTV, width: width, height: height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleTV, width: size.width, height: size.height))
                                     break
                                 case (192, 192), (196, 196):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleAndroidChrome, width: width, height: height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleAndroidChrome, width: size.width, height: size.height))
                                     break
                                 default:
                                     break
                                 }
                             }
+                        } else {
+                            icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon))
                         }
+                    }
+                case "apple-touch-icon":
+                    let sizes = parseHTMLIconSizes(link.attributes["sizes"])
+                    if sizes.count > 0 {
+                        for size in sizes {
+                            icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleIOSWebClip, width: size.width, height: size.height))
+                        }
+                    } else {
+                        icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleIOSWebClip, width: 60, height: 60))
                     }
                 default:
                     break
@@ -271,6 +282,20 @@ public class FavIcons {
         }
         
         return icons
+    }
+    
+    private static func parseHTMLIconSizes(string: String?) -> [(width: Int, height: Int)] {
+        var sizes: [(width: Int, height: Int)] = []
+        if let string = string?.lowercaseString where string != "any" {
+            for size in string.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) {
+                let parts = size.componentsSeparatedByString("x")
+                if parts.count != 2 { continue }
+                if let width = Int(parts[0]), let height = Int(parts[1]) {
+                    sizes.append((width: width, height: height))
+                }
+            }
+        }
+        return sizes
     }
     
     private init () {
