@@ -80,60 +80,65 @@ public enum IconDownloadResult {
 
 /// Responsible for detecting all of the different icons supported by a given site.
 public class FavIcons {
-    /// Interrogates a base URL, attempting to determine all of the supported icons.
-    /// It will check whether known file names exist, and if present, it will parse 
-    /// the Google and Microsoft specific JSON and XML files to find files if necessary. 
-    /// It will also attempt to parse the response of the `url` as HTML to try and find 
-    /// relevant `<link>` elements.
+    /// Scans a base URL, attempting to determine all of the supported icons that can
+    /// be used for favicon purposes.
+    ///
+    /// It will do the following to determine possible icons that can be used:
+    ///   - Check whether or not `/favicon.ico` exists.
+    ///   - If the base URL returns an HTML page, parse the `<head>` section and check for `<link>`
+    ///     and `<meta>` tags that reference icons using Apple, Microsoft and Google
+    ///     conventions.
+    ///   - If _Web Application Manifest JSON_ (`manifest.json`) files are referenced, or
+    ///     _Microsoft browser configuration XML_ (`browserconfig.xml`) files
+    ///     are referenced, download and parse them to check if they reference icons.
+    ///
+    ///  All of this work is performed in a background queue.
     ///
     /// - Parameters:
-    ///   - url: The URL to interrogate for the presence of icons.
-    ///   - completion: The callback to invoke when detection has completed. The caller
-    ///                 must not make any assumptions about which dispatch queue the completion
-    ///                 will be invoked on.
-    /// - Returns: The list of `DetectedIcon`s representing the icons that were found.
+    ///   - url: The base URL to scan.
+    ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
+    ///                 from a background queue.
+    /// - Returns: An array of `DetectedIcon`s for the icons that were found.
     public static func detect(url: NSURL, completion: [DetectedIcon] -> Void) {
-        let operations = [
+        let detectionOperations = [
             DownloadTextOperation(url: url),
             CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL),
             CheckURLExistsOperation(url: NSURL(string: "/browserconfig.xml", relativeToURL: url)!.absoluteURL)
         ]
         
-        executeURLOperations(operations) { results in
+        executeURLOperations(detectionOperations) { detectionResults in
             var icons: [DetectedIcon] = []
+            var additionalDownloads: [(URLRequestOperation, URLResult -> Void)] = []
             
-            var manifestIcons: [DetectedIcon] = []
-            var browserConfigIcons: [DetectedIcon] = []
-            var additionalFileQueue: NSOperationQueue? = nil
-            
-            switch results[0] {
+            switch detectionResults[0] {
             case .TextDownloaded(let actualURL, let text, let contentType):
                 if contentType == "text/html" {
                     let document = HTMLDocument(string: text)
                     
-                    // Check for Web App manifest, trigger download and processing if required.
+                    // 1. Extract any icons referenced by <link> or other elements from the HTML.
+                    icons.appendContentsOf(extractHTMLHeadIcons(document, baseURL: actualURL))
+                    
+                    // Check for Web App Manifest, if present, additional download and processing to do.
                     for link in document.query("/html/head/link") {
                         if let rel = link.attributes["rel"]?.lowercaseString where rel == "manifest",
                            let href = link.attributes["href"],
                            let manifestURL = NSURL(string: href, relativeToURL: url)
                         {
-                            additionalFileQueue = NSOperationQueue()
-                            
-                            executeURLOperations([DownloadTextOperation(url: manifestURL.absoluteURL)], queue: additionalFileQueue) { manifestResults in
-                                switch manifestResults[0] {
+                            additionalDownloads.append((DownloadTextOperation(url: manifestURL), { manifestResult in
+                                switch manifestResult {
                                 case .TextDownloaded( _, let manifestJSON, _):
-                                    manifestIcons = extractManifestJSONIcons(manifestJSON, baseURL: actualURL)
+                                    icons.appendContentsOf(extractManifestJSONIcons(manifestJSON, baseURL: actualURL))
                                     break
                                 default:
                                     break
                                 }
-                            }
+                            }))
                         }
                     }
                     
-                    // Check for Microsoft browser configuration XML, trigger download and processing if present and not disabled.
-                    var browserConfigURL: NSURL? = operations[2].urlRequest.URL
-                    switch results[2] {
+                    // Check for Microsoft browser configuration XML, if present, additional download and processing to do.
+                    var browserConfigURL: NSURL? = detectionOperations[2].urlRequest.URL
+                    switch detectionResults[2] {
                     case .Success(let actualURL):
                         browserConfigURL = actualURL
                         break
@@ -152,46 +157,44 @@ public class FavIcons {
                             }
                         }
                     }
-
                     if let browserConfigURL = browserConfigURL {
-                        if additionalFileQueue ==  nil {
-                            additionalFileQueue = NSOperationQueue()
-                        }
-                        
-                        executeURLOperations([DownloadTextOperation(url: browserConfigURL)], queue: additionalFileQueue) { browserConfigResults in
-                            switch browserConfigResults[0] {
+                        additionalDownloads.append((DownloadTextOperation(url: browserConfigURL), { browserConfigResult in
+                            switch browserConfigResult {
                             case .TextDownloaded( _, let browserConfigXML, _):
                                 let document = XMLDocument(string: browserConfigXML)
-                                browserConfigIcons = extractBrowserConfigXMLIcons(document, baseURL: actualURL)
+                                icons.appendContentsOf(extractBrowserConfigXMLIcons(document, baseURL: actualURL))
                                 break
                             default:
                                 break
                             }
-                        }
+                        }))
                     }
-                    
-                    // Extract any icons referenced by <link> or other elements from the HTML.
-                    icons.appendContentsOf(extractHTMLHeadIcons(document, baseURL: actualURL))
                 }
                 break
             default: break
             }
             
-            switch results[1] {
+            switch detectionResults[1] {
             case .Success(let actualURL):
                 icons.append(DetectedIcon(url: actualURL, type: .FavIcon))
                 break
             default: break
             }
             
-            if additionalFileQueue != nil {
-                additionalFileQueue?.waitUntilAllOperationsAreFinished()
-                additionalFileQueue = nil
-                icons.appendContentsOf(manifestIcons)
-                icons.appendContentsOf(browserConfigIcons)
+            if additionalDownloads.count > 0 {
+                let additionalOperations = additionalDownloads.map { $0.0 }
+                let additionalCompletions = additionalDownloads.map { $0.1 }
+                
+                executeURLOperations(additionalOperations) { additionalResults in
+                    for (index, result) in additionalResults.enumerate() {
+                        additionalCompletions[index](result)
+                    }
+                    
+                    completion(icons)
+                }
+            } else {
+                completion(icons)
             }
-            
-            completion(icons)
         }
     }
     
