@@ -17,45 +17,6 @@
 
 import Foundation
 
-/// Enumerates the types of detected icons.
-public enum DetectedIconType : UInt {
-    /// A shortcut icon.
-    case Shortcut
-    /// A classic favicon style icon (usually in the range 16x16 to 48x48).
-    case FavIcon
-    /// A Google TV icon.
-    case GoogleTV
-    /// An icon used by Chrome/Android.
-    case GoogleAndroidChrome
-    /// An icon used by Safari on OS X.
-    case AppleOSXSafariTabIcon
-    /// An icon used iOS for Web Clips on home screen.
-    case AppleIOSWebClip
-    /// An icon used for a pinned site in Windows.
-    case MicrosoftPinnedSite
-    /// An icon defined in a Web Application Manifest JSON file.
-    case WebAppManifest
-}
-
-/// Represents a detected icon.
-public struct DetectedIcon {
-    /// The absolute URL for the icon file.
-    let url: NSURL
-    /// The type of the icon.
-    let type: DetectedIconType
-    /// The width of the icon, if known, in pixels.
-    let width: Int?
-    /// The height of the icon, if known, in pixels.
-    let height: Int?
-    
-    init(url: NSURL, type: DetectedIconType, width: Int? = nil, height: Int? = nil) {
-        self.url = url
-        self.type = type
-        self.width = width
-        self.height = height
-    }
-}
-
 #if os(iOS)
     import UIKit
     /// iOS image type (`UIImage`).
@@ -98,7 +59,6 @@ public class FavIcons {
     ///   - url: The base URL to scan.
     ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
     ///                 from a background queue.
-    /// - Returns: An array of `DetectedIcon`s for the icons that were found.
     public static func detect(url: NSURL, completion: [DetectedIcon] -> Void) {
         let detectionOperations = [
             DownloadTextOperation(url: url),
@@ -176,7 +136,7 @@ public class FavIcons {
             
             switch detectionResults[1] {
             case .Success(let actualURL):
-                icons.append(DetectedIcon(url: actualURL, type: .FavIcon))
+                icons.append(DetectedIcon(url: actualURL, type: .Classic))
                 break
             default: break
             }
@@ -198,11 +158,14 @@ public class FavIcons {
         }
     }
     
-    /// Downloads all available icons.
+    /// Downloads all available icons by calling `detect()` to discover the available icons, and then
+    /// performing background downloads of each icon.
+    ///
     /// - Parameters:
-    ///   - url: The URL to interrogate for the presence of icons.
-    ///   - completion: A completion handler to invoke when the download results are available. This can be called on any queue.
-    public static func download(url: NSURL, completion: [IconDownloadResult] -> Void) {
+    ///   - url: The URL to scan for icons.
+    ///   - completion: A callback to invoke when all download tasks have results available (successful or otherwise).
+    ///                 The callback will be invoked from a background queue.
+    public static func downloadAll(url: NSURL, completion: [IconDownloadResult] -> Void) {
         detect(url) { icons in
             let operations: [DownloadImageOperation] = icons.map { DownloadImageOperation(url: $0.url) }
             
@@ -223,13 +186,19 @@ public class FavIcons {
         }
     }
     
-    /// Downloads the most preferred icon out of the available icons.
+    /// Downloads the most preferred icon, by calling `detect()` to discover available icons, and then choosing
+    /// the icon that is closest to a preferred width and height to download.
+    ///
     /// - Parameters:
-    ///   - url: The URL to interrogate for the presence of icons.
-    ///   - preferredWidth: The preferred icon width, in pixels.
-    ///   - preferredHeight: The preferred icon height, in pixels.
-    ///   - completion: A completion handler to invoke when the download result is available. This can be called on any queue.
-    public static func download(url: NSURL, preferredWidth: Int, preferredHeight: Int, completion: IconDownloadResult -> Void) throws {
+    ///   - url: The URL to scan for icons.
+    ///   - width: The preferred icon width, in pixels.
+    ///   - height: The preferred icon height, in pixels.
+    ///   - completion: A callback to invoke when the download task has produced a result. The callback will
+    ///                 be invoked from a background queue.
+    ///
+    /// - Note: If the site has no icons with explicitly declared dimensions, the first icon found will be downloaded. It will
+    ///         NOT download each icon to determine its dimensions.
+    public static func downloadPreferred(url: NSURL, width: Int, height: Int, completion: IconDownloadResult -> Void) throws {
         detect(url) { icons in
             if icons.count == 0 {
                 completion(IconDownloadResult.Failure(error: IconError.NoIconsDetected))
@@ -238,8 +207,8 @@ public class FavIcons {
             
             let rankedIcons = icons.sort { a, b in
                 if let sizeA = a.dimensions, let sizeB = b.dimensions {
-                    let isWidthACloser = abs(preferredWidth - sizeA.width) < abs(preferredWidth - sizeB.width)
-                    let isHeightACloser = abs(preferredHeight - sizeA.height) < abs(preferredHeight - sizeB.height)
+                    let isWidthACloser = abs(width - sizeA.width) < abs(width - sizeB.width)
+                    let isHeightACloser = abs(height - sizeA.height) < abs(height - sizeB.height)
                     return isWidthACloser && isHeightACloser
                 }
                 if let _ = a.dimensions {
@@ -253,7 +222,7 @@ public class FavIcons {
                 switch a.type {
                 case .Shortcut:
                     switch b.type {
-                    case .FavIcon: return true
+                    case .Classic: return true
                     default: return false
                     }
                 default: return false
@@ -311,7 +280,11 @@ public class FavIcons {
         queue.suspended = false
     }
     
-    /// Extracts a list of icons from a Google Android/Chrome manifest.json file
+    /// Extracts a list of icons from a Web Application Manifest file
+    ///
+    /// - Parameters:
+    ///   - jsonString: A JSON string containing the contents of the manifest file.
+    ///   - baseURL: A base URL to combine with any relative image paths.
     static func extractManifestJSONIcons(jsonString: String, baseURL: NSURL) -> [DetectedIcon] {
         var icons: [DetectedIcon] = []
         
@@ -339,6 +312,11 @@ public class FavIcons {
         return icons
     }
     
+    /// Extracts a list of icons from a Microsoft browser configuration XML document.
+    ///
+    /// - Parameters:
+    ///   - document: An `XMLDocument` for the Microsoft browser configuration file.
+    ///   - baseURL: A base URL to combine with any relative image paths.
     static func extractBrowserConfigXMLIcons(document: XMLDocument, baseURL: NSURL) -> [DetectedIcon] {
         var icons: [DetectedIcon] = []
         
@@ -370,6 +348,10 @@ public class FavIcons {
     }
     
     /// Extracts a list of icons from the `<head>` section of an HTML document.
+    ///
+    /// - Parameters:
+    ///   - document: An HTML document to process.
+    ///   - baseURL: A base URL to combine with any relative image paths.
     static func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIcon] {
         var icons: [DetectedIcon] = []
         
@@ -386,7 +368,7 @@ public class FavIcons {
                             for size in sizes {
                                 switch size {
                                 case (16, 16):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon, width: size.width, height: size.height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .Classic, width: size.width, height: size.height))
                                     break
                                 case (32, 32):
                                     icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafariTabIcon, width: size.width, height: size.height))
@@ -402,7 +384,7 @@ public class FavIcons {
                                 }
                             }
                         } else {
-                            icons.append(DetectedIcon(url: url.absoluteURL, type: .FavIcon))
+                            icons.append(DetectedIcon(url: url.absoluteURL, type: .Classic))
                         }
                     }
                 case "apple-touch-icon":
@@ -447,6 +429,11 @@ public class FavIcons {
         return icons
     }
     
+    /// Helper function for parsing a W3 `sizes` attribute value.
+    ///
+    /// - Parameters:
+    ///   - string: If not `nil`, the value of the attribute to parse (e.g. `50x50 144x144`).
+    /// - Returns: An array of `(width: Int, height: Int)` tuples for each size found.
     private static func parseHTMLIconSizes(string: String?) -> [(width: Int, height: Int)] {
         var sizes: [(width: Int, height: Int)] = []
         if let string = string?.lowercaseString where string != "any" {
@@ -466,7 +453,7 @@ public class FavIcons {
 }
 
 /// Enumerates errors that can be thrown while detecting or downloading icons.
-public enum IconError : ErrorType {
+enum IconError : ErrorType {
     /// The base URL specified is not a valid URL.
     case InvalidBaseURL
     /// At least one icon to must be specified for downloading.
@@ -477,15 +464,22 @@ public enum IconError : ErrorType {
     case NoIconsDetected
 }
 
+// MARK: - Extensions
+
 extension FavIcons {
     public static func detect(url urlString: String, completion: [DetectedIcon] -> Void) throws {
         guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
         detect(url, completion: completion)
     }
 
-    public static func download(url urlString: String, completion: [IconDownloadResult] -> Void) throws {
+    public static func downloadAll(url urlString: String, completion: [IconDownloadResult] -> Void) throws {
         guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
-        download(url, completion: completion)
+        downloadAll(url, completion: completion)
+    }
+
+    public static func downloadPreferred(url urlString: String, width: Int, height: Int, completion: IconDownloadResult -> Void) throws {
+        guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
+        try downloadPreferred(url, width: width, height: height, completion: completion)
     }
 }
 
@@ -496,238 +490,5 @@ extension DetectedIcon {
             return (width: width, height: height)
         }
         return nil
-    }
-}
-
-/// Enumerates the possible results of a `URLRequestOperation`.
-enum URLResult {
-    /// Plain text content was downloaded successfully.
-    /// - Parameters:
-    ///   - url: The actual URL the content was downloaded from, after any redirects.
-    ///   - text: The text content.
-    ///   - mimeType: The MIME type of the text content (e.g. `application/json`).
-    case TextDownloaded(url: NSURL, text: String, mimeType: String)
-    /// Image content was downloaded successfully.
-    /// - Parameters:
-    ///   - url: The actual URL the content was downloaded from, after any redirects.
-    ///   - image: The downloaded image.
-    case ImageDownloaded(url: NSURL, image: ImageType)
-    /// The URL request was successful (HTTP 200 response).
-    /// - Parameters:
-    ///   - url: The actual URL, after any redirects.
-    case Success(url: NSURL)
-    /// The URL request failed for some reason.
-    /// - Parameters:
-    ///   - error: The error that occurred.
-    case Failed(error: ErrorType)
-}
-
-/// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
-enum URLRequestError : ErrorType {
-    /// No response was received from the server.
-    case MissingResponse
-    /// The file was not found (HTTP 404 response).
-    case FileNotFound
-    /// The request succeeded, but the content was not plain text when it was expected to be.
-    case NotPlainText
-    /// The request succeeded, but the content encoding could not be determined, or was malformed.
-    case InvalidTextEncoding
-    /// The request succeeded, but the MIME type of the response is not a supported image format.
-    case UnsupportedImageFormat(mimeType: String)
-    /// An unexpected HTTP error response was returned.
-    /// - Parameters:
-    ///   - response: The `NSHTTPURLResponse` that can be consulted for further information.
-    case HTTPError(response: NSHTTPURLResponse)
-}
-
-/// Checks whether a URL exists, and returns `URLResult.Success` as the result if it does.
-class CheckURLExistsOperation : URLRequestOperation {
-    override func prepareRequest() {
-        urlRequest.HTTPMethod = "HEAD"
-    }
-    
-    override func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
-        return .Success(url: response.URL!)
-    }
-}
-
-/// Attempts to download the text content for a URL, and returns `URLResult.TextDownloaded` as the result if it does.
-class DownloadTextOperation : URLRequestOperation {
-    override func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
-        let (mimeType, encoding) = response.contentTypeAndEncoding()
-        switch mimeType {
-        case "application/json", hasPrefix("text/"):
-            if let data = data, let text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
-                return .TextDownloaded(url: response.URL!, text: text, mimeType: mimeType)
-            }
-            return .Failed(error: URLRequestError.InvalidTextEncoding)
-        default:
-            return .Failed(error: URLRequestError.NotPlainText)
-        }
-    }
-}
-
-class DownloadImageOperation : URLRequestOperation {
-    override func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
-        guard let data = data else { return .Failed(error: URLRequestError.MissingResponse) }
-        let (mimeType, _) = response.contentTypeAndEncoding()
-        switch mimeType {
-        case "image/png", "image/jpg", "image/jpeg", "image/x-icon":
-            if let image = ImageType(data: data) {
-                return .ImageDownloaded(url: response.URL!, image: image)
-            }
-        default:
-            break
-        }
-        return .Failed(error: URLRequestError.UnsupportedImageFormat(mimeType: mimeType))
-    }
-}
-
-/// Base class for performing URL requests in the context of an `NSOperation`.
-class URLRequestOperation : NSOperation {
-    let urlRequest: NSMutableURLRequest
-    var result: URLResult?
-    
-    private var task: NSURLSessionDataTask?
-    private let session: NSURLSession
-    private var semaphore: dispatch_semaphore_t?
-    
-    init(url: NSURL, session: NSURLSession = NSURLSession.sharedSession()) {
-        self.session = session
-        self.urlRequest = NSMutableURLRequest(URL: url)
-        self.semaphore = nil
-    }
-    
-    override func main() {
-        semaphore = dispatch_semaphore_create(0)
-        prepareRequest()
-        task = session.dataTaskWithRequest(urlRequest, completionHandler: dataTaskCompletion)
-        task?.resume()
-        dispatch_semaphore_wait(semaphore!, DISPATCH_TIME_FOREVER)
-    }
-    
-    override func cancel() {
-        task?.cancel()
-        if let semaphore = semaphore {
-            dispatch_semaphore_signal(semaphore)
-        }
-    }
-    
-    func prepareRequest() {
-    }
-    
-    func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
-        fatalError("must override processResult()")
-    }
-    
-    private func dataTaskCompletion(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        defer {
-            if let semaphore = semaphore {
-                dispatch_semaphore_signal(semaphore)
-            }
-        }
-        
-        guard error == nil else {
-            result = .Failed(error: error!)
-            return
-        }
-        
-        guard let response = response as? NSHTTPURLResponse else {
-            result = .Failed(error: URLRequestError.MissingResponse)
-            return
-        }
-        
-        if response.statusCode == 404 {
-            result = .Failed(error: URLRequestError.FileNotFound)
-            return
-        }
-        
-        if response.statusCode < 200 || response.statusCode > 299 {
-            result = .Failed(error: URLRequestError.HTTPError(response: response))
-            return
-        }
-        
-        result = processResult(data, response: response)
-    }
-}
-
-// MARK: - Extensions
-
-func ~=<T>(pattern: T -> Bool, value: T) -> Bool {
-    return pattern(value)
-}
-
-func hasPrefix(prefix: String)(value: String) -> Bool {
-    return value.hasPrefix(prefix)
-}
-
-extension String {
-    /// Parses this string as an HTTP Content-Type header.
-    func parseAsHTTPContentTypeHeader() -> (mimeType: String, encoding: UInt?) {
-        let headerComponents = componentsSeparatedByString(";").map { $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) }
-        if headerComponents.count > 1 {
-            let parameters = headerComponents[1..<headerComponents.count]
-                .map { $0.componentsSeparatedByString("=") }
-                .toDictionary { ($0[0], $0[1]) }
-            
-            // Default according to RFC is ISO-8859-1, but probably nothing obeys that, so default
-            // to UTF-8 instead.
-            var encoding = NSUTF8StringEncoding
-            if let charset = parameters["charset"], let parsedEncoding = charset.parseAsStringEncoding() {
-                encoding = parsedEncoding
-            }
-            
-            return (mimeType: headerComponents[0], encoding: encoding)
-        } else {
-            return (mimeType: headerComponents[0], encoding: nil)
-        }
-    }
-    
-    /// Returns identifier for the encoding.
-    func parseAsStringEncoding() -> UInt? {
-        switch self.lowercaseString {
-        case "iso-8859-1", "latin1": return NSISOLatin1StringEncoding
-        case "iso-8859-2", "latin2": return NSISOLatin2StringEncoding
-        case "iso-2022-jp": return NSISO2022JPStringEncoding
-        case "shift_jis": return NSShiftJISStringEncoding
-        case "us-ascii": return NSASCIIStringEncoding
-        case "utf-8": return NSUTF8StringEncoding
-        case "utf-16": return NSUTF16StringEncoding
-        case "utf-32": return NSUTF32StringEncoding
-        case "utf-32be": return NSUTF32BigEndianStringEncoding
-        case "utf-32le": return NSUTF32LittleEndianStringEncoding
-        case "windows-1250": return NSWindowsCP1250StringEncoding
-        case "windows-1251": return NSWindowsCP1251StringEncoding
-        case "windows-1252": return NSWindowsCP1252StringEncoding
-        case "windows-1253": return NSWindowsCP1253StringEncoding
-        case "windows-1254": return NSWindowsCP1254StringEncoding
-        case "x-mac-roman": return NSMacOSRomanStringEncoding
-        default:
-            return nil
-        }
-    }
-}
-
-extension NSHTTPURLResponse {
-    func contentTypeAndEncoding() -> (mimeType: String, encoding: UInt?) {
-        if let contentTypeHeader = allHeaderFields["Content-Type"] as? String {
-            return contentTypeHeader.parseAsHTTPContentTypeHeader()
-        }
-        return (mimeType: "application/octet-stream", encoding: nil)
-    }
-}
-
-extension Array {
-    /// Converts this array to a dictionary of type `[K: V]`, by calling a transform function to
-    /// obtain a key and a value from an array element.
-    /// - Parameters:
-    ///   - transform: A function that will transform an array element of type `Element` into a `(K, V)` tuple.
-    func toDictionary<K, V>(transform: Element -> (K, V)) -> [K: V] {
-        var dict: [K: V] = [:]
-        for item in self {
-            let (key, value) = transform(item)
-            dict[key] = value
-        }
-        return dict
     }
 }

@@ -39,7 +39,7 @@ class FavIconTests : XCTestCase {
     func testDownloading() {
         self.performWebRequest("download icons") { completion in
             do {
-                try FavIcons.download(url: "https://soundcloud.com") { results in
+                try FavIcons.downloadAll(url: "https://soundcloud.com") { results in
                     completion()
                     
                     for result in results {
@@ -71,7 +71,7 @@ class FavIconTests : XCTestCase {
         XCTAssertEqual(96, icons[1].height!)
         
         XCTAssertEqual("https://localhost/content/images/favicon-16x16.png", icons[2].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.FavIcon.rawValue, icons[2].type.rawValue)
+        XCTAssertEqual(DetectedIconType.Classic.rawValue, icons[2].type.rawValue)
         XCTAssertEqual(16, icons[2].width!)
         XCTAssertEqual(16, icons[2].height!)
         
