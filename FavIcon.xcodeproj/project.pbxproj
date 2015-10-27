@@ -10,6 +10,12 @@
 		2E0C31041BDB829600C88151 /* FavIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconTests.swift */; };
 		2E0C31071BDC7B8300C88151 /* SampleHTMLFile.html in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C31061BDC7B8300C88151 /* SampleHTMLFile.html */; };
 		2E0C31081BDC7B8300C88151 /* SampleHTMLFile.html in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C31061BDC7B8300C88151 /* SampleHTMLFile.html */; };
+		2E0C310B1BDDEA1900C88151 /* SampleManifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C310A1BDDEA1900C88151 /* SampleManifest.json */; };
+		2E0C310C1BDDEA1900C88151 /* SampleManifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C310A1BDDEA1900C88151 /* SampleManifest.json */; };
+		2E0C310E1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C310D1BDDF35400C88151 /* SampleBrowserConfig.xml */; };
+		2E0C310F1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2E0C310D1BDDF35400C88151 /* SampleBrowserConfig.xml */; };
+		2E0C31111BDDF3E600C88151 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31101BDDF3E600C88151 /* XMLDocument.swift */; };
+		2E0C31121BDDF3E600C88151 /* XMLDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31101BDDF3E600C88151 /* XMLDocument.swift */; };
 		2E18521F1BDAE5160065F877 /* FavIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E18521E1BDAE5160065F877 /* FavIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1852261BDAE5160065F877 /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; };
 		2E18522B1BDAE5160065F877 /* HTMLDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */; };
@@ -57,6 +63,9 @@
 /* Begin PBXFileReference section */
 		2E0C31021BDB827100C88151 /* FavIconTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
 		2E0C31061BDC7B8300C88151 /* SampleHTMLFile.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SampleHTMLFile.html; sourceTree = "<group>"; };
+		2E0C310A1BDDEA1900C88151 /* SampleManifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SampleManifest.json; sourceTree = "<group>"; };
+		2E0C310D1BDDF35400C88151 /* SampleBrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SampleBrowserConfig.xml; sourceTree = "<group>"; };
+		2E0C31101BDDF3E600C88151 /* XMLDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMLDocument.swift; sourceTree = "<group>"; };
 		2E18521B1BDAE5160065F877 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E18521E1BDAE5160065F877 /* FavIcon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FavIcon.h; sourceTree = "<group>"; };
 		2E1852201BDAE5160065F877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -152,6 +161,7 @@
 				2E18521E1BDAE5160065F877 /* FavIcon.h */,
 				2E1852531BDAE7190065F877 /* FavIcon.swift */,
 				2E1852651BDAE95D0065F877 /* HTMLDocument.swift */,
+				2E0C31101BDDF3E600C88151 /* XMLDocument.swift */,
 				2E1852201BDAE5160065F877 /* Info.plist */,
 			);
 			path = FavIcon;
@@ -164,6 +174,8 @@
 				2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */,
 				2E18522C1BDAE5160065F877 /* Info.plist */,
 				2E0C31061BDC7B8300C88151 /* SampleHTMLFile.html */,
+				2E0C310A1BDDEA1900C88151 /* SampleManifest.json */,
+				2E0C310D1BDDF35400C88151 /* SampleBrowserConfig.xml */,
 			);
 			path = FavIconTests;
 			sourceTree = "<group>";
@@ -387,6 +399,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0C310B1BDDEA1900C88151 /* SampleManifest.json in Resources */,
+				2E0C310E1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */,
 				2E0C31071BDC7B8300C88151 /* SampleHTMLFile.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,6 +416,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0C310C1BDDEA1900C88151 /* SampleManifest.json in Resources */,
+				2E0C310F1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */,
 				2E0C31081BDC7B8300C88151 /* SampleHTMLFile.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +443,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0C31111BDDF3E600C88151 /* XMLDocument.swift in Sources */,
 				2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */,
 				2E1852661BDAE95D0065F877 /* HTMLDocument.swift in Sources */,
 			);
@@ -445,6 +462,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E0C31121BDDF3E600C88151 /* XMLDocument.swift in Sources */,
 				2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */,
 				2EC4AEEA1BDB4CFF00C650B9 /* HTMLDocument.swift in Sources */,
 			);

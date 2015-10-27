@@ -25,12 +25,16 @@ public enum DetectedIconType : UInt {
     case FavIcon
     /// A Google TV icon.
     case GoogleTV
-    /// An icon used by Chrome on Android
+    /// An icon used by Chrome/Android.
     case GoogleAndroidChrome
     /// An icon used by Safari on OS X.
     case AppleOSXSafariTabIcon
     /// An icon used iOS for Web Clips on home screen.
     case AppleIOSWebClip
+    /// An icon used for a pinned site in Windows.
+    case MicrosoftPinnedSite
+    /// An icon defined in a Web Application Manifest JSON file.
+    case WebAppManifest
 }
 
 /// Represents a detected icon.
@@ -91,16 +95,83 @@ public class FavIcons {
     public static func detect(url: NSURL, completion: [DetectedIcon] -> Void) {
         let operations = [
             DownloadTextOperation(url: url),
-            CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL)
+            CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL),
+            CheckURLExistsOperation(url: NSURL(string: "/browserconfig.xml", relativeToURL: url)!.absoluteURL)
         ]
         
         executeURLOperations(operations) { results in
             var icons: [DetectedIcon] = []
             
+            var manifestIcons: [DetectedIcon] = []
+            var browserConfigIcons: [DetectedIcon] = []
+            var additionalFileQueue: NSOperationQueue? = nil
+            
             switch results[0] {
             case .TextDownloaded(let actualURL, let text, let contentType):
                 if contentType == "text/html" {
-                    icons.appendContentsOf(extractHTMLHeadIcons(HTMLDocument(string: text), baseURL: actualURL))
+                    let document = HTMLDocument(string: text)
+                    
+                    // Check for Web App manifest, trigger download and processing if required.
+                    for link in document.query("/html/head/link") {
+                        if let rel = link.attributes["rel"]?.lowercaseString where rel == "manifest",
+                           let href = link.attributes["href"],
+                           let manifestURL = NSURL(string: href, relativeToURL: url)
+                        {
+                            additionalFileQueue = NSOperationQueue()
+                            
+                            executeURLOperations([DownloadTextOperation(url: manifestURL.absoluteURL)], queue: additionalFileQueue) { manifestResults in
+                                switch manifestResults[0] {
+                                case .TextDownloaded( _, let manifestJSON, _):
+                                    manifestIcons = extractManifestJSONIcons(manifestJSON, baseURL: actualURL)
+                                    break
+                                default:
+                                    break
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Check for Microsoft browser configuration XML, trigger download and processing if present and not disabled.
+                    var browserConfigURL: NSURL? = operations[2].urlRequest.URL
+                    switch results[2] {
+                    case .Success(let actualURL):
+                        browserConfigURL = actualURL
+                        break
+                    default:
+                        browserConfigURL = nil
+                    }
+                    for meta in document.query("/html/head/meta") {
+                        if let name = meta.attributes["name"]?.lowercaseString where name == "msapplication-config",
+                           let content = meta.attributes["content"]
+                        {
+                            if content.lowercaseString == "none" {
+                                // Explicitly asked us not to download the file.
+                                browserConfigURL = nil
+                            } else {
+                                browserConfigURL = NSURL(string: content, relativeToURL: url)?.absoluteURL
+                            }
+                        }
+                    }
+
+                    if let browserConfigURL = browserConfigURL {
+                        if additionalFileQueue ==  nil {
+                            additionalFileQueue = NSOperationQueue()
+                        }
+                        
+                        executeURLOperations([DownloadTextOperation(url: browserConfigURL)], queue: additionalFileQueue) { browserConfigResults in
+                            switch browserConfigResults[0] {
+                            case .TextDownloaded( _, let browserConfigXML, _):
+                                let document = XMLDocument(string: browserConfigXML)
+                                browserConfigIcons = extractBrowserConfigXMLIcons(document, baseURL: actualURL)
+                                break
+                            default:
+                                break
+                            }
+                        }
+                    }
+                    
+                    // Extract any icons referenced by <link> or other elements from the HTML.
+                    icons.appendContentsOf(extractHTMLHeadIcons(document, baseURL: actualURL))
                 }
                 break
             default: break
@@ -111,6 +182,13 @@ public class FavIcons {
                 icons.append(DetectedIcon(url: actualURL, type: .FavIcon))
                 break
             default: break
+            }
+            
+            if additionalFileQueue != nil {
+                additionalFileQueue?.waitUntilAllOperationsAreFinished()
+                additionalFileQueue = nil
+                icons.appendContentsOf(manifestIcons)
+                icons.appendContentsOf(browserConfigIcons)
             }
             
             completion(icons)
@@ -206,13 +284,13 @@ public class FavIcons {
     ///   - operations: An array of `NSOperation` instances to execute.
     ///   - concurrency: The maximum number of operations to execute concurrently.
     ///   - completion: A completion handler to invoke when all operations have completed. This can be called on any queue.
-    private static func executeURLOperations(operations: [URLRequestOperation], concurrency: Int = 2, completion: [URLResult] -> Void) {
+    private static func executeURLOperations(operations: [URLRequestOperation], concurrency: Int = 2, queue: NSOperationQueue? = nil, completion: [URLResult] -> Void) {
         guard operations.count > 0 else {
             completion([])
             return
         }
         
-        let queue = NSOperationQueue()
+        let queue = queue ?? NSOperationQueue()
         queue.suspended = true
         queue.maxConcurrentOperationCount = concurrency
         
@@ -228,6 +306,64 @@ public class FavIcons {
         queue.addOperation(completionOperation)
         
         queue.suspended = false
+    }
+    
+    /// Extracts a list of icons from a Google Android/Chrome manifest.json file
+    static func extractManifestJSONIcons(jsonString: String, baseURL: NSURL) -> [DetectedIcon] {
+        var icons: [DetectedIcon] = []
+        
+        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding),
+           let jsonObject = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)),
+           let manifest = jsonObject as? NSDictionary,
+           let manifestIcons = manifest["icons"] as? [NSDictionary]
+        {
+            for icon in manifestIcons {
+                if let type = icon["type"] as? String where type.lowercaseString == "image/png",
+                   let src = icon["src"] as? String, url = NSURL(string: src, relativeToURL: baseURL)?.absoluteURL
+                {
+                    let sizes = parseHTMLIconSizes(icon["sizes"] as? String)
+                    if sizes.count > 0 {
+                        for size in sizes {
+                            icons.append(DetectedIcon(url: url, type: .WebAppManifest, width: size.width, height: size.height))
+                        }
+                    } else {
+                        icons.append(DetectedIcon(url: url, type: .WebAppManifest))
+                    }
+                }
+            }
+        }
+
+        return icons
+    }
+    
+    static func extractBrowserConfigXMLIcons(document: XMLDocument, baseURL: NSURL) -> [DetectedIcon] {
+        var icons: [DetectedIcon] = []
+        
+        for tile in document.query("/browserconfig/msapplication/tile/*") {
+            if let src = tile.attributes["src"], let url = NSURL(string: src, relativeToURL: baseURL)?.absoluteURL {
+                switch tile.name.lowercaseString {
+                case "tileimage":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 144, height: 144))
+                    break
+                case "square70x70logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 70, height: 70))
+                    break
+                case "square150x150logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 150, height: 150))
+                    break
+                case "wide310x150logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 310, height: 150))
+                    break
+                case "square310x310logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 310, height: 310))
+                    break
+                default:
+                    break
+                }
+            }
+        }
+        
+        return icons
     }
     
     /// Extracts a list of icons from the `<head>` section of an HTML document.
@@ -281,6 +417,30 @@ public class FavIcons {
             }
         }
         
+        for meta in document.query("/html/head/meta") {
+            if let name = meta.attributes["name"]?.lowercaseString, content = meta.attributes["content"], url = NSURL(string: content, relativeToURL: baseURL) {
+                switch name {
+                case "msapplication-tileimage":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 144, height: 144))
+                    break
+                case "msapplication-square70x70logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 70, height: 70))
+                    break
+                case "msapplication-square150x150logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 150, height: 150))
+                    break
+                case "msapplication-wide310x150logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 310, height: 150))
+                    break
+                case "msapplication-square310x310logo":
+                    icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 310, height: 310))
+                    break
+                default:
+                    break
+                }
+            }
+        }
+
         return icons
     }
     
