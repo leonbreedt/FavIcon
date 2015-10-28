@@ -1,3 +1,0 @@
-MODULEMAP_FILE[sdk=iphoneos*]            = $(SRCROOT)/LibXML2/iphoneos.modulemap
-MODULEMAP_FILE[sdk=iphonesimulator*]     = $(SRCROOT)/LibXML2/iphonesimulator.modulemap
-MODULEMAP_FILE[sdk=macosx*]              = $(SRCROOT)/LibXML2/macosx.modulemap

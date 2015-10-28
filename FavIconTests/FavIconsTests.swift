@@ -17,6 +17,7 @@
 
 import XCTest
 @testable import FavIcon
+import LibXML2
 
 class FavIconTests : XCTestCase {
     func testDetection() {

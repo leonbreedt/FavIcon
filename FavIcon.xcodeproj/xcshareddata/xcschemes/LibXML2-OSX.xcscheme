@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+               BlueprintIdentifier = "2E8745721BE0CB4A008E23AC"
                BuildableName = "LibXML2.framework"
                BlueprintName = "LibXML2-OSX"
                ReferencedContainer = "container:FavIcon.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+            BlueprintIdentifier = "2E8745721BE0CB4A008E23AC"
             BuildableName = "LibXML2.framework"
             BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">
@@ -63,7 +63,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2EC4AEEF1BDB4D3000C650B9"
+            BlueprintIdentifier = "2E8745721BE0CB4A008E23AC"
             BuildableName = "LibXML2.framework"
             BlueprintName = "LibXML2-OSX"
             ReferencedContainer = "container:FavIcon.xcodeproj">

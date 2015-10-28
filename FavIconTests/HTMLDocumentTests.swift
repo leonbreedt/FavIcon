@@ -17,6 +17,7 @@
 
 import XCTest
 @testable import FavIcon
+import LibXML2
 
 class HTMLDocumentTests : XCTestCase {
     func testHTMLFragment() {

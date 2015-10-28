@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import LibXML2
 
 #if os(iOS)
     import UIKit
