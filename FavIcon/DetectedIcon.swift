@@ -38,13 +38,13 @@ public enum DetectedIconType : UInt {
 /// Represents a detected icon.
 public struct DetectedIcon {
     /// The absolute URL for the icon file.
-    let url: NSURL
+    public let url: NSURL
     /// The type of the icon.
-    let type: DetectedIconType
+    public let type: DetectedIconType
     /// The width of the icon, if known, in pixels.
-    let width: Int?
+    public let width: Int?
     /// The height of the icon, if known, in pixels.
-    let height: Int?
+    public let height: Int?
     
     init(url: NSURL, type: DetectedIconType, width: Int? = nil, height: Int? = nil) {
         self.url = url

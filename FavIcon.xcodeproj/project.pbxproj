@@ -98,6 +98,7 @@
 		2E18527C1BDB44CE0065F877 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E1852801BDB44F30065F877 /* LibXML2.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LibXML2.xcconfig; sourceTree = "<group>"; };
 		2EC4AEF01BDB4D3000C650B9 /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EDF3FA91BE09DA100444B21 /* Walkthrough-iOS.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "Walkthrough-iOS.playground"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +187,7 @@
 				2E0C31161BDF50AA00C88151 /* URLRequestOperation.swift */,
 				2E0C31221BDF533100C88151 /* Utils.swift */,
 				2E0C31101BDDF3E600C88151 /* XMLDocument.swift */,
+				2EDF3FA91BE09DA100444B21 /* Walkthrough-iOS.playground */,
 				2E1852201BDAE5160065F877 /* Info.plist */,
 			);
 			path = FavIcon;

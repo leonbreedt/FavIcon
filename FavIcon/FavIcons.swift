@@ -19,21 +19,23 @@ import Foundation
 
 #if os(iOS)
     import UIKit
-    /// iOS image type (`UIImage`).
+    /// Alias for the iOS image type (`UIImage`).
     public typealias ImageType = UIImage
 #elseif os(OSX)
     import Cocoa
-    /// OS X image type (`NSImage`).
+    /// Alias for the OS X image type (`NSImage`).
     public typealias ImageType = NSImage
 #endif
 
 /// Represents the result of attempting to download an icon.
 public enum IconDownloadResult {
     /// Download successful.
+    ///
     /// - Parameters:
     ///   - image: The `ImageType` for the downloaded icon.
     case Success(image: ImageType)
     /// Download failed for some reason.
+    ///
     /// - Parameters:
     ///   - error: The error which can be consulted to determine the root cause.
     case Failure(error: ErrorType)
@@ -45,13 +47,14 @@ public class FavIcons {
     /// be used for favicon purposes.
     ///
     /// It will do the following to determine possible icons that can be used:
-    ///   - Check whether or not `/favicon.ico` exists.
-    ///   - If the base URL returns an HTML page, parse the `<head>` section and check for `<link>`
-    ///     and `<meta>` tags that reference icons using Apple, Microsoft and Google
-    ///     conventions.
-    ///   - If _Web Application Manifest JSON_ (`manifest.json`) files are referenced, or
-    ///     _Microsoft browser configuration XML_ (`browserconfig.xml`) files
-    ///     are referenced, download and parse them to check if they reference icons.
+    ///
+    /// - Check whether or not `/favicon.ico` exists.
+    /// - If the base URL returns an HTML page, parse the `<head>` section and check for `<link>`
+    ///   and `<meta>` tags that reference icons using Apple, Microsoft and Google
+    ///   conventions.
+    /// - If _Web Application Manifest JSON_ (`manifest.json`) files are referenced, or
+    ///   _Microsoft browser configuration XML_ (`browserconfig.xml`) files
+    ///   are referenced, download and parse them to check if they reference icons.
     ///
     ///  All of this work is performed in a background queue.
     ///
@@ -467,16 +470,19 @@ enum IconError : ErrorType {
 // MARK: - Extensions
 
 extension FavIcons {
+    /// Convenience overload for `detect(_:completion:)` that takes a `String` instead of an `NSURL` as the URL parameter.
     public static func detect(url urlString: String, completion: [DetectedIcon] -> Void) throws {
         guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
         detect(url, completion: completion)
     }
 
+    /// Convenience overload for `downloadAll(_:completion:)` that takes a `String` instead of an `NSURL` as the URL parameter.
     public static func downloadAll(url urlString: String, completion: [IconDownloadResult] -> Void) throws {
         guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
         downloadAll(url, completion: completion)
     }
 
+    /// Convenience overload for `downloadPreferred(_:width:height:completion:)` that takes a `String` instead of an `NSURL` as the URL parameter.
     public static func downloadPreferred(url urlString: String, width: Int, height: Int, completion: IconDownloadResult -> Void) throws {
         guard let url = NSURL(string: urlString) else { throw IconError.InvalidBaseURL }
         try downloadPreferred(url, width: width, height: height, completion: completion)
