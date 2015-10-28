@@ -53,7 +53,6 @@
 		2E8745651BE0CADE008E23AC /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456C1BE0CB13008E23AC /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456D1BE0CB13008E23AC /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
-		2E8745761BE0CB4A008E23AC /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745751BE0CB4A008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87457D1BE0CDA7008E23AC /* HTMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457B1BE0CDA7008E23AC /* HTMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87457E1BE0CDA7008E23AC /* HTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87457C1BE0CDA7008E23AC /* HTMLElement.m */; };
 		2E8745801BE0D1E0008E23AC /* HTMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */; };
@@ -152,8 +151,6 @@
 		2E87456A1BE0CB13008E23AC /* HTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLDocument.h; sourceTree = "<group>"; };
 		2E87456B1BE0CB13008E23AC /* HTMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLDocument.m; sourceTree = "<group>"; };
 		2E8745731BE0CB4A008E23AC /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E8745751BE0CB4A008E23AC /* LibXML2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibXML2.h; sourceTree = "<group>"; };
-		2E8745771BE0CB4A008E23AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E87457B1BE0CDA7008E23AC /* HTMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElement.h; sourceTree = "<group>"; };
 		2E87457C1BE0CDA7008E23AC /* HTMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLElement.m; sourceTree = "<group>"; };
 		2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLElement_Private.h; sourceTree = "<group>"; };
@@ -216,7 +213,6 @@
 				2E18521D1BDAE5160065F877 /* FavIcon */,
 				2E1852291BDAE5160065F877 /* FavIconTests */,
 				2E8745631BE0CADE008E23AC /* LibXML2 */,
-				2E8745741BE0CB4A008E23AC /* LibXML2 */,
 				2E18521C1BDAE5160065F877 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -283,15 +279,6 @@
 			path = LibXML2;
 			sourceTree = "<group>";
 		};
-		2E8745741BE0CB4A008E23AC /* LibXML2 */ = {
-			isa = PBXGroup;
-			children = (
-				2E8745751BE0CB4A008E23AC /* LibXML2.h */,
-				2E8745771BE0CB4A008E23AC /* Info.plist */,
-			);
-			path = LibXML2;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -338,7 +325,6 @@
 				2E67AB4D1BE0DC61003EF0A3 /* XMLElement_Private.h in Headers */,
 				2E8745901BE0DBC1008E23AC /* HTMLElement.h in Headers */,
 				2E67AB4E1BE0DC61003EF0A3 /* XMLElement.h in Headers */,
-				2E8745761BE0CB4A008E23AC /* LibXML2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
