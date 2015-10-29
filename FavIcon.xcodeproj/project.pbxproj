@@ -154,6 +154,7 @@
 		2E87457B1BE0CDA7008E23AC /* HTMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElement.h; sourceTree = "<group>"; };
 		2E87457C1BE0CDA7008E23AC /* HTMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLElement.m; sourceTree = "<group>"; };
 		2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLElement_Private.h; sourceTree = "<group>"; };
+		2EDA8AB51BE1E6510043F0F2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2EDF3FA91BE09DA100444B21 /* Walkthrough.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Walkthrough.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -243,6 +244,7 @@
 				2E0C31221BDF533100C88151 /* Utils.swift */,
 				2EDF3FA91BE09DA100444B21 /* Walkthrough.playground */,
 				2E1852201BDAE5160065F877 /* Info.plist */,
+				2EDA8AB51BE1E6510043F0F2 /* README.md */,
 			);
 			path = FavIcon;
 			sourceTree = "<group>";
