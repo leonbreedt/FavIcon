@@ -1,5 +1,5 @@
 # FavIcon
-FavIcon is a tiny Swift library for downloading an icon representing a website’s brand.
+FavIcon is a tiny Swift library for downloading the favicon representing a website.
 
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of `/favicon.ico`, right? Right?
 Well. Go have a read of [http://stackoverflow.com/questions/19029342/favicons-best-practices], and see how you feel about programming afterwards.
@@ -17,7 +17,7 @@ try FavIcons.downloadPreferred(url: "https://apple.com", width: 16, height: 16) 
         // Ignore if you please!
         break
 }
-`
+```
 
 This will detect all of the available icons at the URL, and if it is able to determine their sizes, it will try to find the icon closest in size to your desired size, otherwise it will just take the first one it found.
 
