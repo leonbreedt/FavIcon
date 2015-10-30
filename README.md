@@ -1,4 +1,4 @@
-# FavIcon
+# FavIcon [![Build Status](https://travis-ci.org/bitserf/FavIcon.svg)](https://travis-ci.org/bitserf/FavIcon)
 FavIcon is a tiny Swift library for downloading the favicon representing a website.
 
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of `/favicon.ico`, right? Right?
