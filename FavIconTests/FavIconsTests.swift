@@ -19,11 +19,17 @@ import XCTest
 @testable import FavIcon
 import LibXML2
 
+#if os(iOS)
+import UIKit
+#elseif os(OSX)
+import Cocoa
+#endif
+
 class FavIconTests : XCTestCase {
-    func testDetection() {
-        performWebRequest("detect icons") { completion in
+    func testScan() {
+        performWebRequest("scan for icons") { completion in
             do {
-                try FavIcons.detect(url: "https://basecamp.com") { icons in
+                try FavIcons.scan("https://apple.com") { icons in
                     completion()
                     
                     for icon in icons {
@@ -40,7 +46,7 @@ class FavIconTests : XCTestCase {
     func testDownloading() {
         self.performWebRequest("download icons") { completion in
             do {
-                try FavIcons.downloadAll(url: "https://soundcloud.com") { results in
+                try FavIcons.downloadAll("https://soundcloud.com") { results in
                     completion()
                     
                     for result in results {
