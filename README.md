@@ -4,7 +4,7 @@ FavIcon is a tiny Swift library for downloading the favicon representing a websi
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of
 `/favicon.ico`, right? Right?  Well. Go have a read of [this StackOverflow
 post](<http://stackoverflow.com/questions/19029342/favicons-best-practices), and
-see how you feel about programming afterwards.
+see how you feel afterwards.
 
 ## Quick Start
 The project ships with a playground in which you can try it out for yourself.
@@ -13,8 +13,8 @@ playground, or you will get an import error when it tries to import the FavIcon
 framework.
 
 ## Features
-- Detection of /favicon.ico if it exists
-- Parsing of the HTML of a URL, and scanning for appropriate `<link>` or
+- Detection of `/favicon.ico` if it exists
+- Parsing of the HTML at a URL, and scanning for appropriate `<link>` or
   `<meta>` tags that refer to icons using Apple, Google or Microsoft
   conventions.
 - Discovery of and parsing of Web Application manifest JSON files to obtain
@@ -23,7 +23,7 @@ framework.
   obtaining lists of icons.
 
 Yup. These are all potential ways of indicating that your website has an icon
-that can be used in user interfaces 👍
+that can be used in user interfaces. Good work, fellow programmers. 👍
 
 ## Usage Example
 Perhaps you have a 16x16 location in your user interface where you want to put
