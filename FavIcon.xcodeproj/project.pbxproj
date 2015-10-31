@@ -32,8 +32,8 @@
 		2E1852521BDAE5CD0065F877 /* FavIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E18521E1BDAE5160065F877 /* FavIcon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E1852541BDAE7190065F877 /* FavIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852531BDAE7190065F877 /* FavIcons.swift */; };
 		2E1852551BDAE7AF0065F877 /* FavIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852531BDAE7190065F877 /* FavIcons.swift */; };
-		2E28EF251BE0E03F00E02613 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745621BE0CADE008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E28EF271BE0E07000E02613 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745731BE0CB4A008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E4681B21BE32A61008375AB /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
@@ -108,34 +108,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2E28EF241BE0E03100E02613 /* Copy Embedded Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2E28EF251BE0E03F00E02613 /* LibXML2.framework in Copy Embedded Frameworks */,
-			);
-			name = "Copy Embedded Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E28EF261BE0E06600E02613 /* Copy Embedded Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2E28EF271BE0E07000E02613 /* LibXML2.framework in Copy Embedded Frameworks */,
-			);
-			name = "Copy Embedded Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		2E4681BF1BE493BA008375AB /* Copy Embedded Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */,
 				2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
@@ -147,6 +126,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */,
 				2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
@@ -410,7 +390,6 @@
 				2E1852171BDAE5160065F877 /* Frameworks */,
 				2E1852181BDAE5160065F877 /* Headers */,
 				2E1852191BDAE5160065F877 /* Resources */,
-				2E28EF241BE0E03100E02613 /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -449,7 +428,6 @@
 				2E1852361BDAE5300065F877 /* Frameworks */,
 				2E1852371BDAE5300065F877 /* Headers */,
 				2E1852381BDAE5300065F877 /* Resources */,
-				2E28EF261BE0E06600E02613 /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
