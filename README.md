@@ -1,4 +1,4 @@
-# FavIcon [![License](https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg)](https://raw.githubusercontent.com/bitserf/FavIcon/master/LICENSE) [![Build Status](https://travis-ci.org/bitserf/FavIcon.svg)](https://travis-ci.org/bitserf/FavIcon) 
+# FavIcon [![License](https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg)](https://raw.githubusercontent.com/bitserf/FavIcon/master/LICENSE) [![Build Status](https://travis-ci.org/bitserf/FavIcon.svg)](https://travis-ci.org/bitserf/FavIcon) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 FavIcon is a tiny Swift library for downloading the favicon representing a website.
 
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of
