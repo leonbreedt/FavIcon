@@ -43,10 +43,8 @@
 		2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E67AB411BE0DC5B003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; };
-		2E67AB421BE0DC5B003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
 		2E67AB431BE0DC5B003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
 		2E67AB441BE0DC5B003EF0A3 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; };
-		2E67AB451BE0DC5B003EF0A3 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
 		2E67AB461BE0DC60003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E67AB471BE0DC60003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
 		2E67AB481BE0DC60003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
@@ -607,11 +605,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0C31141BDF4EA200C88151 /* DetectedIcon.swift in Sources */,
-				2E67AB421BE0DC5B003EF0A3 /* XMLDocument.m in Sources */,
 				2E0C31231BDF533100C88151 /* Utils.swift in Sources */,
 				2E0C31201BDF52C700C88151 /* CheckURLExistsOperation.swift in Sources */,
 				2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */,
-				2E67AB451BE0DC5B003EF0A3 /* XMLElement.m in Sources */,
 				2E0C311A1BDF50E300C88151 /* DownloadImageOperation.swift in Sources */,
 				2E0C31171BDF50AA00C88151 /* URLRequestOperation.swift in Sources */,
 				2E0C311D1BDF511200C88151 /* DownloadTextOperation.swift in Sources */,
