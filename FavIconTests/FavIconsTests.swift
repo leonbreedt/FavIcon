@@ -18,6 +18,7 @@
 import XCTest
 @testable import FavIcon
 import LibXML2
+import DVR
 
 #if os(iOS)
 import UIKit
@@ -27,36 +28,47 @@ import Cocoa
 
 class FavIconTests : XCTestCase {
     func testScan() {
-        performWebRequest("scan for icons") { completion in
+        var actualIcons: [DetectedIcon] = []
+        
+        performWebRequest("scan") { requestCompleted in
             do {
                 try FavIcons.scan("https://apple.com") { icons in
-                    completion()
-                    
-                    for icon in icons {
-                        print("detected icon: \(icon)")
-                    }
+                    requestCompleted()
+                    actualIcons = icons
                 }
             } catch let error {
                 XCTFail("failed to detect icons: \(error)")
-                completion()
             }
         }
+        
+        XCTAssertEqual(1, actualIcons.count)
+        XCTAssertEqual(NSURL(string: "https://www.apple.com/favicon.ico")!, actualIcons[0].url)
     }
     
     func testDownloading() {
-        self.performWebRequest("download icons") { completion in
+        var actualResults: [IconDownloadResult] = []
+        
+        performWebRequest("download") { requestCompleted in
             do {
-                try FavIcons.downloadAll("https://soundcloud.com") { results in
-                    completion()
-                    
-                    for result in results {
-                        print("downloaded icon: \(result)")
-                    }
+                try FavIcons.downloadAll("https://apple.com") { results in
+                    requestCompleted()
+                    actualResults = results
                 }
             } catch let error {
                 XCTFail("failed to download icons: \(error)")
-                completion()
             }
+        }
+        
+        XCTAssertEqual(1, actualResults.count)
+        
+        switch actualResults[0] {
+        case .Success(let image):
+            XCTAssertEqual(32, image.size.width)
+            XCTAssertEqual(32, image.size.height)
+            break
+        case .Failure(let error):
+            XCTFail("unexpected error returned for download: \(error)")
+            break
         }
     }
     
@@ -244,8 +256,9 @@ class FavIconTests : XCTestCase {
 }
 
 private extension XCTestCase {
-    func performWebRequest(description: String, timeout: NSTimeInterval = 5.0, callback: (() -> Void) -> Void) {
-        let expectation = expectationWithDescription(description)
+    func performWebRequest(name: String, timeout: NSTimeInterval = 5.0, callback: (() -> Void) -> Void) {
+        FavIcons.urlSessionProvider = { return Session(cassetteName: name) }
+        let expectation = expectationWithDescription("web request - \(name)")
         callback(expectation.fulfill)
         waitForExpectationsWithTimeout(timeout, handler: nil)
     }

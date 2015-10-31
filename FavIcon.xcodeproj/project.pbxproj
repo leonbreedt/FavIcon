@@ -38,6 +38,10 @@
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
 		2E4681B71BE32DE2008375AB /* HTMLDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */; };
+		2E4681B91BE490D6008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; };
+		2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; };
+		2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E67AB411BE0DC5B003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; };
 		2E67AB421BE0DC5B003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
 		2E67AB431BE0DC5B003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
@@ -53,6 +57,10 @@
 		2E67AB4D1BE0DC61003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
 		2E67AB4E1BE0DC61003EF0A3 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E67AB4F1BE0DC61003EF0A3 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
+		2E7A93EB1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
+		2E7A93EC1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
+		2E7A93F51BE4BD3E0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
+		2E7A93F61BE4BD3F0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
 		2E8745651BE0CADE008E23AC /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456C1BE0CB13008E23AC /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456D1BE0CB13008E23AC /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
@@ -122,6 +130,28 @@
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2E4681BF1BE493BA008375AB /* Copy Embedded Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */,
+			);
+			name = "Copy Embedded Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4681C11BE493EE008375AB /* Copy Embedded Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */,
+			);
+			name = "Copy Embedded Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -144,11 +174,15 @@
 		2E18523A1BDAE5300065F877 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852431BDAE5300065F877 /* FavIcon-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FavIcon-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852531BDAE7190065F877 /* FavIcons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIcons.swift; sourceTree = "<group>"; };
+		2E4681B81BE490D6008375AB /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
+		2E4681BA1BE490E9008375AB /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/Mac/DVR.framework; sourceTree = "<group>"; };
 		2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDocument.h; sourceTree = "<group>"; };
 		2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDocument.m; sourceTree = "<group>"; };
 		2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLElement_Private.h; sourceTree = "<group>"; };
 		2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLElement.h; sourceTree = "<group>"; };
 		2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLElement.m; sourceTree = "<group>"; };
+		2E7A93E91BE4BA000004C1F3 /* scan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scan.json; sourceTree = "<group>"; };
+		2E7A93F31BE4BD3A0004C1F3 /* download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = download.json; sourceTree = "<group>"; };
 		2E8745621BE0CADE008E23AC /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8745641BE0CADE008E23AC /* LibXML2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibXML2.h; sourceTree = "<group>"; };
 		2E8745661BE0CADE008E23AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -176,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E1852261BDAE5160065F877 /* FavIcon.framework in Frameworks */,
+				2E4681B91BE490D6008375AB /* DVR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */,
+				2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +255,7 @@
 				2E18521D1BDAE5160065F877 /* FavIcon */,
 				2E1852291BDAE5160065F877 /* FavIconTests */,
 				2E8745631BE0CADE008E23AC /* LibXML2 */,
+				2E4681BC1BE4936C008375AB /* Frameworks */,
 				2E18521C1BDAE5160065F877 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -256,14 +293,41 @@
 		2E1852291BDAE5160065F877 /* FavIconTests */ = {
 			isa = PBXGroup;
 			children = (
+				2E7A93F31BE4BD3A0004C1F3 /* download.json */,
 				2E0C31021BDB827100C88151 /* FavIconsTests.swift */,
 				2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */,
 				2E18522C1BDAE5160065F877 /* Info.plist */,
 				2E0C31061BDC7B8300C88151 /* SampleHTMLFile.html */,
 				2E0C310A1BDDEA1900C88151 /* SampleManifest.json */,
 				2E0C310D1BDDF35400C88151 /* SampleBrowserConfig.xml */,
+				2E7A93E91BE4BA000004C1F3 /* scan.json */,
 			);
 			path = FavIconTests;
+			sourceTree = "<group>";
+		};
+		2E4681BC1BE4936C008375AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E4681BE1BE49375008375AB /* OSX */,
+				2E4681BD1BE49370008375AB /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2E4681BD1BE49370008375AB /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				2E4681B81BE490D6008375AB /* DVR.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		2E4681BE1BE49375008375AB /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				2E4681BA1BE490E9008375AB /* DVR.framework */,
+			);
+			name = OSX;
 			sourceTree = "<group>";
 		};
 		2E8745631BE0CADE008E23AC /* LibXML2 */ = {
@@ -365,6 +429,7 @@
 				2E1852211BDAE5160065F877 /* Sources */,
 				2E1852221BDAE5160065F877 /* Frameworks */,
 				2E1852231BDAE5160065F877 /* Resources */,
+				2E4681BF1BE493BA008375AB /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -403,6 +468,7 @@
 				2E18523F1BDAE5300065F877 /* Sources */,
 				2E1852401BDAE5300065F877 /* Frameworks */,
 				2E1852411BDAE5300065F877 /* Resources */,
+				2E4681C11BE493EE008375AB /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -516,7 +582,9 @@
 			files = (
 				2E0C310B1BDDEA1900C88151 /* SampleManifest.json in Resources */,
 				2E0C310E1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */,
+				2E7A93EB1BE4BA060004C1F3 /* scan.json in Resources */,
 				2E0C31071BDC7B8300C88151 /* SampleHTMLFile.html in Resources */,
+				2E7A93F51BE4BD3E0004C1F3 /* download.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,7 +601,9 @@
 			files = (
 				2E0C310C1BDDEA1900C88151 /* SampleManifest.json in Resources */,
 				2E0C310F1BDDF35400C88151 /* SampleBrowserConfig.xml in Resources */,
+				2E7A93EC1BE4BA060004C1F3 /* scan.json in Resources */,
 				2E0C31081BDC7B8300C88151 /* SampleHTMLFile.html in Resources */,
+				2E7A93F61BE4BD3F0004C1F3 /* download.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +859,11 @@
 		2E1852331BDAE5160065F877 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -800,6 +875,11 @@
 		2E1852341BDAE5160065F877 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -859,7 +939,11 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -875,7 +959,11 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
 				INFOPLIST_FILE = FavIconTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";

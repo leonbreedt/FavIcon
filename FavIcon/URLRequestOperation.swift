@@ -65,7 +65,7 @@ class URLRequestOperation : NSOperation {
     private let session: NSURLSession
     private var semaphore: dispatch_semaphore_t?
     
-    init(url: NSURL, session: NSURLSession = NSURLSession.sharedSession()) {
+    init(url: NSURL, session: NSURLSession) {
         self.session = session
         self.urlRequest = NSMutableURLRequest(URL: url)
         self.semaphore = nil

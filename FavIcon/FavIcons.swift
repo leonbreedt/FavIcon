@@ -64,10 +64,12 @@ public class FavIcons {
     ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
     ///                 from a background queue.
     public static func scan(url: NSURL, completion: [DetectedIcon] -> Void) {
+        let urlSession = urlSessionProvider()
+        
         let detectionOperations = [
-            DownloadTextOperation(url: url),
-            CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL),
-            CheckURLExistsOperation(url: NSURL(string: "/browserconfig.xml", relativeToURL: url)!.absoluteURL)
+            DownloadTextOperation(url: url, session: urlSession),
+            CheckURLExistsOperation(url: NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL, session: urlSession),
+            CheckURLExistsOperation(url: NSURL(string: "/browserconfig.xml", relativeToURL: url)!.absoluteURL, session: urlSession)
         ]
         
         executeURLOperations(detectionOperations) { detectionResults in
@@ -88,7 +90,7 @@ public class FavIcons {
                            let href = link.attributes["href"],
                            let manifestURL = NSURL(string: href, relativeToURL: url)
                         {
-                            additionalDownloads.append((DownloadTextOperation(url: manifestURL), { manifestResult in
+                            additionalDownloads.append((DownloadTextOperation(url: manifestURL, session: urlSession), { manifestResult in
                                 switch manifestResult {
                                 case .TextDownloaded( _, let manifestJSON, _):
                                     icons.appendContentsOf(extractManifestJSONIcons(manifestJSON, baseURL: actualURL))
@@ -122,7 +124,7 @@ public class FavIcons {
                         }
                     }
                     if let browserConfigURL = browserConfigURL {
-                        additionalDownloads.append((DownloadTextOperation(url: browserConfigURL), { browserConfigResult in
+                        additionalDownloads.append((DownloadTextOperation(url: browserConfigURL, session: urlSession), { browserConfigResult in
                             switch browserConfigResult {
                             case .TextDownloaded( _, let browserConfigXML, _):
                                 let document = XMLDocument(string: browserConfigXML)
@@ -168,7 +170,8 @@ public class FavIcons {
     ///   - completion: A callback to invoke when all download tasks have results available (successful or otherwise).
     ///                 The callback will be invoked from a background queue.
     public static func download(icons: [DetectedIcon], completion: [IconDownloadResult] -> Void) {
-        let operations: [DownloadImageOperation] = icons.map { DownloadImageOperation(url: $0.url) }
+        let urlSession = urlSessionProvider()
+        let operations: [DownloadImageOperation] = icons.map { DownloadImageOperation(url: $0.url, session: urlSession) }
         
         executeURLOperations(operations) { results in
             let downloadResults: [IconDownloadResult] = results.map { result in
@@ -243,8 +246,9 @@ public class FavIcons {
             }
             
             let icon = rankedIcons.first!
+            let urlSession = urlSessionProvider()
             
-            executeURLOperations([DownloadImageOperation(url: icon.url)]) { results in
+            executeURLOperations([DownloadImageOperation(url: icon.url, session: urlSession)]) { results in
                 let downloadResults: [IconDownloadResult] = results.map { result in
                     switch result {
                     case .ImageDownloaded(_, let image):
@@ -263,13 +267,24 @@ public class FavIcons {
         }
     }
     
+    // MARK: - Test hooks
+    typealias URLSessionProvider = Void -> NSURLSession
+    static var urlSessionProvider: URLSessionProvider = FavIcons.createDefaultURLSession
+    
+    // MARK: - Internal
+    
+    /// Creates the default `NSURLSession` to use for background requests.
+    static func createDefaultURLSession() -> NSURLSession {
+        return NSURLSession.sharedSession()
+    }
+    
     /// Executes an array of URL operations in parallel on a background queue, and execute a completion
     /// block when they have all finished.
     /// - Parameters:
     ///   - operations: An array of `NSOperation` instances to execute.
     ///   - concurrency: The maximum number of operations to execute concurrently.
     ///   - completion: A completion handler to invoke when all operations have completed. This can be called on any queue.
-    private static func executeURLOperations(operations: [URLRequestOperation], concurrency: Int = 2, queue: NSOperationQueue? = nil, completion: [URLResult] -> Void) {
+    static func executeURLOperations(operations: [URLRequestOperation], concurrency: Int = 2, queue: NSOperationQueue? = nil, completion: [URLResult] -> Void) {
         guard operations.count > 0 else {
             completion([])
             return
