@@ -43,7 +43,7 @@ public enum IconDownloadResult {
 }
 
 /// Responsible for detecting all of the different icons supported by a given site.
-public class FavIcons {
+public class FavIcon {
     /// Scans a base URL, attempting to determine all of the supported icons that can
     /// be used for favicon purposes.
     ///
@@ -269,7 +269,7 @@ public class FavIcons {
     
     // MARK: - Test hooks
     typealias URLSessionProvider = Void -> NSURLSession
-    static var urlSessionProvider: URLSessionProvider = FavIcons.createDefaultURLSession
+    static var urlSessionProvider: URLSessionProvider = FavIcon.createDefaultURLSession
     
     // MARK: - Internal
     
@@ -494,7 +494,7 @@ enum IconError : ErrorType {
 
 // MARK: - Extensions
 
-extension FavIcons {
+extension FavIcon {
     /// Convenience overload for `scan(_:completion:)` that takes a `String` instead of an `NSURL` as the URL parameter.
     /// Throws an error if the URL is not a valid URL.
     public static func scan(url: String, completion: [DetectedIcon] -> Void) throws {

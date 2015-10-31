@@ -32,7 +32,7 @@ class FavIconTests : XCTestCase {
         
         performWebRequest("scan") { requestCompleted in
             do {
-                try FavIcons.scan("https://apple.com") { icons in
+                try FavIcon.scan("https://apple.com") { icons in
                     requestCompleted()
                     actualIcons = icons
                 }
@@ -50,7 +50,7 @@ class FavIconTests : XCTestCase {
         
         performWebRequest("download") { requestCompleted in
             do {
-                try FavIcons.downloadAll("https://apple.com") { results in
+                try FavIcon.downloadAll("https://apple.com") { results in
                     requestCompleted()
                     actualResults = results
                 }
@@ -75,7 +75,7 @@ class FavIconTests : XCTestCase {
     func testHTMLHeadIconExtraction() {
         let html = stringForContentsOfFile(pathForTestBundleResource("SampleHTMLFile.html")) ?? ""
         let document = HTMLDocument(string: html)
-        let icons = FavIcons.extractHTMLHeadIcons(document, baseURL: NSURL(string: "https://localhost")!)
+        let icons = FavIcon.extractHTMLHeadIcons(document, baseURL: NSURL(string: "https://localhost")!)
         
         XCTAssertEqual(19, icons.count)
         
@@ -177,7 +177,7 @@ class FavIconTests : XCTestCase {
     
     func testManifestJSONIconExtraction() {
         let json = stringForContentsOfFile(pathForTestBundleResource("SampleManifest.json")) ?? ""
-        let icons = FavIcons.extractManifestJSONIcons(json, baseURL: NSURL(string: "https://localhost")!)
+        let icons = FavIcon.extractManifestJSONIcons(json, baseURL: NSURL(string: "https://localhost")!)
         
         XCTAssertEqual(6, icons.count)
 
@@ -215,7 +215,7 @@ class FavIconTests : XCTestCase {
     func testBrowserConfigXMLIconExtraction() {
         let xml = stringForContentsOfFile(pathForTestBundleResource("SampleBrowserConfig.xml")) ?? ""
         let document = XMLDocument(string: xml)
-        let icons = FavIcons.extractBrowserConfigXMLIcons(document, baseURL: NSURL(string: "https://localhost")!)
+        let icons = FavIcon.extractBrowserConfigXMLIcons(document, baseURL: NSURL(string: "https://localhost")!)
         
         XCTAssertEqual(5, icons.count)
         
@@ -257,7 +257,7 @@ class FavIconTests : XCTestCase {
 
 private extension XCTestCase {
     func performWebRequest(name: String, timeout: NSTimeInterval = 5.0, callback: (() -> Void) -> Void) {
-        FavIcons.urlSessionProvider = { return Session(cassetteName: name) }
+        FavIcon.urlSessionProvider = { return Session(cassetteName: name) }
         let expectation = expectationWithDescription("web request - \(name)")
         callback(expectation.fulfill)
         waitForExpectationsWithTimeout(timeout, handler: nil)
