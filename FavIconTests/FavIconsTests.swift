@@ -72,6 +72,47 @@ class FavIconTests : XCTestCase {
         }
     }
     
+    func testChooseIcon() {
+        let mixedIcons = [
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Shortcut, width: 32, height: 32),
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic, width: 64, height: 64),
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .AppleIOSWebClip, width: 64, height: 64),
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .AppleOSXSafariTab, width: 144, height: 144),
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic)
+        ]
+        let noSizeIcons = [
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic),
+            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Shortcut)
+        ]
+        
+        var icon = FavIcon.chooseIcon(mixedIcons, width: 50, height: 50)
+        
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(64, icon!.width)
+        XCTAssertEqual(64, icon!.height)
+
+        icon = FavIcon.chooseIcon(mixedIcons, width: 28, height: 28)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(32, icon!.width)
+        XCTAssertEqual(32, icon!.height)
+
+        icon = FavIcon.chooseIcon(mixedIcons)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(144, icon!.width)
+        XCTAssertEqual(144, icon!.height)
+
+        icon = FavIcon.chooseIcon(noSizeIcons)
+        
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(DetectedIconType.Shortcut.rawValue, icon!.type.rawValue)
+
+        icon = FavIcon.chooseIcon([])
+        
+        XCTAssertNil(icon)
+    }
+    
     func testHTMLHeadIconExtraction() {
         let html = stringForContentsOfFile(pathForTestBundleResource("SampleHTMLFile.html")) ?? ""
         let document = HTMLDocument(string: html)
@@ -95,7 +136,7 @@ class FavIconTests : XCTestCase {
         XCTAssertEqual(16, icons[2].height!)
         
         XCTAssertEqual("https://localhost/content/images/favicon-32x32.png", icons[3].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleOSXSafariTabIcon.rawValue, icons[3].type.rawValue)
+        XCTAssertEqual(DetectedIconType.AppleOSXSafariTab.rawValue, icons[3].type.rawValue)
         XCTAssertEqual(32, icons[3].width!)
         XCTAssertEqual(32, icons[3].height!)
         

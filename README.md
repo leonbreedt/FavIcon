@@ -41,15 +41,17 @@ try FavIcon.downloadPreferred("https://apple.com", width: 16, height: 16) { resu
 }
 ```
 
-This will detect all of the available icons at the URL, and if it is able to determine their sizes, it will try to find the icon closest in size to your desired size, otherwise it will just take the first one it found.
+This will detect all of the available icons at the URL, and if it is able to
+determine their sizes, it will try to find the icon closest in size to your
+desired size.
 
 Of course, if this approach is too opaque for you, you can download them all
 using `downloadAll(_:completion:)`.
 
 Or perhaps you’d like to take a stab at downloading them yourself at a later
-time, in which case `scan(_:completion:)` will give you information about the
-detected icons, which you can feed to `download(_:completion:)` for downloading
-at your convenience.
+time, choosing which icon you prefer based on your own criteria, in which case
+`scan(_:completion:)` will give you information about the detected icons, which
+you can feed to `download(_:completion:)` for downloading at your convenience.
 
 ## License
 Apache 2.0

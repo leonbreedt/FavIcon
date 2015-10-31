@@ -26,7 +26,7 @@ public enum DetectedIconType : UInt {
     /// An icon used by Chrome/Android.
     case GoogleAndroidChrome
     /// An icon used by Safari on OS X for tabs.
-    case AppleOSXSafariTabIcon
+    case AppleOSXSafariTab
     /// An icon used iOS for Web Clips on home screen.
     case AppleIOSWebClip
     /// An icon used for a pinned site in Windows.

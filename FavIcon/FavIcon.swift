@@ -203,49 +203,23 @@ public class FavIcon {
     }
     
     /// Downloads the most preferred icon, by calling `scan()` to discover available icons, and then choosing
-    /// the icon that is closest to a preferred width and height to download.
+    /// the most preferable icon found. If both `width` and `height` are supplied, the icon closest to the
+    /// preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon has
+    /// dimensions, the icons are chosen by order of their `DetectedIconType` enumeration raw value.
     ///
     /// - Parameters:
     ///   - url: The URL to scan for icons.
-    ///   - width: The preferred icon width, in pixels.
-    ///   - height: The preferred icon height, in pixels.
+    ///   - width: The preferred icon width, in pixels, or `nil`.
+    ///   - height: The preferred icon height, in pixels, or `nil`.
     ///   - completion: A callback to invoke when the download task has produced a result. The callback will
     ///                 be invoked from a background queue.
-    ///
-    /// - Note: If the site has no icons with explicitly declared dimensions, the first icon found will be downloaded. It will
-    ///         NOT download each icon to determine its dimensions.
-    public static func downloadPreferred(url: NSURL, width: Int, height: Int, completion: IconDownloadResult -> Void) throws {
+    public static func downloadPreferred(url: NSURL, width: Int? = nil, height: Int? = nil, completion: IconDownloadResult -> Void) throws {
         scan(url) { icons in
-            if icons.count == 0 {
+            guard let icon = chooseIcon(icons, width: width, height: height) else {
                 completion(IconDownloadResult.Failure(error: IconError.NoIconsDetected))
                 return
             }
             
-            let rankedIcons = icons.sort { a, b in
-                if let sizeA = a.dimensions, let sizeB = b.dimensions {
-                    let isWidthACloser = abs(width - sizeA.width) < abs(width - sizeB.width)
-                    let isHeightACloser = abs(height - sizeA.height) < abs(height - sizeB.height)
-                    return isWidthACloser && isHeightACloser
-                }
-                if let _ = a.dimensions {
-                    return true
-                }
-                
-                if let _ = b.dimensions {
-                    return false
-                }
-
-                switch a.type {
-                case .Shortcut:
-                    switch b.type {
-                    case .Classic: return true
-                    default: return false
-                    }
-                default: return false
-                }
-            }
-            
-            let icon = rankedIcons.first!
             let urlSession = urlSessionProvider()
             
             executeURLOperations([DownloadImageOperation(url: icon.url, session: urlSession)]) { results in
@@ -399,7 +373,7 @@ public class FavIcon {
                                     icons.append(DetectedIcon(url: url.absoluteURL, type: .Classic, width: size.width, height: size.height))
                                     break
                                 case (32, 32):
-                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafariTabIcon, width: size.width, height: size.height))
+                                    icons.append(DetectedIcon(url: url.absoluteURL, type: .AppleOSXSafariTab, width: size.width, height: size.height))
                                     break
                                 case (96, 96):
                                     icons.append(DetectedIcon(url: url.absoluteURL, type: .GoogleTV, width: size.width, height: size.height))
@@ -457,6 +431,50 @@ public class FavIcon {
         return icons
     }
     
+    /// Helper function to choose an icon to use out of a set of available icons. If preferred
+    /// width or height is supplied, the icon closest to the preferred size is chosen. If no
+    /// preferred width or height is supplied, the largest icon (if known) is chosen.
+    ///
+    /// - Parameters:
+    ///   - icons: The icons to choose from.
+    ///   - preferredWidth: The preferred icon width.
+    ///   - preferredHeight: The preferred icon height.
+    /// - Returns: The chosen icon, or `nil`, if `icons` is empty.
+    static func chooseIcon(icons: [DetectedIcon], width: Int? = nil, height: Int? = nil) -> DetectedIcon? {
+        guard icons.count > 0 else { return nil }
+        
+        let iconsInPreferredOrder = icons.sort { a, b in
+            if let preferredWidth = width, preferredHeight = height,
+               let widthA = a.width, heightA = a.height,
+               let widthB = b.width, heightB = b.height
+            {
+                // Which is closest to preferred size?
+                let deltaA = abs(widthA - preferredWidth) * abs(heightA - preferredHeight)
+                let deltaB = abs(widthB - preferredWidth) * abs(heightB - preferredHeight)
+                return deltaA < deltaB
+            } else {
+                if let areaA = a.area, let areaB = b.area {
+                    // Which is larger?
+                    return areaB < areaA
+                }
+            }
+            
+            if a.area != nil {
+                // Only A has dimensions, prefer it.
+                return true
+            }
+            if b.area != nil {
+                // Only B has dimensions, prefer it.
+                return false
+            }
+            
+            // Neither has dimensions, order by enum value
+            return a.type.rawValue < b.type.rawValue
+        }
+        
+        return iconsInPreferredOrder.first!
+    }
+    
     /// Helper function for parsing a W3 `sizes` attribute value.
     ///
     /// - Parameters:
@@ -511,17 +529,17 @@ extension FavIcon {
 
     /// Convenience overload for `downloadPreferred(_:width:height:completion:)` that takes a `String` instead of an `NSURL` as the URL parameter.
     /// Throws an error if the URL is not a valid URL.
-    public static func downloadPreferred(url: String, width: Int, height: Int, completion: IconDownloadResult -> Void) throws {
+    public static func downloadPreferred(url: String, width: Int? = nil, height: Int? = nil, completion: IconDownloadResult -> Void) throws {
         guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
         try downloadPreferred(url, width: width, height: height, completion: completion)
     }
 }
 
 extension DetectedIcon {
-    /// The dimensions of a detected icon, if known.
-    var dimensions: (width: Int, height: Int)? {
+    /// The area of a detected icon, if known.
+    var area: Int? {
         if let width = width, height = height {
-            return (width: width, height: height)
+            return width * height
         }
         return nil
     }

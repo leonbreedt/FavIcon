@@ -42,9 +42,6 @@
 		2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; };
 		2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E67AB411BE0DC5B003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; };
-		2E67AB431BE0DC5B003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
-		2E67AB441BE0DC5B003EF0A3 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; };
 		2E67AB461BE0DC60003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E67AB471BE0DC60003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
 		2E67AB481BE0DC60003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
@@ -59,6 +56,8 @@
 		2E7A93EC1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
 		2E7A93F51BE4BD3E0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
 		2E7A93F61BE4BD3F0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
+		2E80E26F1BE57F88005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745621BE0CADE008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E80E2711BE57FA2005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745731BE0CB4A008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E8745651BE0CADE008E23AC /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456C1BE0CB13008E23AC /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E87456D1BE0CB13008E23AC /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
@@ -126,6 +125,28 @@
 			files = (
 				2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */,
 				2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */,
+			);
+			name = "Copy Embedded Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E80E26E1BE57F75005C4C48 /* Copy Embedded Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2E80E26F1BE57F88005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */,
+			);
+			name = "Copy Embedded Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E80E2701BE57F96005C4C48 /* Copy Embedded Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2E80E2711BE57FA2005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,10 +355,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E67AB431BE0DC5B003EF0A3 /* XMLElement_Private.h in Headers */,
-				2E67AB441BE0DC5B003EF0A3 /* XMLElement.h in Headers */,
 				2E18521F1BDAE5160065F877 /* FavIcon.h in Headers */,
-				2E67AB411BE0DC5B003EF0A3 /* XMLDocument.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +406,7 @@
 				2E1852171BDAE5160065F877 /* Frameworks */,
 				2E1852181BDAE5160065F877 /* Headers */,
 				2E1852191BDAE5160065F877 /* Resources */,
+				2E80E26E1BE57F75005C4C48 /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
@@ -426,6 +445,7 @@
 				2E1852361BDAE5300065F877 /* Frameworks */,
 				2E1852371BDAE5300065F877 /* Headers */,
 				2E1852381BDAE5300065F877 /* Resources */,
+				2E80E2701BE57F96005C4C48 /* Copy Embedded Frameworks */,
 			);
 			buildRules = (
 			);
