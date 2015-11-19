@@ -39,7 +39,8 @@ try FavIcon.downloadPreferred("https://apple.com", width: 16, height: 16) { resu
 
 This will detect all of the available icons at the URL, and if it is able to
 determine their sizes, it will try to find the icon closest in size to your
-desired size.
+desired size, otherwise, it will prefer the largest icon. If it has no idea of
+the size of any of the icons, it will prefer the first one it found.
 
 Of course, if this approach is too opaque for you, you can download them all
 using `downloadAll(_:completion:)`.
