@@ -91,12 +91,8 @@ public class FavIcon {
                            let manifestURL = NSURL(string: href, relativeToURL: url)
                         {
                             additionalDownloads.append((DownloadTextOperation(url: manifestURL, session: urlSession), { manifestResult in
-                                switch manifestResult {
-                                case .TextDownloaded( _, let manifestJSON, _):
+                                if case .TextDownloaded(_, let manifestJSON, _) = manifestResult {
                                     icons.appendContentsOf(extractManifestJSONIcons(manifestJSON, baseURL: actualURL))
-                                    break
-                                default:
-                                    break
                                 }
                             }))
                         }
@@ -104,11 +100,9 @@ public class FavIcon {
                     
                     // Check for Microsoft browser configuration XML, if present, additional download and processing to do.
                     var browserConfigURL: NSURL? = detectionOperations[2].urlRequest.URL
-                    switch detectionResults[2] {
-                    case .Success(let actualURL):
+                    if case .Success(let actualURL) = detectionResults[2] {
                         browserConfigURL = actualURL
-                        break
-                    default:
+                    } else {
                         browserConfigURL = nil
                     }
                     for meta in document.query("/html/head/meta") {
@@ -125,13 +119,9 @@ public class FavIcon {
                     }
                     if let browserConfigURL = browserConfigURL {
                         additionalDownloads.append((DownloadTextOperation(url: browserConfigURL, session: urlSession), { browserConfigResult in
-                            switch browserConfigResult {
-                            case .TextDownloaded( _, let browserConfigXML, _):
+                            if case .TextDownloaded(_, let browserConfigXML, _) = browserConfigResult {
                                 let document = XMLDocument(string: browserConfigXML)
                                 icons.appendContentsOf(extractBrowserConfigXMLIcons(document, baseURL: actualURL))
-                                break
-                            default:
-                                break
                             }
                         }))
                     }
@@ -140,11 +130,8 @@ public class FavIcon {
             default: break
             }
             
-            switch detectionResults[1] {
-            case .Success(let actualURL):
+            if case .Success(let actualURL) = detectionResults[1] {
                 icons.append(DetectedIcon(url: actualURL, type: .Classic))
-                break
-            default: break
             }
             
             if additionalDownloads.count > 0 {

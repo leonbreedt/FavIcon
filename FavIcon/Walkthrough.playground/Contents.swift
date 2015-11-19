@@ -35,13 +35,8 @@ try FavIcon.downloadPreferred("https://apple.com") { result in
 try FavIcon.downloadAll("https://microsoft.com") { results in
     let numberOfIcons = results.count
     for (index, result) in results.enumerate() {
-        switch result {
-        case .Success(let image):
+        if case .Success(let image) = result {
             let icon = image
-            break
-        case .Failure(let error):
-            print("failed \(index) - \(error)")
-            break
         }
     }
 }
@@ -56,12 +51,8 @@ FavIcon.scan(NSURL(string: "https://google.com")!) { icons in
 //: If one is to your liking, you can download it using `download(_:completion:)`.
         FavIcon.download([icon]) { results in
             for result in results {
-                switch result {
-                case .Success(let image):
+                if case .Success(let image) = result {
                     let icon = image
-                    break
-                default:
-                    break
                 }
             }
         }
