@@ -17,16 +17,19 @@
 
 /// Attempts to download the text content for a URL, and returns `URLResult.TextDownloaded` as the result if it does.
 class DownloadTextOperation : URLRequestOperation {
-    override func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
+    override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()
         switch mimeType {
         case "application/json", hasPrefix("text/"):
             if let data = data, let text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
-                return .TextDownloaded(url: response.URL!, text: text, mimeType: mimeType)
+                completion(.TextDownloaded(url: response.URL!, text: text, mimeType: mimeType))
+            } else {
+                completion(.Failed(error: URLRequestError.InvalidTextEncoding))
             }
-            return .Failed(error: URLRequestError.InvalidTextEncoding)
+            return
         default:
-            return .Failed(error: URLRequestError.NotPlainText)
+            completion(.Failed(error: URLRequestError.NotPlainText))
+            return
         }
     }
 }

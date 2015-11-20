@@ -297,7 +297,7 @@ class FavIconTests : XCTestCase {
 }
 
 private extension XCTestCase {
-    func performWebRequest(name: String, timeout: NSTimeInterval = 5.0, callback: (() -> Void) -> Void) {
+    func performWebRequest(name: String, timeout: NSTimeInterval = 50000.0, callback: (() -> Void) -> Void) {
         FavIcon.urlSessionProvider = { return Session(cassetteName: name) }
         let expectation = expectationWithDescription("web request - \(name)")
         callback(expectation.fulfill)

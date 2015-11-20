@@ -73,6 +73,8 @@ public class FavIcon {
         ]
         
         executeURLOperations(detectionOperations) { detectionResults in
+            let queue = dispatch_queue_create("org.bitserf.FavIcon", DISPATCH_QUEUE_SERIAL)
+            
             var icons: [DetectedIcon] = []
             var additionalDownloads: [(URLRequestOperation, URLResult -> Void)] = []
             
@@ -82,7 +84,10 @@ public class FavIcon {
                     let document = HTMLDocument(string: text)
                     
                     // 1. Extract any icons referenced by <link> or other elements from the HTML.
-                    icons.appendContentsOf(extractHTMLHeadIcons(document, baseURL: actualURL))
+                    let htmlIcons = extractHTMLHeadIcons(document, baseURL: actualURL)
+                    dispatch_sync(queue) {
+                        icons.appendContentsOf(htmlIcons)
+                    }
                     
                     // Check for Web App Manifest, if present, additional download and processing to do.
                     for link in document.query("/html/head/link") {
@@ -92,7 +97,10 @@ public class FavIcon {
                         {
                             additionalDownloads.append((DownloadTextOperation(url: manifestURL, session: urlSession), { manifestResult in
                                 if case .TextDownloaded(_, let manifestJSON, _) = manifestResult {
-                                    icons.appendContentsOf(extractManifestJSONIcons(manifestJSON, baseURL: actualURL))
+                                    let jsonIcons = extractManifestJSONIcons(manifestJSON, baseURL: actualURL)
+                                    dispatch_sync(queue) {
+                                        icons.appendContentsOf(jsonIcons)
+                                    }
                                 }
                             }))
                         }
@@ -121,7 +129,10 @@ public class FavIcon {
                         additionalDownloads.append((DownloadTextOperation(url: browserConfigURL, session: urlSession), { browserConfigResult in
                             if case .TextDownloaded(_, let browserConfigXML, _) = browserConfigResult {
                                 let document = XMLDocument(string: browserConfigXML)
-                                icons.appendContentsOf(extractBrowserConfigXMLIcons(document, baseURL: actualURL))
+                                let xmlIcons = extractBrowserConfigXMLIcons(document, baseURL: actualURL)
+                                dispatch_sync(queue) {
+                                    icons.appendContentsOf(xmlIcons)
+                                }
                             }
                         }))
                     }
@@ -131,7 +142,9 @@ public class FavIcon {
             }
             
             if case .Success(let actualURL) = detectionResults[1] {
-                icons.append(DetectedIcon(url: actualURL, type: .Classic))
+                dispatch_sync(queue) {
+                    icons.append(DetectedIcon(url: actualURL, type: .Classic))
+                }
             }
             
             if additionalDownloads.count > 0 {

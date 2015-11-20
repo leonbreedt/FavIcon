@@ -21,7 +21,7 @@ class CheckURLExistsOperation : URLRequestOperation {
         urlRequest.HTTPMethod = "HEAD"
     }
     
-    override func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
-        return .Success(url: response.URL!)
+    override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
+        completion(.Success(url: response.URL!))
     }
 }

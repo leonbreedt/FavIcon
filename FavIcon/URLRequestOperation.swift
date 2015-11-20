@@ -89,37 +89,46 @@ class URLRequestOperation : NSOperation {
     func prepareRequest() {
     }
     
-    func processResult(data: NSData?, response: NSHTTPURLResponse) -> URLResult {
+    func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         fatalError("must override processResult()")
     }
     
     private func dataTaskCompletion(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        defer {
-            if let semaphore = semaphore {
-                dispatch_semaphore_signal(semaphore)
-            }
-        }
-        
         guard error == nil else {
             result = .Failed(error: error!)
+            self.notifyFinished()
             return
         }
         
         guard let response = response as? NSHTTPURLResponse else {
             result = .Failed(error: URLRequestError.MissingResponse)
+            self.notifyFinished()
             return
         }
         
         if response.statusCode == 404 {
             result = .Failed(error: URLRequestError.FileNotFound)
+            self.notifyFinished()
             return
         }
         
         if response.statusCode < 200 || response.statusCode > 299 {
             result = .Failed(error: URLRequestError.HTTPError(response: response))
+            self.notifyFinished()
             return
         }
         
-        result = processResult(data, response: response)
+        processResult(data, response: response) { result in
+            // This block may run on another thread long after dataTaskCompletion() finishes! So
+            // wait until then to signal semaphore if we get past checks above.
+            self.result = result
+            self.notifyFinished()
+        }
+    }
+    
+    private func notifyFinished() {
+        if let semaphore = self.semaphore {
+            dispatch_semaphore_signal(semaphore)
+        }
     }
 }
