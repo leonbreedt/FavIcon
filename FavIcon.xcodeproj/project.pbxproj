@@ -35,6 +35,7 @@
 		2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E30A68C1C04461C001D9583 /* IconExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E30A68B1C04461C001D9583 /* IconExtraction.swift */; };
+		2E30A68D1C04CF85001D9583 /* IconExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E30A68B1C04461C001D9583 /* IconExtraction.swift */; };
 		2E4681B21BE32A61008375AB /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
@@ -670,6 +671,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0C31151BDF4EA200C88151 /* DetectedIcon.swift in Sources */,
+				2E30A68D1C04CF85001D9583 /* IconExtraction.swift in Sources */,
 				2E0C31241BDF533100C88151 /* Utils.swift in Sources */,
 				2E0C31211BDF52C700C88151 /* CheckURLExistsOperation.swift in Sources */,
 				2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */,
