@@ -39,7 +39,7 @@ enum URLResult {
 }
 
 /// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
-enum URLRequestError : ErrorType {
+enum URLRequestError: ErrorType {
     /// No response was received from the server.
     case MissingResponse
     /// The file was not found (HTTP 404 response).
@@ -57,20 +57,20 @@ enum URLRequestError : ErrorType {
 }
 
 /// Base class for performing URL requests in the context of an `NSOperation`.
-class URLRequestOperation : NSOperation {
+class URLRequestOperation: NSOperation {
     let urlRequest: NSMutableURLRequest
     var result: URLResult?
-    
+
     private var task: NSURLSessionDataTask?
     private let session: NSURLSession
     private var semaphore: dispatch_semaphore_t?
-    
+
     init(url: NSURL, session: NSURLSession) {
         self.session = session
         self.urlRequest = NSMutableURLRequest(URL: url)
         self.semaphore = nil
     }
-    
+
     override func main() {
         semaphore = dispatch_semaphore_create(0)
         prepareRequest()
@@ -78,46 +78,46 @@ class URLRequestOperation : NSOperation {
         task?.resume()
         dispatch_semaphore_wait(semaphore!, DISPATCH_TIME_FOREVER)
     }
-    
+
     override func cancel() {
         task?.cancel()
         if let semaphore = semaphore {
             dispatch_semaphore_signal(semaphore)
         }
     }
-    
+
     func prepareRequest() {
     }
-    
+
     func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         fatalError("must override processResult()")
     }
-    
+
     private func dataTaskCompletion(data: NSData?, response: NSURLResponse?, error: NSError?) {
         guard error == nil else {
             result = .Failed(error: error!)
             self.notifyFinished()
             return
         }
-        
+
         guard let response = response as? NSHTTPURLResponse else {
             result = .Failed(error: URLRequestError.MissingResponse)
             self.notifyFinished()
             return
         }
-        
+
         if response.statusCode == 404 {
             result = .Failed(error: URLRequestError.FileNotFound)
             self.notifyFinished()
             return
         }
-        
+
         if response.statusCode < 200 || response.statusCode > 299 {
             result = .Failed(error: URLRequestError.HTTPError(response: response))
             self.notifyFinished()
             return
         }
-        
+
         processResult(data, response: response) { result in
             // This block may run on another thread long after dataTaskCompletion() finishes! So
             // wait until then to signal semaphore if we get past checks above.
@@ -125,10 +125,70 @@ class URLRequestOperation : NSOperation {
             self.notifyFinished()
         }
     }
-    
+
     private func notifyFinished() {
         if let semaphore = self.semaphore {
             dispatch_semaphore_signal(semaphore)
         }
     }
+}
+
+typealias URLRequestWithCallback = (request: URLRequestOperation, completion: URLResult -> Void)
+
+func executeURLOperations(operations: [URLRequestOperation],
+                          concurrency: Int = 2,
+                          on queue: NSOperationQueue? = nil,
+                          completion: [URLResult] -> Void) {
+    guard operations.count > 0 else {
+        completion([])
+        return
+    }
+
+    let queue = queue ?? NSOperationQueue()
+    queue.suspended = true
+    queue.maxConcurrentOperationCount = concurrency
+
+    let completionOperation = NSBlockOperation {
+        completion(operations.map { $0.result! })
+    }
+    for operation in operations {
+        queue.addOperation(operation)
+        completionOperation.addDependency(operation)
+    }
+    queue.addOperation(completionOperation)
+
+    queue.suspended = false
+}
+
+func executeURLOperations(operations: [URLRequestWithCallback],
+                          concurrency: Int = 2,
+                          on queue: NSOperationQueue? = nil,
+                          completion: () -> Void) {
+    guard operations.count > 0 else { return }
+
+    let queue = queue ?? NSOperationQueue()
+    queue.suspended = true
+    queue.maxConcurrentOperationCount = concurrency
+
+    let overallCompletion = NSBlockOperation {
+        completion()
+    }
+
+    for operation in operations {
+        let operationCompletion = NSBlockOperation {
+            operation.completion(operation.request.result!)
+        }
+        queue.addOperation(operation.request)
+        operationCompletion.addDependency(operation.request)
+        queue.addOperation(operationCompletion)
+        overallCompletion.addDependency(operationCompletion)
+    }
+    queue.addOperation(overallCompletion)
+
+    queue.suspended = false
+}
+
+func urlRequestOperation(operation: URLRequestOperation,
+                         completion: URLResult -> Void) -> URLRequestWithCallback {
+    return (request: operation, completion: completion)
 }

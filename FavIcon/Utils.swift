@@ -16,7 +16,7 @@
 //
 
 /// Support pattern matching on boolean expressions.
-func ~=<T>(pattern: T -> Bool, value: T) -> Bool {
+func ~= <T>(pattern: T -> Bool, value: T) -> Bool {
     return pattern(value)
 }
 
@@ -28,26 +28,27 @@ func hasPrefix(prefix: String)(value: String) -> Bool {
 
 extension String {
     /// Parses this string as an HTTP Content-Type header.
-    func parseAsHTTPContentTypeHeader() -> (mimeType: String, encoding: UInt?) {
-        let headerComponents = componentsSeparatedByString(";").map { $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) }
+    func parseAsHTTPContentTypeHeader() -> (mimeType: String, encoding: UInt) {
+        let headerComponents = componentsSeparatedByString(";")
+            .map { $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) }
         if headerComponents.count > 1 {
             let parameters = headerComponents[1..<headerComponents.count]
                 .map { $0.componentsSeparatedByString("=") }
                 .toDictionary { ($0[0], $0[1]) }
-            
+
             // Default according to RFC is ISO-8859-1, but probably nothing obeys that, so default
             // to UTF-8 instead.
             var encoding = NSUTF8StringEncoding
             if let charset = parameters["charset"], let parsedEncoding = charset.parseAsStringEncoding() {
                 encoding = parsedEncoding
             }
-            
+
             return (mimeType: headerComponents[0], encoding: encoding)
         } else {
-            return (mimeType: headerComponents[0], encoding: nil)
+            return (mimeType: headerComponents[0], encoding: NSUTF8StringEncoding)
         }
     }
-    
+
     /// Returns Cocoa encoding identifier for the encoding name in this string.
     func parseAsStringEncoding() -> UInt? {
         switch lowercaseString {
@@ -74,12 +75,12 @@ extension String {
 }
 
 extension NSHTTPURLResponse {
-    /// Parses the `Content-Type` header in this response into a `(mimeType: String, encoding: UInt?)` tuple.
-    func contentTypeAndEncoding() -> (mimeType: String, encoding: UInt?) {
+    /// Parses the `Content-Type` header in this response into a `(mimeType: String, encoding: UInt)` tuple.
+    func contentTypeAndEncoding() -> (mimeType: String, encoding: UInt) {
         if let contentTypeHeader = allHeaderFields["Content-Type"] as? String {
             return contentTypeHeader.parseAsHTTPContentTypeHeader()
         }
-        return (mimeType: "application/octet-stream", encoding: nil)
+        return (mimeType: "application/octet-stream", encoding: NSUTF8StringEncoding)
     }
 }
 
@@ -87,7 +88,8 @@ extension Array {
     /// Converts this array to a dictionary of type `[K: V]`, by calling a transform function to
     /// obtain a key and a value from an array element.
     /// - Parameters:
-    ///   - transform: A function that will transform an array element of type `Element` into a `(K, V)` tuple.
+    ///   - transform: A function that will transform an array element of type `Element` into a
+    ///                `(K, V)` tuple.
     func toDictionary<K, V>(transform: Element -> (K, V)) -> [K: V] {
         var dict: [K: V] = [:]
         for item in self {

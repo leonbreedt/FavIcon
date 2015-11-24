@@ -15,15 +15,17 @@
 // limitations under the License.
 //
 
-/// Attempts to download the image content for a URL, and returns `URLResult.ImageDownloaded` as the result if the
-/// download was successful, and the data is in an image format supported by the platform's image class.
-class DownloadImageOperation : URLRequestOperation {
+/// Attempts to download the image content for a URL, and returns
+/// `URLResult.ImageDownloaded` as the result if the
+/// download was successful, and the data is in an image format
+/// supported by the platform's image class.
+class DownloadImageOperation: URLRequestOperation {
     override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         guard let data = data else {
             completion(.Failed(error: URLRequestError.MissingResponse))
             return
         }
-        
+
         let (mimeType, _) = response.contentTypeAndEncoding()
         switch mimeType {
         case "image/png", "image/jpg", "image/jpeg", "image/x-icon":

@@ -16,11 +16,11 @@
 //
 
 /// Checks whether a URL exists, and returns `URLResult.Success` as the result if it does.
-class CheckURLExistsOperation : URLRequestOperation {
+class CheckURLExistsOperation: URLRequestOperation {
     override func prepareRequest() {
         urlRequest.HTTPMethod = "HEAD"
     }
-    
+
     override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         completion(.Success(url: response.URL!))
     }

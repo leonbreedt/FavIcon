@@ -1,0 +1,6 @@
+line_length: 110
+type_body_length:
+  - 300
+  - 400
+excluded:
+  - Carthage

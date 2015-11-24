@@ -16,7 +16,7 @@
 //
 
 /// Enumerates the types of detected icons.
-public enum DetectedIconType : UInt {
+public enum DetectedIconType: UInt {
     /// A shortcut icon.
     case Shortcut
     /// A classic icon (usually in the range 16x16 to 48x48).
@@ -45,7 +45,7 @@ public struct DetectedIcon {
     public let width: Int?
     /// The height of the icon, if known, in pixels.
     public let height: Int?
-    
+
     init(url: NSURL, type: DetectedIconType, width: Int? = nil, height: Int? = nil) {
         self.url = url
         self.type = type

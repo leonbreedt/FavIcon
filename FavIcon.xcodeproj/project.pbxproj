@@ -34,6 +34,7 @@
 		2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1852531BDAE7190065F877 /* FavIcon.swift */; };
 		2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2E30A68C1C04461C001D9583 /* IconExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E30A68B1C04461C001D9583 /* IconExtraction.swift */; };
 		2E4681B21BE32A61008375AB /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
@@ -173,6 +174,7 @@
 		2E18523A1BDAE5300065F877 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852431BDAE5300065F877 /* FavIcon-OSXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "FavIcon-OSXTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E1852531BDAE7190065F877 /* FavIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIcon.swift; sourceTree = "<group>"; };
+		2E30A68B1C04461C001D9583 /* IconExtraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconExtraction.swift; sourceTree = "<group>"; };
 		2E4681B81BE490D6008375AB /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/iOS/DVR.framework; sourceTree = "<group>"; };
 		2E4681BA1BE490E9008375AB /* DVR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DVR.framework; path = Carthage/Build/Mac/DVR.framework; sourceTree = "<group>"; };
 		2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDocument.h; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				2E0C311C1BDF511200C88151 /* DownloadTextOperation.swift */,
 				2E18521E1BDAE5160065F877 /* FavIcon.h */,
 				2E1852531BDAE7190065F877 /* FavIcon.swift */,
+				2E30A68B1C04461C001D9583 /* IconExtraction.swift */,
 				2E0C31161BDF50AA00C88151 /* URLRequestOperation.swift */,
 				2E0C31221BDF533100C88151 /* Utils.swift */,
 				2EDF3FA91BE09DA100444B21 /* Walkthrough.playground */,
@@ -407,6 +410,7 @@
 				2E1852181BDAE5160065F877 /* Headers */,
 				2E1852191BDAE5160065F877 /* Resources */,
 				2E80E26E1BE57F75005C4C48 /* Copy Embedded Frameworks */,
+				2E30A68A1C043B2B001D9583 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -619,12 +623,30 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2E30A68A1C043B2B001D9583 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2E1852161BDAE5160065F877 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				2E0C31141BDF4EA200C88151 /* DetectedIcon.swift in Sources */,
+				2E30A68C1C04461C001D9583 /* IconExtraction.swift in Sources */,
 				2E0C31231BDF533100C88151 /* Utils.swift in Sources */,
 				2E0C31201BDF52C700C88151 /* CheckURLExistsOperation.swift in Sources */,
 				2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */,
