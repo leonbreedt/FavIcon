@@ -12,6 +12,12 @@ Just be sure to build the `FavIcon-iOS` target before you try to use the
 playground, or you will get an import error when it tries to import the FavIcon
 framework.
 
+## Including in your project
+
+1. Add `FavIcon.framework` to the Linked Frameworks and Libraries for your application target.
+2. If you're using Carthage, add `FavIcon.framework` *and* `LibXML2.framework` to the Input Files for your `carthage copy-frameworks` Build Phase.
+
+
 ## Features
 - Detection of `/favicon.ico` if it exists
 - Parsing of the HTML at a URL, and scanning for appropriate `<link>` or
@@ -34,7 +40,9 @@ try FavIcon.downloadPreferred("https://apple.com",
                               width: 16,
                               height: 16) { result in
     if case .Success(let image) = result {
-        // On iOS, this is a UIImage, do something with it here.
+        dispatch_async(dispatch_get_main_queue()) {
+          // On iOS, this is a UIImage, do something with it here.
+        }
     }
 }
 ```
@@ -51,6 +59,15 @@ Or perhaps you’d like to take a stab at downloading them yourself at a later
 time, choosing which icon you prefer based on your own criteria, in which case
 `scan(_:completion:)` will give you information about the detected icons, which
 you can feed to `download(_:completion:)` for downloading at your convenience.
+
+
+## Troubleshooting
+
+##### It fails at runtime with an error `dyld: Library not loaded: @rpath/LibXML2.framework/LibXML2`. 
+I have not found a way to deal well with embedded frameworks. I use an embedded framework that wraps libxml2 for HTML parsing. If you're using Carthage, you can fix this by adding `$(SRCROOT)/Carthage/Build/iOS/LibXML2.framework` to the Input Files for the `carthage copy-frameworks` build phase.
+
+##### When setting the UIImage of a UIImageView in the completion block, it doesn't update the image.
+The completion block is called from a background queue, if you use send it to the main queue it will work (see the example above). I may change this to default to sending it to the main queue if it is annoying enough.
 
 ## License
 Apache 2.0
