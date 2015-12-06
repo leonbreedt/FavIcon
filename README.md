@@ -64,10 +64,15 @@ you can feed to `download(_:completion:)` for downloading at your convenience.
 ## Troubleshooting
 
 ##### It fails at runtime with an error `dyld: Library not loaded: @rpath/LibXML2.framework/LibXML2`. 
-I have not found a way to deal well with embedded frameworks. I use an embedded framework that wraps libxml2 for HTML parsing. If you're using Carthage, you can fix this by adding `$(SRCROOT)/Carthage/Build/iOS/LibXML2.framework` to the Input Files for the `carthage copy-frameworks` build phase.
+I have not found a way to deal well with embedded frameworks. I use an embedded
+framework that wraps libxml2 for HTML parsing. If you're using Carthage, you can
+fix this by adding `$(SRCROOT)/Carthage/Build/iOS/LibXML2.framework` to the
+Input Files for the `carthage copy-frameworks` build phase.
 
 ##### When setting the UIImage of a UIImageView in the completion block, it doesn't update the image.
-The completion block is called from a background queue, if you use send it to the main queue it will work (see the example above). I may change this to default to sending it to the main queue if it is annoying enough.
+The completion block is called from a background queue, if you use send it to
+the main queue it will work (see the example above). I may change this to
+default to sending it to the main queue if it is annoying enough.
 
 ## License
 Apache 2.0
