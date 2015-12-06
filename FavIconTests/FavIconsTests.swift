@@ -289,6 +289,13 @@ class FavIconTests: XCTestCase {
         XCTAssertEqual(144, icons[4].height!)
     }
 
+    func testIssue6_ContentTypeWithEmptyComponent() {
+        let result = "text/html;;charset=UTF-8".parseAsHTTPContentTypeHeader()
+
+        XCTAssertEqual("text/html", result.mimeType)
+        XCTAssertEqual(NSUTF8StringEncoding, result.encoding)
+    }
+
     private func pathForTestBundleResource(fileName: String) -> String {
         let testBundle = NSBundle(forClass: FavIconTests.self)
         return testBundle.pathForResource(fileName, ofType: "")!

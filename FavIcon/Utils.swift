@@ -33,6 +33,7 @@ extension String {
             .map { $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) }
         if headerComponents.count > 1 {
             let parameters = headerComponents[1..<headerComponents.count]
+                .filter { $0.containsString("=") }
                 .map { $0.componentsSeparatedByString("=") }
                 .toDictionary { ($0[0], $0[1]) }
 
