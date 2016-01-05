@@ -36,7 +36,6 @@
 		2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18521B1BDAE5160065F877 /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E30A68C1C04461C001D9583 /* IconExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E30A68B1C04461C001D9583 /* IconExtraction.swift */; };
 		2E30A68D1C04CF85001D9583 /* IconExtraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E30A68B1C04461C001D9583 /* IconExtraction.swift */; };
-		2E4681B21BE32A61008375AB /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
 		2E4681B71BE32DE2008375AB /* HTMLDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */; };
@@ -44,35 +43,26 @@
 		2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; };
 		2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E67AB461BE0DC60003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E67AB471BE0DC60003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
-		2E67AB481BE0DC60003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
-		2E67AB491BE0DC60003EF0A3 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E67AB4A1BE0DC60003EF0A3 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
-		2E67AB4B1BE0DC61003EF0A3 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E67AB4C1BE0DC61003EF0A3 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
-		2E67AB4D1BE0DC61003EF0A3 /* XMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3E1BE0DC5B003EF0A3 /* XMLElement_Private.h */; };
-		2E67AB4E1BE0DC61003EF0A3 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E67AB4F1BE0DC61003EF0A3 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
 		2E7A93EB1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
 		2E7A93EC1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
 		2E7A93F51BE4BD3E0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
 		2E7A93F61BE4BD3F0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
-		2E80E26F1BE57F88005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745621BE0CADE008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E80E2711BE57FA2005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745731BE0CB4A008E23AC /* LibXML2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E8745651BE0CADE008E23AC /* LibXML2.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8745641BE0CADE008E23AC /* LibXML2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E87456C1BE0CB13008E23AC /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E87456D1BE0CB13008E23AC /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
-		2E87457D1BE0CDA7008E23AC /* HTMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457B1BE0CDA7008E23AC /* HTMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E87457E1BE0CDA7008E23AC /* HTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87457C1BE0CDA7008E23AC /* HTMLElement.m */; };
-		2E8745801BE0D1E0008E23AC /* HTMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */; };
-		2E8745821BE0DAC0008E23AC /* LibXML2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745621BE0CADE008E23AC /* LibXML2.framework */; };
-		2E8745831BE0DACE008E23AC /* LibXML2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8745731BE0CB4A008E23AC /* LibXML2.framework */; };
-		2E87458E1BE0DBC1008E23AC /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E87458F1BE0DBC1008E23AC /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
-		2E8745901BE0DBC1008E23AC /* HTMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457B1BE0CDA7008E23AC /* HTMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2E8745911BE0DBC1008E23AC /* HTMLElement_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */; };
-		2E8745921BE0DBC1008E23AC /* HTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87457C1BE0CDA7008E23AC /* HTMLElement.m */; };
+		2EA1B2131C3B73B500478E37 /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B2171C3B73CA00478E37 /* HTMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87456A1BE0CB13008E23AC /* HTMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B2181C3B73CA00478E37 /* HTMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457B1BE0CDA7008E23AC /* HTMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B2191C3B73CA00478E37 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B21A1C3B73CA00478E37 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B21B1C3B73CB00478E37 /* HTMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E87457B1BE0CDA7008E23AC /* HTMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B21C1C3B73CB00478E37 /* XMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3C1BE0DC5B003EF0A3 /* XMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B21D1C3B73CB00478E37 /* XMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E67AB3F1BE0DC5B003EF0A3 /* XMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2EA1B21E1C3B73D600478E37 /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
+		2EA1B21F1C3B73D600478E37 /* HTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87457C1BE0CDA7008E23AC /* HTMLElement.m */; };
+		2EA1B2201C3B73D600478E37 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
+		2EA1B2211C3B73D600478E37 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
+		2EA1B2221C3B73D700478E37 /* HTMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87456B1BE0CB13008E23AC /* HTMLDocument.m */; };
+		2EA1B2231C3B73D700478E37 /* HTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E87457C1BE0CDA7008E23AC /* HTMLElement.m */; };
+		2EA1B2241C3B73D700478E37 /* XMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB3D1BE0DC5B003EF0A3 /* XMLDocument.m */; };
+		2EA1B2251C3B73D700478E37 /* XMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,20 +79,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2E1852391BDAE5300065F877;
 			remoteInfo = FavIcon;
-		};
-		2E8745841BE0DAE3008E23AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2E1852121BDAE5160065F877 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E8745611BE0CADE008E23AC;
-			remoteInfo = "LibXML2-iOS";
-		};
-		2E8745861BE0DAE9008E23AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2E1852121BDAE5160065F877 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E8745721BE0CB4A008E23AC;
-			remoteInfo = "LibXML2-OSX";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -137,7 +113,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2E80E26F1BE57F88005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +123,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				2E80E2711BE57FA2005C4C48 /* LibXML2.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,12 +159,8 @@
 		2E67AB401BE0DC5B003EF0A3 /* XMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLElement.m; sourceTree = "<group>"; };
 		2E7A93E91BE4BA000004C1F3 /* scan.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scan.json; sourceTree = "<group>"; };
 		2E7A93F31BE4BD3A0004C1F3 /* download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = download.json; sourceTree = "<group>"; };
-		2E8745621BE0CADE008E23AC /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E8745641BE0CADE008E23AC /* LibXML2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibXML2.h; sourceTree = "<group>"; };
-		2E8745661BE0CADE008E23AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E87456A1BE0CB13008E23AC /* HTMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLDocument.h; sourceTree = "<group>"; };
 		2E87456B1BE0CB13008E23AC /* HTMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLDocument.m; sourceTree = "<group>"; };
-		2E8745731BE0CB4A008E23AC /* LibXML2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibXML2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E87457B1BE0CDA7008E23AC /* HTMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLElement.h; sourceTree = "<group>"; };
 		2E87457C1BE0CDA7008E23AC /* HTMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLElement.m; sourceTree = "<group>"; };
 		2E87457F1BE0D183008E23AC /* HTMLElement_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLElement_Private.h; sourceTree = "<group>"; };
@@ -203,7 +173,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E8745821BE0DAC0008E23AC /* LibXML2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +189,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E8745831BE0DACE008E23AC /* LibXML2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,20 +198,6 @@
 			files = (
 				2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */,
 				2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E87455E1BE0CADE008E23AC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E87456F1BE0CB4A008E23AC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,8 +223,6 @@
 				2E1852251BDAE5160065F877 /* FavIcon-iOSTests.xctest */,
 				2E18523A1BDAE5300065F877 /* FavIcon.framework */,
 				2E1852431BDAE5300065F877 /* FavIcon-OSXTests.xctest */,
-				2E8745621BE0CADE008E23AC /* LibXML2.framework */,
-				2E8745731BE0CB4A008E23AC /* LibXML2.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -336,8 +288,6 @@
 		2E8745631BE0CADE008E23AC /* LibXML2 */ = {
 			isa = PBXGroup;
 			children = (
-				2E8745641BE0CADE008E23AC /* LibXML2.h */,
-				2E8745661BE0CADE008E23AC /* Info.plist */,
 				2E87456A1BE0CB13008E23AC /* HTMLDocument.h */,
 				2E87456B1BE0CB13008E23AC /* HTMLDocument.m */,
 				2E87457B1BE0CDA7008E23AC /* HTMLElement.h */,
@@ -359,7 +309,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA1B2171C3B73CA00478E37 /* HTMLDocument.h in Headers */,
+				2EA1B2181C3B73CA00478E37 /* HTMLElement.h in Headers */,
 				2E18521F1BDAE5160065F877 /* FavIcon.h in Headers */,
+				2EA1B21A1C3B73CA00478E37 /* XMLElement.h in Headers */,
+				2EA1B2191C3B73CA00478E37 /* XMLDocument.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,35 +321,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA1B2131C3B73B500478E37 /* HTMLDocument.h in Headers */,
+				2EA1B21B1C3B73CB00478E37 /* HTMLElement.h in Headers */,
 				2E1852521BDAE5CD0065F877 /* FavIcon.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E87455F1BE0CADE008E23AC /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E8745801BE0D1E0008E23AC /* HTMLElement_Private.h in Headers */,
-				2E87456C1BE0CB13008E23AC /* HTMLDocument.h in Headers */,
-				2E67AB461BE0DC60003EF0A3 /* XMLDocument.h in Headers */,
-				2E67AB481BE0DC60003EF0A3 /* XMLElement_Private.h in Headers */,
-				2E87457D1BE0CDA7008E23AC /* HTMLElement.h in Headers */,
-				2E67AB491BE0DC60003EF0A3 /* XMLElement.h in Headers */,
-				2E8745651BE0CADE008E23AC /* LibXML2.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E8745701BE0CB4A008E23AC /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E8745911BE0DBC1008E23AC /* HTMLElement_Private.h in Headers */,
-				2E87458E1BE0DBC1008E23AC /* HTMLDocument.h in Headers */,
-				2E67AB4B1BE0DC61003EF0A3 /* XMLDocument.h in Headers */,
-				2E67AB4D1BE0DC61003EF0A3 /* XMLElement_Private.h in Headers */,
-				2E8745901BE0DBC1008E23AC /* HTMLElement.h in Headers */,
-				2E4681B21BE32A61008375AB /* LibXML2.h in Headers */,
-				2E67AB4E1BE0DC61003EF0A3 /* XMLElement.h in Headers */,
+				2EA1B21D1C3B73CB00478E37 /* XMLElement.h in Headers */,
+				2EA1B21C1C3B73CB00478E37 /* XMLDocument.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +346,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2E8745851BE0DAE3008E23AC /* PBXTargetDependency */,
 			);
 			name = "FavIcon-iOS";
 			productName = FavIcon;
@@ -455,7 +384,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2E8745871BE0DAE9008E23AC /* PBXTargetDependency */,
 			);
 			name = "FavIcon-OSX";
 			productName = FavIcon;
@@ -481,42 +409,6 @@
 			productReference = 2E1852431BDAE5300065F877 /* FavIcon-OSXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2E8745611BE0CADE008E23AC /* LibXML2-iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2E8745691BE0CADE008E23AC /* Build configuration list for PBXNativeTarget "LibXML2-iOS" */;
-			buildPhases = (
-				2E87455D1BE0CADE008E23AC /* Sources */,
-				2E87455E1BE0CADE008E23AC /* Frameworks */,
-				2E87455F1BE0CADE008E23AC /* Headers */,
-				2E8745601BE0CADE008E23AC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "LibXML2-iOS";
-			productName = LibXML2;
-			productReference = 2E8745621BE0CADE008E23AC /* LibXML2.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		2E8745721BE0CB4A008E23AC /* LibXML2-OSX */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2E8745781BE0CB4A008E23AC /* Build configuration list for PBXNativeTarget "LibXML2-OSX" */;
-			buildPhases = (
-				2E87456E1BE0CB4A008E23AC /* Sources */,
-				2E87456F1BE0CB4A008E23AC /* Frameworks */,
-				2E8745701BE0CB4A008E23AC /* Headers */,
-				2E8745711BE0CB4A008E23AC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "LibXML2-OSX";
-			productName = LibXML2;
-			productReference = 2E8745731BE0CB4A008E23AC /* LibXML2.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -539,12 +431,6 @@
 					2E1852421BDAE5300065F877 = {
 						CreatedOnToolsVersion = 7.1;
 					};
-					2E8745611BE0CADE008E23AC = {
-						CreatedOnToolsVersion = 7.1;
-					};
-					2E8745721BE0CB4A008E23AC = {
-						CreatedOnToolsVersion = 7.1;
-					};
 				};
 			};
 			buildConfigurationList = 2E1852151BDAE5160065F877 /* Build configuration list for PBXProject "FavIcon" */;
@@ -563,8 +449,6 @@
 				2E1852241BDAE5160065F877 /* FavIcon-iOSTests */,
 				2E1852391BDAE5300065F877 /* FavIcon-OSX */,
 				2E1852421BDAE5300065F877 /* FavIcon-OSXTests */,
-				2E8745611BE0CADE008E23AC /* LibXML2-iOS */,
-				2E8745721BE0CB4A008E23AC /* LibXML2-OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -608,20 +492,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2E8745601BE0CADE008E23AC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E8745711BE0CB4A008E23AC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -647,11 +517,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0C31141BDF4EA200C88151 /* DetectedIcon.swift in Sources */,
+				2EA1B2201C3B73D600478E37 /* XMLDocument.m in Sources */,
+				2EA1B2211C3B73D600478E37 /* XMLElement.m in Sources */,
 				2E30A68C1C04461C001D9583 /* IconExtraction.swift in Sources */,
+				2EA1B21E1C3B73D600478E37 /* HTMLDocument.m in Sources */,
 				2E0C31231BDF533100C88151 /* Utils.swift in Sources */,
 				2E0C31201BDF52C700C88151 /* CheckURLExistsOperation.swift in Sources */,
 				2E1852541BDAE7190065F877 /* FavIcon.swift in Sources */,
 				2E0C311A1BDF50E300C88151 /* DownloadImageOperation.swift in Sources */,
+				2EA1B21F1C3B73D600478E37 /* HTMLElement.m in Sources */,
 				2E0C31171BDF50AA00C88151 /* URLRequestOperation.swift in Sources */,
 				2E0C311D1BDF511200C88151 /* DownloadTextOperation.swift in Sources */,
 			);
@@ -671,11 +545,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E0C31151BDF4EA200C88151 /* DetectedIcon.swift in Sources */,
+				2EA1B2241C3B73D700478E37 /* XMLDocument.m in Sources */,
+				2EA1B2251C3B73D700478E37 /* XMLElement.m in Sources */,
 				2E30A68D1C04CF85001D9583 /* IconExtraction.swift in Sources */,
+				2EA1B2221C3B73D700478E37 /* HTMLDocument.m in Sources */,
 				2E0C31241BDF533100C88151 /* Utils.swift in Sources */,
 				2E0C31211BDF52C700C88151 /* CheckURLExistsOperation.swift in Sources */,
 				2E1852551BDAE7AF0065F877 /* FavIcon.swift in Sources */,
 				2E0C311B1BDF50E300C88151 /* DownloadImageOperation.swift in Sources */,
+				2EA1B2231C3B73D700478E37 /* HTMLElement.m in Sources */,
 				2E0C31181BDF50AA00C88151 /* URLRequestOperation.swift in Sources */,
 				2E0C311E1BDF511200C88151 /* DownloadTextOperation.swift in Sources */,
 			);
@@ -687,28 +565,6 @@
 			files = (
 				2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */,
 				2E4681B71BE32DE2008375AB /* HTMLDocumentTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E87455D1BE0CADE008E23AC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E87456D1BE0CB13008E23AC /* HTMLDocument.m in Sources */,
-				2E67AB471BE0DC60003EF0A3 /* XMLDocument.m in Sources */,
-				2E67AB4A1BE0DC60003EF0A3 /* XMLElement.m in Sources */,
-				2E87457E1BE0CDA7008E23AC /* HTMLElement.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E87456E1BE0CB4A008E23AC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2E87458F1BE0DBC1008E23AC /* HTMLDocument.m in Sources */,
-				2E67AB4C1BE0DC61003EF0A3 /* XMLDocument.m in Sources */,
-				2E67AB4F1BE0DC61003EF0A3 /* XMLElement.m in Sources */,
-				2E8745921BE0DBC1008E23AC /* HTMLElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,16 +580,6 @@
 			isa = PBXTargetDependency;
 			target = 2E1852391BDAE5300065F877 /* FavIcon-OSX */;
 			targetProxy = 2E1852451BDAE5300065F877 /* PBXContainerItemProxy */;
-		};
-		2E8745851BE0DAE3008E23AC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E8745611BE0CADE008E23AC /* LibXML2-iOS */;
-			targetProxy = 2E8745841BE0DAE3008E23AC /* PBXContainerItemProxy */;
-		};
-		2E8745871BE0DAE9008E23AC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E8745721BE0CB4A008E23AC /* LibXML2-OSX */;
-			targetProxy = 2E8745861BE0DAE9008E23AC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -779,6 +625,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -820,6 +667,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -990,88 +838,6 @@
 			};
 			name = Release;
 		};
-		2E8745671BE0CADE008E23AC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = LibXML2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.LibXML2;
-				PRODUCT_NAME = LibXML2;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		2E8745681BE0CADE008E23AC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = LibXML2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.LibXML2;
-				PRODUCT_NAME = LibXML2;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		2E8745791BE0CB4A008E23AC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = LibXML2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.LibXML2;
-				PRODUCT_NAME = LibXML2;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		2E87457A1BE0CB4A008E23AC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
-				COMBINE_HIDPI_IMAGES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_VERSION = A;
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
-				INFOPLIST_FILE = LibXML2/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.LibXML2;
-				PRODUCT_NAME = LibXML2;
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1116,24 +882,6 @@
 			buildConfigurations = (
 				2E18524F1BDAE5300065F877 /* Debug */,
 				2E1852501BDAE5300065F877 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2E8745691BE0CADE008E23AC /* Build configuration list for PBXNativeTarget "LibXML2-iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2E8745671BE0CADE008E23AC /* Debug */,
-				2E8745681BE0CADE008E23AC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2E8745781BE0CB4A008E23AC /* Build configuration list for PBXNativeTarget "LibXML2-OSX" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2E8745791BE0CB4A008E23AC /* Debug */,
-				2E87457A1BE0CB4A008E23AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

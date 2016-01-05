@@ -1,6 +1,6 @@
 //
 // FavIcon
-// Copyright (C) 2015 Leon Breedt
+// Copyright © 2016 Leon Breedt
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
