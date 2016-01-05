@@ -18,22 +18,22 @@
 /// Enumerates the possible results of a `URLRequestOperation`.
 enum URLResult {
     /// Plain text content was downloaded successfully.
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The actual URL the content was downloaded from, after any redirects.
     ///   - text: The text content.
     ///   - mimeType: The MIME type of the text content (e.g. `application/json`).
     case TextDownloaded(url: NSURL, text: String, mimeType: String)
     /// Image content was downloaded successfully.
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The actual URL the content was downloaded from, after any redirects.
     ///   - image: The downloaded image.
     case ImageDownloaded(url: NSURL, image: ImageType)
     /// The URL request was successful (HTTP 200 response).
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The actual URL, after any redirects.
     case Success(url: NSURL)
     /// The URL request failed for some reason.
-    /// - Parameters:
+    /// - parameters:
     ///   - error: The error that occurred.
     case Failed(error: ErrorType)
 }
@@ -51,7 +51,7 @@ enum URLRequestError: ErrorType {
     /// The request succeeded, but the MIME type of the response is not a supported image format.
     case UnsupportedImageFormat(mimeType: String)
     /// An unexpected HTTP error response was returned.
-    /// - Parameters:
+    /// - parameters:
     ///   - response: The `NSHTTPURLResponse` that can be consulted for further information.
     case HTTPError(response: NSHTTPURLResponse)
 }

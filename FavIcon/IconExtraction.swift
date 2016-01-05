@@ -37,9 +37,10 @@ private let kMicrosoftSizeMap: [String: IconSize] = [
 
 /// Extracts a list of icons from the `<head>` section of an HTML document.
 ///
-/// - Parameters:
+/// - parameters:
 ///   - document: An HTML document to process.
 ///   - baseURL: A base URL to combine with any relative image paths.
+/// - returns: An array of `DetectedIcon` structures.
 func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
@@ -106,9 +107,10 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIc
 
 /// Extracts a list of icons from a Web Application Manifest file
 ///
-/// - Parameters:
+/// - parameters:
 ///   - jsonString: A JSON string containing the contents of the manifest file.
 ///   - baseURL: A base URL to combine with any relative image paths.
+/// - returns: An array of `DetectedIcon` structures.
 func extractManifestJSONIcons(jsonString: String, baseURL: NSURL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
@@ -140,9 +142,10 @@ func extractManifestJSONIcons(jsonString: String, baseURL: NSURL) -> [DetectedIc
 
 /// Extracts a list of icons from a Microsoft browser configuration XML document.
 ///
-/// - Parameters:
+/// - parameters:
 ///   - document: An `XMLDocument` for the Microsoft browser configuration file.
 ///   - baseURL: A base URL to combine with any relative image paths.
+/// - returns: An array of `DetectedIcon` structures.
 func extractBrowserConfigXMLIcons(document: XMLDocument, baseURL: NSURL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
@@ -176,10 +179,10 @@ func extractBrowserConfigXMLIcons(document: XMLDocument, baseURL: NSURL) -> [Det
 
 /// Extracts the Web App Manifest URLs from an HTML document, if any.
 ///
-/// - Parameters:
+/// - parameters:
 ///   - document: The HTML document to scan for Web App Manifest URLs
 ///   - baseURL: The base URL that any 'href' attributes are relative to.
-/// - Returns: An array of Web App Manifest `NSURL`s.
+/// - returns: An array of Web App Manifest `NSURL`s.
 func extractWebAppManifestURLs(document: HTMLDocument, baseURL: NSURL) -> [NSURL] {
     var urls: [NSURL] = []
     for link in document.query("/html/head/link") {
@@ -192,12 +195,13 @@ func extractWebAppManifestURLs(document: HTMLDocument, baseURL: NSURL) -> [NSURL
     return urls
 }
 
-/// Extracts the Web App Manifest URLs from an HTML document, if any.
+/// Extracts the first browser config XML file URL from an HTML document, if any.
 ///
-/// - Parameters:
-///   - document: The HTML document to scan for Web App Manifest URLs
+/// - parameters:
+///   - document: The HTML document to scan for browser config XML file URLs.
 ///   - baseURL: The base URL that any 'href' attributes are relative to.
-/// - Returns: An array of Web App Manifest `NSURL`s.
+/// - returns: A named tuple describing the file URL or a flag indicating that the server
+///            explicitly requested that the file not be downloaded.
 func extractBrowserConfigURL(document: HTMLDocument, baseURL: NSURL) -> (url: NSURL?, disabled: Bool) {
     for meta in document.query("/html/head/meta") {
         if let name = meta.attributes["name"]?.lowercaseString where name == "msapplication-config",
@@ -223,9 +227,9 @@ struct IconSize {
 
 /// Helper function for parsing a W3 `sizes` attribute value.
 ///
-/// - Parameters:
+/// - parameters:
 ///   - string: If not `nil`, the value of the attribute to parse (e.g. `50x50 144x144`).
-/// - Returns: An array of `(width: Int, height: Int)` tuples for each size found.
+/// - returns: An array of `IconSize` structs for each size found.
 private func parseHTMLIconSizes(string: String?) -> [IconSize] {
     var sizes: [IconSize] = []
     if let string = string?.lowercaseString where string != "any" {

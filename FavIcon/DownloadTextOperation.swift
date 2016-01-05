@@ -15,8 +15,8 @@
 // limitations under the License.
 //
 
-/// Attempts to download the text content for a URL, and returns
-/// `URLResult.TextDownloaded` as the result if it does.
+// Attempts to download the text content for a URL, and returns
+// `URLResult.TextDownloaded` as the result if it does.
 class DownloadTextOperation: URLRequestOperation {
     override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()

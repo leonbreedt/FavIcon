@@ -15,13 +15,13 @@
 // limitations under the License.
 //
 
-/// Support pattern matching on boolean expressions.
+// Support pattern matching on boolean expressions.
 func ~= <T>(pattern: T -> Bool, value: T) -> Bool {
     return pattern(value)
 }
 
-/// Allows using `hasPrefix("XXX")` as a pattern matching expression. See
-/// http://oleb.net/blog/2015/09/swift-pattern-matching/.
+// Allows using `hasPrefix("XXX")` as a pattern matching expression. See
+// http://oleb.net/blog/2015/09/swift-pattern-matching/.
 func hasPrefix(prefix: String)(value: String) -> Bool {
     return value.hasPrefix(prefix)
 }
@@ -88,9 +88,10 @@ extension NSHTTPURLResponse {
 extension Array {
     /// Converts this array to a dictionary of type `[K: V]`, by calling a transform function to
     /// obtain a key and a value from an array element.
-    /// - Parameters:
+    /// - parameters:
     ///   - transform: A function that will transform an array element of type `Element` into a
     ///                `(K, V)` tuple.
+    /// - returns: A dictionary having items of type `K` as keys, and type `V` as values.
     func toDictionary<K, V>(transform: Element -> (K, V)) -> [K: V] {
         var dict: [K: V] = [:]
         for item in self {

@@ -12,9 +12,8 @@ import FavIcon
 //: many icons to choose from, you may not get the size you desire.
 //:
 //: Since downloads happen asynchronously, you need to provide a closure that will get
-//: called when the downloading is finished. This closure will be called from a global queue, so
-//: if you want to do something like update your user interface, you'll need to send it to the main queue
-//: via something like `dispatch_async()`, unless you like weird bugs 😎
+//: called when the downloading is finished. This closure will be called on the main queue, so you can safely
+//: touch the UI inside of it.
 try FavIcon.downloadPreferred("https://apple.com") { result in
 //: The `result` parameter passed to the closure is a `DownloadResultType`.
 //: This is a Swift enum type that will be `.Success` or `.Failure`.

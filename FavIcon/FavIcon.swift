@@ -31,12 +31,12 @@ import Foundation
 public enum IconDownloadResult {
     /// Download successful.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - image: The `ImageType` for the downloaded icon.
     case Success(image: ImageType)
     /// Download failed for some reason.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - error: The error which can be consulted to determine the root cause.
     case Failure(error: ErrorType)
 }
@@ -44,7 +44,6 @@ public enum IconDownloadResult {
 /// Responsible for detecting all of the different icons supported by a given site.
 public class FavIcon {
     // swiftlint:disable function_body_length
-    public static func scan(url: NSURL, completion: [DetectedIcon] -> Void) {
     /// Scans a base URL, attempting to determine all of the supported icons that can
     /// be used for favicon purposes.
     ///
@@ -60,10 +59,11 @@ public class FavIcon {
     ///
     ///  All of this work is performed in a background queue.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The base URL to scan.
     ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
-    ///                 from a background queue.
+    ///                 on the main queue.
+    public static func scan(url: NSURL, completion: [DetectedIcon] -> Void) {
         let queue = dispatch_queue_create("org.bitserf.FavIcon", DISPATCH_QUEUE_SERIAL)
         var icons: [DetectedIcon] = []
         var additionalDownloads: [URLRequestWithCallback] = []
@@ -126,21 +126,25 @@ public class FavIcon {
         executeURLOperations([downloadHTML, checkFavIcon]) {
             if additionalDownloads.count > 0 {
                 executeURLOperations(additionalDownloads) {
-                    completion(icons)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(icons)
+                    }
                 }
             } else {
-                completion(icons)
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(icons)
+                }
             }
         }
     }
     // swiftlint:enable function_body_length
 
     /// Downloads an array of detected icons in the background.
-    /// - Parameters:
+    /// - parameters:
     ///   - icons: The icons to download.
     ///   - completion: A callback to invoke when all download tasks have
     ///                 results available (successful or otherwise). The callback
-    ///                 will be invoked from a background queue.
+    ///                 will be invoked on the main queue.
     public static func download(icons: [DetectedIcon], completion: [IconDownloadResult] -> Void) {
         let urlSession = urlSessionProvider()
         let operations: [DownloadImageOperation] =
@@ -158,17 +162,19 @@ public class FavIcon {
                 }
             }
 
-            completion(downloadResults)
+            dispatch_async(dispatch_get_main_queue()) {
+                completion(downloadResults)
+            }
         }
     }
 
     /// Downloads all available icons by calling `scan()` to discover the available icons, and then
     /// performing background downloads of each icon.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The URL to scan for icons.
     ///   - completion: A callback to invoke when all download tasks have results available
-    ///                 (successful or otherwise). The callback will be invoked from a background queue.
+    ///                 (successful or otherwise). The callback will be invoked on the main queue.
     public static func downloadAll(url: NSURL, completion: [IconDownloadResult] -> Void) {
         scan(url) { icons in
             download(icons, completion: completion)
@@ -180,19 +186,22 @@ public class FavIcon {
     /// preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon
     /// has dimensions, the icons are chosen by order of their `DetectedIconType` enumeration raw value.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - url: The URL to scan for icons.
     ///   - width: The preferred icon width, in pixels, or `nil`.
     ///   - height: The preferred icon height, in pixels, or `nil`.
     ///   - completion: A callback to invoke when the download task has produced a result. The callback will
-    ///                 be invoked from a background queue.
+    ///                 be invoked on the main queue.
+    /// - throws: An appropriate `IconError` if downloading failed for some reason.
     public static func downloadPreferred(url: NSURL,
                                          width: Int? = nil,
                                          height: Int? = nil,
                                          completion: IconDownloadResult -> Void) throws {
         scan(url) { icons in
             guard let icon = chooseIcon(icons, width: width, height: height) else {
-                completion(IconDownloadResult.Failure(error: IconError.NoIconsDetected))
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(IconDownloadResult.Failure(error: IconError.NoIconsDetected))
+                }
                 return
             }
 
@@ -212,7 +221,9 @@ public class FavIcon {
 
                 assert(downloadResults.count > 0)
 
-                completion(downloadResults.first!)
+                dispatch_async(dispatch_get_main_queue()) {
+                    completion(downloadResults.first!)
+                }
             }
         }
     }
@@ -223,7 +234,7 @@ public class FavIcon {
 
     // MARK: - Internal
 
-    /// Creates the default `NSURLSession` to use for background requests.
+    // Creates the default `NSURLSession` to use for background requests.
     static func createDefaultURLSession() -> NSURLSession {
         return NSURLSession.sharedSession()
     }
@@ -232,11 +243,11 @@ public class FavIcon {
     /// width or height is supplied, the icon closest to the preferred size is chosen. If no
     /// preferred width or height is supplied, the largest icon (if known) is chosen.
     ///
-    /// - Parameters:
+    /// - parameters:
     ///   - icons: The icons to choose from.
-    ///   - preferredWidth: The preferred icon width.
-    ///   - preferredHeight: The preferred icon height.
-    /// - Returns: The chosen icon, or `nil`, if `icons` is empty.
+    ///   - width: The preferred icon width.
+    ///   - height: The preferred icon height.
+    /// - returns: The chosen icon, or `nil`, if `icons` is empty.
     static func chooseIcon(icons: [DetectedIcon], width: Int? = nil, height: Int? = nil) -> DetectedIcon? {
         guard icons.count > 0 else { return nil }
 
@@ -292,6 +303,12 @@ enum IconError: ErrorType {
 extension FavIcon {
     /// Convenience overload for `scan(_:completion:)` that takes a `String`
     /// instead of an `NSURL` as the URL parameter. Throws an error if the URL is not a valid URL.
+    ///
+    /// - parameters:
+    ///   - url: The base URL to scan.
+    ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
+    ///                 on the main queue.
+    /// - throws: An `IconError` if the scan failed for some reason.
     public static func scan(url: String, completion: [DetectedIcon] -> Void) throws {
         guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
         scan(url, completion: completion)
@@ -299,6 +316,12 @@ extension FavIcon {
 
     /// Convenience overload for `downloadAll(_:completion:)` that takes a `String`
     /// instead of an `NSURL` as the URL parameter. Throws an error if the URL is not a valid URL.
+    ///
+    /// - parameters:
+    ///   - url: The URL to scan for icons.
+    ///   - completion: A callback to invoke when all download tasks have results available
+    ///                 (successful or otherwise). The callback will be invoked on the main queue.
+    /// - throws: An `IconError` if the scan or download failed for some reason.
     public static func downloadAll(url: String, completion: [IconDownloadResult] -> Void) throws {
         guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
         downloadAll(url, completion: completion)
@@ -306,6 +329,14 @@ extension FavIcon {
 
     /// Convenience overload for `downloadPreferred(_:width:height:completion:)` that takes a `String`
     /// instead of an `NSURL` as the URL parameter. Throws an error if the URL is not a valid URL.
+    ///
+    /// - parameters:
+    ///   - url: The URL to scan for icons.
+    ///   - width: The preferred icon width, in pixels, or `nil`.
+    ///   - height: The preferred icon height, in pixels, or `nil`.
+    ///   - completion: A callback to invoke when the download task has produced a result. The callback will
+    ///                 be invoked on the main queue.
+    /// - throws: An appropriate `IconError` if downloading failed for some reason.
     public static func downloadPreferred(url: String,
                                          width: Int? = nil,
                                          height: Int? = nil,

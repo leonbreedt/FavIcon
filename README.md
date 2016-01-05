@@ -17,7 +17,6 @@ framework.
 1. Add `FavIcon.framework` to the Linked Frameworks and Libraries for your application target.
 2. If you're using Carthage, add `FavIcon.framework` to the Input Files for your `carthage copy-frameworks` Build Phase.
 
-
 ## Features
 - Detection of `/favicon.ico` if it exists
 - Parsing of the HTML at a URL, and scanning for appropriate `<link>` or
@@ -40,9 +39,9 @@ try FavIcon.downloadPreferred("https://apple.com",
                               width: 16,
                               height: 16) { result in
     if case .Success(let image) = result {
-        dispatch_async(dispatch_get_main_queue()) {
-          // On iOS, this is a UIImage, do something with it here.
-        }
+      // On iOS, this is a UIImage, do something with it here.
+      // This closure will be executed on the main queue, so it's safe to touch
+      // the UI here.
     }
 }
 ```
@@ -59,14 +58,6 @@ Or perhaps you’d like to take a stab at downloading them yourself at a later
 time, choosing which icon you prefer based on your own criteria, in which case
 `scan(_:completion:)` will give you information about the detected icons, which
 you can feed to `download(_:completion:)` for downloading at your convenience.
-
-
-## Troubleshooting
-
-##### When setting the UIImage of a UIImageView in the completion block, it doesn't update the image.
-The completion block is called from a background queue, if you use send it to
-the main queue it will work (see the example above). I may change this to
-default to sending it to the main queue if it is annoying enough.
 
 ## License
 Apache 2.0
