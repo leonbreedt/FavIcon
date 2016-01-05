@@ -35,8 +35,8 @@ class FavIconTests: XCTestCase {
         performWebRequest("scan") { requestCompleted in
             do {
                 try FavIcon.scan("https://apple.com") { icons in
-                    requestCompleted()
                     actualIcons = icons
+                    requestCompleted()
                 }
             } catch let error {
                 XCTFail("failed to detect icons: \(error)")
@@ -53,8 +53,8 @@ class FavIconTests: XCTestCase {
         performWebRequest("download") { requestCompleted in
             do {
                 try FavIcon.downloadAll("https://apple.com") { results in
-                    requestCompleted()
                     actualResults = results
+                    requestCompleted()
                 }
             } catch let error {
                 XCTFail("failed to download icons: \(error)")
