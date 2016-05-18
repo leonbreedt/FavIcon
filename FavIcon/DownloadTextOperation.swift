@@ -20,17 +20,14 @@
 class DownloadTextOperation: URLRequestOperation {
     override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()
-        switch mimeType {
-        case "application/json", hasPrefix("text/"):
-            if let data = data, let text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
+        if mimeType == "application/json" || mimeType.hasPrefix("text/") {
+            if let data = data, text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
                 completion(.TextDownloaded(url: response.URL!, text: text, mimeType: mimeType))
             } else {
                 completion(.Failed(error: URLRequestError.InvalidTextEncoding))
             }
-            return
-        default:
+        } else {
             completion(.Failed(error: URLRequestError.NotPlainText))
-            return
         }
     }
 }

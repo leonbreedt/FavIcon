@@ -71,7 +71,9 @@ public class FavIcon {
 
         let downloadHTMLOperation = DownloadTextOperation(url: url, session: urlSession)
         let downloadHTML = urlRequestOperation(downloadHTMLOperation) { result in
+            // swiftlint:disable conditional_binding_cascade
             if case .TextDownloaded(let actualURL, let text, let contentType) = result {
+            // swiftlint:enable conditional_binding_cascade
                 if contentType == "text/html" {
                     let document = HTMLDocument(string: text)
 
@@ -253,14 +255,14 @@ public class FavIcon {
 
         let iconsInPreferredOrder = icons.sort { left, right in
             if let preferredWidth = width, preferredHeight = height,
-               let widthLeft = left.width, heightLeft = left.height,
-               let widthRight = right.width, heightRight = right.height {
+                   widthLeft = left.width, heightLeft = left.height,
+                   widthRight = right.width, heightRight = right.height {
                 // Which is closest to preferred size?
                 let deltaA = abs(widthLeft - preferredWidth) * abs(heightLeft - preferredHeight)
                 let deltaB = abs(widthRight - preferredWidth) * abs(heightRight - preferredHeight)
                 return deltaA < deltaB
             } else {
-                if let areaLeft = left.area, let areaRight = right.area {
+                if let areaLeft = left.area, areaRight = right.area {
                     // Which is larger?
                     return areaRight < areaLeft
                 }

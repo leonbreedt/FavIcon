@@ -15,19 +15,9 @@
 // limitations under the License.
 //
 
-// Support pattern matching on boolean expressions.
-func ~= <T>(pattern: T -> Bool, value: T) -> Bool {
-    return pattern(value)
-}
-
-// Allows using `hasPrefix("XXX")` as a pattern matching expression. See
-// http://oleb.net/blog/2015/09/swift-pattern-matching/.
-func hasPrefix(prefix: String)(value: String) -> Bool {
-    return value.hasPrefix(prefix)
-}
-
 extension String {
     /// Parses this string as an HTTP Content-Type header.
+    /// - Returns: A tuple containing the mime type and string, if this could be determined.
     func parseAsHTTPContentTypeHeader() -> (mimeType: String, encoding: UInt) {
         let headerComponents = componentsSeparatedByString(";")
             .map { $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) }
@@ -40,7 +30,7 @@ extension String {
             // Default according to RFC is ISO-8859-1, but probably nothing obeys that, so default
             // to UTF-8 instead.
             var encoding = NSUTF8StringEncoding
-            if let charset = parameters["charset"], let parsedEncoding = charset.parseAsStringEncoding() {
+            if let charset = parameters["charset"], parsedEncoding = charset.parseAsStringEncoding() {
                 encoding = parsedEncoding
             }
 
@@ -50,7 +40,9 @@ extension String {
         }
     }
 
-    /// Returns Cocoa encoding identifier for the encoding name in this string.
+    /// - Returns: The Cocoa encoding identifier for the encoding name in this string, or `nil`
+    ///            if the encoding is not supported or known.
+    //swiftlint:disable cyclomatic_complexity
     func parseAsStringEncoding() -> UInt? {
         switch lowercaseString {
         case "iso-8859-1", "latin1": return NSISOLatin1StringEncoding
@@ -72,11 +64,13 @@ extension String {
         default:
             return nil
         }
+        //swiftlint:enable cyclomatic_complexity
     }
 }
 
 extension NSHTTPURLResponse {
-    /// Parses the `Content-Type` header in this response into a `(mimeType: String, encoding: UInt)` tuple.
+    /// Parses the `Content-Type` header in this response.
+    /// - Returns: A `(mimeType: String, encoding: UInt)` tuple.
     func contentTypeAndEncoding() -> (mimeType: String, encoding: UInt) {
         if let contentTypeHeader = allHeaderFields["Content-Type"] as? String {
             return contentTypeHeader.parseAsHTTPContentTypeHeader()

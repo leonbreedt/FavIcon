@@ -41,6 +41,7 @@ private let kMicrosoftSizeMap: [String: IconSize] = [
 ///   - document: An HTML document to process.
 ///   - baseURL: A base URL to combine with any relative image paths.
 /// - returns: An array of `DetectedIcon` structures.
+// swiftlint:disable cyclomatic_complexity
 func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
@@ -103,6 +104,7 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIc
 
     return icons
 }
+// swiftlint:enable cyclomatic_complexity
 // swiftlint:enable function_body_length
 
 /// Extracts a list of icons from a Web Application Manifest file
@@ -114,10 +116,11 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: NSURL) -> [DetectedIc
 func extractManifestJSONIcons(jsonString: String, baseURL: NSURL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
-    if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding),
-        let object = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()),
-        let manifest = object as? NSDictionary,
-        let manifestIcons = manifest["icons"] as? [NSDictionary] {
+    if let
+        data = jsonString.dataUsingEncoding(NSUTF8StringEncoding),
+        object = try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()),
+        manifest = object as? NSDictionary,
+        manifestIcons = manifest["icons"] as? [NSDictionary] {
             for icon in manifestIcons {
                 if let type = icon["type"] as? String where type.lowercaseString == "image/png",
                     let src = icon["src"] as? String,
@@ -150,8 +153,9 @@ func extractBrowserConfigXMLIcons(document: XMLDocument, baseURL: NSURL) -> [Det
     var icons: [DetectedIcon] = []
 
     for tile in document.query("/browserconfig/msapplication/tile/*") {
-        if let src = tile.attributes["src"],
-            let url = NSURL(string: src, relativeToURL: baseURL)?.absoluteURL {
+        if let
+            src = tile.attributes["src"],
+            url = NSURL(string: src, relativeToURL: baseURL)?.absoluteURL {
                 switch tile.name.lowercaseString {
                 case "tileimage":
                     icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 144, height: 144))
@@ -187,8 +191,7 @@ func extractWebAppManifestURLs(document: HTMLDocument, baseURL: NSURL) -> [NSURL
     var urls: [NSURL] = []
     for link in document.query("/html/head/link") {
         if let rel = link.attributes["rel"]?.lowercaseString where rel == "manifest",
-           let href = link.attributes["href"],
-           let manifestURL = NSURL(string: href, relativeToURL: baseURL) {
+           let href = link.attributes["href"], manifestURL = NSURL(string: href, relativeToURL: baseURL) {
             urls.append(manifestURL)
         }
     }
@@ -236,7 +239,7 @@ private func parseHTMLIconSizes(string: String?) -> [IconSize] {
         for size in string.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) {
             let parts = size.componentsSeparatedByString("x")
             if parts.count != 2 { continue }
-            if let width = Int(parts[0]), let height = Int(parts[1]) {
+            if let width = Int(parts[0]), height = Int(parts[1]) {
                 sizes.append(IconSize(width: width, height: height))
             }
         }
