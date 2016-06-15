@@ -24,7 +24,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation XMLDocument {
+@implementation LBXMLDocument {
     xmlDocPtr _xmlDocument;
     NSArray *_children;
 }

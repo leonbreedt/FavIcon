@@ -38,11 +38,12 @@ public enum IconDownloadResult {
     ///
     /// - parameters:
     ///   - error: The error which can be consulted to determine the root cause.
-    case Failure(error: ErrorType)
+    case Failure(error: ErrorProtocol)
 }
 
 /// Responsible for detecting all of the different icons supported by a given site.
 public class FavIcon {
+
     // swiftlint:disable function_body_length
     /// Scans a base URL, attempting to determine all of the supported icons that can
     /// be used for favicon purposes.
@@ -63,49 +64,55 @@ public class FavIcon {
     ///   - url: The base URL to scan.
     ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
     ///                 on the main queue.
-    public static func scan(url: NSURL, completion: [DetectedIcon] -> Void) {
-        let queue = dispatch_queue_create("org.bitserf.FavIcon", DISPATCH_QUEUE_SERIAL)
+    public static func scan(url: URL, completion: ([DetectedIcon]) -> Void) {
+        let queue = DispatchQueue(label: "org.bitserf.FavIcon", attributes: .serial)
         var icons: [DetectedIcon] = []
         var additionalDownloads: [URLRequestWithCallback] = []
         let urlSession = urlSessionProvider()
 
         let downloadHTMLOperation = DownloadTextOperation(url: url, session: urlSession)
-        let downloadHTML = urlRequestOperation(downloadHTMLOperation) { result in
+        let downloadHTML = urlRequestOperation(operation: downloadHTMLOperation) { result in
             // swiftlint:disable conditional_binding_cascade
             if case .TextDownloaded(let actualURL, let text, let contentType) = result {
             // swiftlint:enable conditional_binding_cascade
                 if contentType == "text/html" {
                     let document = HTMLDocument(string: text)
 
-                    let htmlIcons = extractHTMLHeadIcons(document, baseURL: actualURL)
-                    dispatch_sync(queue) {
-                        icons.appendContentsOf(htmlIcons)
+                    let htmlIcons = extractHTMLHeadIcons(document: document, baseURL: actualURL)
+                    queue.sync {
+                        icons.append(contentsOf: htmlIcons)
                     }
 
-                    for manifestURL in extractWebAppManifestURLs(document, baseURL: url) {
+                    for manifestURL in extractWebAppManifestURLs(document: document, baseURL: url) {
                         let downloadOperation = DownloadTextOperation(url: manifestURL,
                                                                               session: urlSession)
-                        let download = urlRequestOperation(downloadOperation) { result in
+                        let download = urlRequestOperation(operation: downloadOperation) { result in
                             if case .TextDownloaded(_, let manifestJSON, _) = result {
-                                let jsonIcons = extractManifestJSONIcons(manifestJSON, baseURL: actualURL)
-                                dispatch_sync(queue) {
-                                    icons.appendContentsOf(jsonIcons)
+                                let jsonIcons = extractManifestJSONIcons(
+                                    jsonString: manifestJSON,
+                                    baseURL: actualURL
+                                )
+                                queue.sync {
+                                    icons.append(contentsOf: jsonIcons)
                                 }
                             }
                         }
                         additionalDownloads.append(download)
                     }
 
-                    let browserConfigResult = extractBrowserConfigURL(document, baseURL: url)
+                    let browserConfigResult = extractBrowserConfigURL(document: document, baseURL: url)
                     if let browserConfigURL = browserConfigResult.url where !browserConfigResult.disabled {
                         let downloadOperation = DownloadTextOperation(url: browserConfigURL,
                                                                       session: urlSession)
-                        let download = urlRequestOperation(downloadOperation) { result in
+                        let download = urlRequestOperation(operation: downloadOperation) { result in
                             if case .TextDownloaded(_, let browserConfigXML, _) = result {
-                                let document = XMLDocument(string: browserConfigXML)
-                                let xmlIcons = extractBrowserConfigXMLIcons(document, baseURL: actualURL)
-                                dispatch_sync(queue) {
-                                    icons.appendContentsOf(xmlIcons)
+                                let document = LBXMLDocument(string: browserConfigXML)
+                                let xmlIcons = extractBrowserConfigXMLIcons(
+                                    document: document,
+                                    baseURL: actualURL
+                                )
+                                queue.sync {
+                                    icons.append(contentsOf: xmlIcons)
                                 }
                             }
                         }
@@ -115,25 +122,26 @@ public class FavIcon {
             }
         }
 
-        let favIconURL = NSURL(string: "/favicon.ico", relativeToURL: url)!.absoluteURL
-        let checkFavIconOperation = CheckURLExistsOperation(url: favIconURL, session: urlSession)
-        let checkFavIcon = urlRequestOperation(checkFavIconOperation) { result in
+
+        let favIconURL = URL(string: "/favicon.ico", relativeTo: url as URL)!.absoluteURL
+        let checkFavIconOperation = CheckURLExistsOperation(url: favIconURL!, session: urlSession)
+        let checkFavIcon = urlRequestOperation(operation: checkFavIconOperation) { result in
             if case .Success(let actualURL) = result {
-                dispatch_sync(queue) {
+                queue.sync {
                     icons.append(DetectedIcon(url: actualURL, type: .Classic))
                 }
             }
         }
 
-        executeURLOperations([downloadHTML, checkFavIcon]) {
+        executeURLOperations(operations: [downloadHTML, checkFavIcon]) {
             if additionalDownloads.count > 0 {
-                executeURLOperations(additionalDownloads) {
-                    dispatch_async(dispatch_get_main_queue()) {
+                executeURLOperations(operations: additionalDownloads) {
+                    DispatchQueue.main.async {
                         completion(icons)
                     }
                 }
             } else {
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     completion(icons)
                 }
             }
@@ -147,12 +155,12 @@ public class FavIcon {
     ///   - completion: A callback to invoke when all download tasks have
     ///                 results available (successful or otherwise). The callback
     ///                 will be invoked on the main queue.
-    public static func download(icons: [DetectedIcon], completion: [IconDownloadResult] -> Void) {
+    public static func download(icons: [DetectedIcon], completion: ([IconDownloadResult]) -> Void) {
         let urlSession = urlSessionProvider()
         let operations: [DownloadImageOperation] =
             icons.map { DownloadImageOperation(url: $0.url, session: urlSession) }
 
-        executeURLOperations(operations) { results in
+        executeURLOperations(operations: operations) { results in
             let downloadResults: [IconDownloadResult] = results.map { result in
                 switch result {
                 case .ImageDownloaded(_, let image):
@@ -164,7 +172,7 @@ public class FavIcon {
                 }
             }
 
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 completion(downloadResults)
             }
         }
@@ -177,9 +185,9 @@ public class FavIcon {
     ///   - url: The URL to scan for icons.
     ///   - completion: A callback to invoke when all download tasks have results available
     ///                 (successful or otherwise). The callback will be invoked on the main queue.
-    public static func downloadAll(url: NSURL, completion: [IconDownloadResult] -> Void) {
-        scan(url) { icons in
-            download(icons, completion: completion)
+    public static func downloadAll(url: URL, completion: ([IconDownloadResult]) -> Void) {
+        scan(url: url) { icons in
+            download(icons: icons, completion: completion)
         }
     }
 
@@ -195,13 +203,13 @@ public class FavIcon {
     ///   - completion: A callback to invoke when the download task has produced a result. The callback will
     ///                 be invoked on the main queue.
     /// - throws: An appropriate `IconError` if downloading failed for some reason.
-    public static func downloadPreferred(url: NSURL,
+    public static func downloadPreferred(url: URL,
                                          width: Int? = nil,
                                          height: Int? = nil,
-                                         completion: IconDownloadResult -> Void) throws {
-        scan(url) { icons in
-            guard let icon = chooseIcon(icons, width: width, height: height) else {
-                dispatch_async(dispatch_get_main_queue()) {
+                                         completion: (IconDownloadResult) -> Void) throws {
+        scan(url: url) { icons in
+            guard let icon = chooseIcon(icons: icons, width: width, height: height) else {
+                DispatchQueue.main.async {
                     completion(IconDownloadResult.Failure(error: IconError.NoIconsDetected))
                 }
                 return
@@ -209,7 +217,8 @@ public class FavIcon {
 
             let urlSession = urlSessionProvider()
 
-            executeURLOperations([DownloadImageOperation(url: icon.url, session: urlSession)]) { results in
+            let operations = [DownloadImageOperation(url: icon.url, session: urlSession)]
+            executeURLOperations(operations: operations) { results in
                 let downloadResults: [IconDownloadResult] = results.map { result in
                     switch result {
                     case .ImageDownloaded(_, let image):
@@ -223,7 +232,7 @@ public class FavIcon {
 
                 assert(downloadResults.count > 0)
 
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     completion(downloadResults.first!)
                 }
             }
@@ -231,14 +240,14 @@ public class FavIcon {
     }
 
     // MARK: - Test hooks
-    typealias URLSessionProvider = Void -> NSURLSession
+    typealias URLSessionProvider = (Void) -> URLSession
     static var urlSessionProvider: URLSessionProvider = FavIcon.createDefaultURLSession
 
     // MARK: - Internal
 
     // Creates the default `NSURLSession` to use for background requests.
-    static func createDefaultURLSession() -> NSURLSession {
-        return NSURLSession.sharedSession()
+    static func createDefaultURLSession() -> URLSession {
+        return URLSession.shared()
     }
 
     /// Helper function to choose an icon to use out of a set of available icons. If preferred
@@ -253,7 +262,7 @@ public class FavIcon {
     static func chooseIcon(icons: [DetectedIcon], width: Int? = nil, height: Int? = nil) -> DetectedIcon? {
         guard icons.count > 0 else { return nil }
 
-        let iconsInPreferredOrder = icons.sort { left, right in
+        let iconsInPreferredOrder = icons.sorted { left, right in
             if let preferredWidth = width, preferredHeight = height,
                    widthLeft = left.width, heightLeft = left.height,
                    widthRight = right.width, heightRight = right.height {
@@ -289,7 +298,7 @@ public class FavIcon {
 }
 
 /// Enumerates errors that can be thrown while detecting or downloading icons.
-enum IconError: ErrorType {
+enum IconError: ErrorProtocol {
     /// The base URL specified is not a valid URL.
     case InvalidBaseURL
     /// At least one icon to must be specified for downloading.
@@ -311,9 +320,9 @@ extension FavIcon {
     ///   - completion: A callback to invoke when the scan has completed. The callback will be invoked
     ///                 on the main queue.
     /// - throws: An `IconError` if the scan failed for some reason.
-    public static func scan(url: String, completion: [DetectedIcon] -> Void) throws {
-        guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
-        scan(url, completion: completion)
+    public static func scan(url: String, completion: ([DetectedIcon]) -> Void) throws {
+        guard let url = URL(string: url) else { throw IconError.InvalidBaseURL }
+        scan(url: url, completion: completion)
     }
 
     /// Convenience overload for `downloadAll(_:completion:)` that takes a `String`
@@ -324,9 +333,9 @@ extension FavIcon {
     ///   - completion: A callback to invoke when all download tasks have results available
     ///                 (successful or otherwise). The callback will be invoked on the main queue.
     /// - throws: An `IconError` if the scan or download failed for some reason.
-    public static func downloadAll(url: String, completion: [IconDownloadResult] -> Void) throws {
-        guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
-        downloadAll(url, completion: completion)
+    public static func downloadAll(url: String, completion: ([IconDownloadResult]) -> Void) throws {
+        guard let url = URL(string: url) else { throw IconError.InvalidBaseURL }
+        downloadAll(url: url, completion: completion)
     }
 
     /// Convenience overload for `downloadPreferred(_:width:height:completion:)` that takes a `String`
@@ -342,9 +351,9 @@ extension FavIcon {
     public static func downloadPreferred(url: String,
                                          width: Int? = nil,
                                          height: Int? = nil,
-                                         completion: IconDownloadResult -> Void) throws {
-        guard let url = NSURL(string: url) else { throw IconError.InvalidBaseURL }
-        try downloadPreferred(url, width: width, height: height, completion: completion)
+                                         completion: (IconDownloadResult) -> Void) throws {
+        guard let url = URL(string: url) else { throw IconError.InvalidBaseURL }
+        try downloadPreferred(url: url, width: width, height: height, completion: completion)
     }
 }
 

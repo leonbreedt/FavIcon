@@ -18,11 +18,11 @@
 // Attempts to download the text content for a URL, and returns
 // `URLResult.TextDownloaded` as the result if it does.
 class DownloadTextOperation: URLRequestOperation {
-    override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
+    override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()
         if mimeType == "application/json" || mimeType.hasPrefix("text/") {
-            if let data = data, text = String(data: data, encoding: encoding ?? NSUTF8StringEncoding) {
-                completion(.TextDownloaded(url: response.URL!, text: text, mimeType: mimeType))
+            if let data = data, text = String(data: data, encoding: encoding ?? String.Encoding.utf8) {
+                completion(.TextDownloaded(url: response.url!, text: text, mimeType: mimeType))
             } else {
                 completion(.Failed(error: URLRequestError.InvalidTextEncoding))
             }

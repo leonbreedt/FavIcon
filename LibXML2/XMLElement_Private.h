@@ -20,13 +20,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class XMLDocument;
+@class LBXMLDocument;
 
 @interface XMLElement ()
 
-- (instancetype)initWithDocument:(XMLDocument *)document node:(xmlNodePtr)node NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDocument:(LBXMLDocument *)document node:(xmlNodePtr)node NS_DESIGNATED_INITIALIZER;
 
-@property (readwrite, nonatomic, nullable) XMLDocument *document;
+@property (readwrite, nonatomic, nullable) LBXMLDocument *document;
 
 @end
 

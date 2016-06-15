@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XMLElement;
 
-@interface XMLDocument : NSObject
+@interface LBXMLDocument : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithData:(NSData *)data NS_DESIGNATED_INITIALIZER;

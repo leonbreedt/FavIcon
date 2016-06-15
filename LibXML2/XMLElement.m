@@ -16,7 +16,7 @@
     NSArray *_children;
 }
 
-- (instancetype)initWithDocument:(XMLDocument *)document node:(xmlNodePtr)node {
+- (instancetype)initWithDocument:(LBXMLDocument *)document node:(xmlNodePtr)node {
     if (self = [super init]) {
         self.document = document;
         _xmlNode = node;

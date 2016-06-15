@@ -22,24 +22,24 @@ enum URLResult {
     ///   - url: The actual URL the content was downloaded from, after any redirects.
     ///   - text: The text content.
     ///   - mimeType: The MIME type of the text content (e.g. `application/json`).
-    case TextDownloaded(url: NSURL, text: String, mimeType: String)
+    case TextDownloaded(url: URL, text: String, mimeType: String)
     /// Image content was downloaded successfully.
     /// - parameters:
     ///   - url: The actual URL the content was downloaded from, after any redirects.
     ///   - image: The downloaded image.
-    case ImageDownloaded(url: NSURL, image: ImageType)
+    case ImageDownloaded(url: URL, image: ImageType)
     /// The URL request was successful (HTTP 200 response).
     /// - parameters:
     ///   - url: The actual URL, after any redirects.
-    case Success(url: NSURL)
+    case Success(url: URL)
     /// The URL request failed for some reason.
     /// - parameters:
     ///   - error: The error that occurred.
-    case Failed(error: ErrorType)
+    case Failed(error: ErrorProtocol)
 }
 
 /// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
-enum URLRequestError: ErrorType {
+enum URLRequestError: ErrorProtocol {
     /// No response was received from the server.
     case MissingResponse
     /// The file was not found (HTTP 404 response).
@@ -52,55 +52,55 @@ enum URLRequestError: ErrorType {
     case UnsupportedImageFormat(mimeType: String)
     /// An unexpected HTTP error response was returned.
     /// - parameters:
-    ///   - response: The `NSHTTPURLResponse` that can be consulted for further information.
-    case HTTPError(response: NSHTTPURLResponse)
+    ///   - response: The `HTTPURLResponse` that can be consulted for further information.
+    case HTTPError(response: HTTPURLResponse)
 }
 
 /// Base class for performing URL requests in the context of an `NSOperation`.
-class URLRequestOperation: NSOperation {
-    let urlRequest: NSMutableURLRequest
+class URLRequestOperation: Operation {
+    var urlRequest: URLRequest
     var result: URLResult?
 
-    private var task: NSURLSessionDataTask?
-    private let session: NSURLSession
-    private var semaphore: dispatch_semaphore_t?
+    private var task: URLSessionDataTask?
+    private let session: URLSession
+    private var semaphore: DispatchSemaphore?
 
-    init(url: NSURL, session: NSURLSession) {
+    init(url: URL, session: URLSession) {
         self.session = session
-        self.urlRequest = NSMutableURLRequest(URL: url)
+        self.urlRequest = URLRequest(url: url)
         self.semaphore = nil
     }
 
     override func main() {
-        semaphore = dispatch_semaphore_create(0)
+        semaphore = DispatchSemaphore(value: 0)
         prepareRequest()
-        task = session.dataTaskWithRequest(urlRequest, completionHandler: dataTaskCompletion)
+        task = session.dataTask(with: urlRequest, completionHandler: dataTaskCompletion)
         task?.resume()
-        dispatch_semaphore_wait(semaphore!, DISPATCH_TIME_FOREVER)
+        semaphore?.wait()
     }
 
     override func cancel() {
         task?.cancel()
         if let semaphore = semaphore {
-            dispatch_semaphore_signal(semaphore)
+            semaphore.signal()
         }
     }
 
     func prepareRequest() {
     }
 
-    func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
+    func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         fatalError("must override processResult()")
     }
 
-    private func dataTaskCompletion(data: NSData?, response: NSURLResponse?, error: NSError?) {
+    private func dataTaskCompletion(data: Data?, response: URLResponse?, error: NSError?) {
         guard error == nil else {
             result = .Failed(error: error!)
             self.notifyFinished()
             return
         }
 
-        guard let response = response as? NSHTTPURLResponse else {
+        guard let response = response as? HTTPURLResponse else {
             result = .Failed(error: URLRequestError.MissingResponse)
             self.notifyFinished()
             return
@@ -118,7 +118,7 @@ class URLRequestOperation: NSOperation {
             return
         }
 
-        processResult(data, response: response) { result in
+        processResult(data: data, response: response) { result in
             // This block may run on another thread long after dataTaskCompletion() finishes! So
             // wait until then to signal semaphore if we get past checks above.
             self.result = result
@@ -128,27 +128,27 @@ class URLRequestOperation: NSOperation {
 
     private func notifyFinished() {
         if let semaphore = self.semaphore {
-            dispatch_semaphore_signal(semaphore)
+            semaphore.signal()
         }
     }
 }
 
-typealias URLRequestWithCallback = (request: URLRequestOperation, completion: URLResult -> Void)
+typealias URLRequestWithCallback = (request: URLRequestOperation, completion: (URLResult) -> Void)
 
 func executeURLOperations(operations: [URLRequestOperation],
                           concurrency: Int = 2,
-                          on queue: NSOperationQueue? = nil,
-                          completion: [URLResult] -> Void) {
+                          on queue: OperationQueue? = nil,
+                          completion: ([URLResult]) -> Void) {
     guard operations.count > 0 else {
         completion([])
         return
     }
 
-    let queue = queue ?? NSOperationQueue()
-    queue.suspended = true
+    let queue = queue ?? OperationQueue()
+    queue.isSuspended = true
     queue.maxConcurrentOperationCount = concurrency
 
-    let completionOperation = NSBlockOperation {
+    let completionOperation = BlockOperation {
         completion(operations.map { $0.result! })
     }
     for operation in operations {
@@ -157,25 +157,25 @@ func executeURLOperations(operations: [URLRequestOperation],
     }
     queue.addOperation(completionOperation)
 
-    queue.suspended = false
+    queue.isSuspended = false
 }
 
 func executeURLOperations(operations: [URLRequestWithCallback],
                           concurrency: Int = 2,
-                          on queue: NSOperationQueue? = nil,
+                          on queue: OperationQueue? = nil,
                           completion: () -> Void) {
     guard operations.count > 0 else { return }
 
-    let queue = queue ?? NSOperationQueue()
-    queue.suspended = true
+    let queue = queue ?? OperationQueue()
+    queue.isSuspended = true
     queue.maxConcurrentOperationCount = concurrency
 
-    let overallCompletion = NSBlockOperation {
+    let overallCompletion = BlockOperation {
         completion()
     }
 
     for operation in operations {
-        let operationCompletion = NSBlockOperation {
+        let operationCompletion = BlockOperation {
             operation.completion(operation.request.result!)
         }
         queue.addOperation(operation.request)
@@ -185,10 +185,10 @@ func executeURLOperations(operations: [URLRequestWithCallback],
     }
     queue.addOperation(overallCompletion)
 
-    queue.suspended = false
+    queue.isSuspended = false
 }
 
 func urlRequestOperation(operation: URLRequestOperation,
-                         completion: URLResult -> Void) -> URLRequestWithCallback {
+                         completion: (URLResult) -> Void) -> URLRequestWithCallback {
     return (request: operation, completion: completion)
 }

@@ -20,7 +20,7 @@
 // download was successful, and the data is in an image format
 // supported by the platform's image class.
 class DownloadImageOperation: URLRequestOperation {
-    override func processResult(data: NSData?, response: NSHTTPURLResponse, completion: URLResult -> Void) {
+    override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         guard let data = data else {
             completion(.Failed(error: URLRequestError.MissingResponse))
             return
@@ -30,10 +30,10 @@ class DownloadImageOperation: URLRequestOperation {
         switch mimeType {
         case "image/png", "image/jpg", "image/jpeg", "image/x-icon":
             // UIImage(data:) is not thread-safe and needs to run on main queue :/
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 var result: URLResult
                 if let image = ImageType(data: data) {
-                    result = .ImageDownloaded(url: response.URL!, image: image)
+                    result = .ImageDownloaded(url: response.url!, image: image)
                 } else {
                     result = .Failed(error: URLRequestError.UnsupportedImageFormat(mimeType: mimeType))
                 }
