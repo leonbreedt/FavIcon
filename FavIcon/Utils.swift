@@ -17,7 +17,7 @@
 
 extension String {
     /// Parses this string as an HTTP Content-Type header.
-    /// - Returns: A tuple containing the mime type and string, if this could be determined.
+    /// - returns: A tuple containing the mime type and string, if this could be determined.
     func parseAsHTTPContentTypeHeader() -> (mimeType: String, encoding: String.Encoding) {
         let headerComponents =
             components(separatedBy: ";")
@@ -67,13 +67,13 @@ extension String {
         default:
             return nil
         }
-        //swiftlint:enable cyclomatic_complexity
     }
+    //swiftlint:enable cyclomatic_complexity
 }
 
 extension HTTPURLResponse {
     /// Parses the `Content-Type` header in this response.
-    /// - Returns: A `(mimeType: String, encoding: String.Encoding)` tuple.
+    /// - returns: A `(mimeType: String, encoding: String.Encoding)` tuple.
     func contentTypeAndEncoding() -> (mimeType: String, encoding: String.Encoding) {
         if let contentTypeHeader = allHeaderFields["Content-Type"] as? String {
             return contentTypeHeader.parseAsHTTPContentTypeHeader()
@@ -83,11 +83,10 @@ extension HTTPURLResponse {
 }
 
 extension Array {
-    /// Converts this array to a dictionary of type `[K: V]`, by calling a transform function to
+    /// Converts this array to a dictionary of type `[K: V]`, by calling a transform closure to
     /// obtain a key and a value from an array element.
-    /// - parameters:
-    ///   - transform: A function that will transform an array element of type `Element` into a
-    ///                `(K, V)` tuple.
+    /// - parameter transform: A closure that will transform an array element of type `Element` into a
+    ///                        `(K, V)` tuple.
     /// - returns: A dictionary having items of type `K` as keys, and type `V` as values.
     func toDictionary<K, V>(transform: (Element) -> (K, V)) -> [K: V] {
         var dict: [K: V] = [:]

@@ -44,7 +44,7 @@ class FavIconTests: XCTestCase {
         }
 
         XCTAssertEqual(1, actualIcons.count)
-        XCTAssertEqual(NSURL(string: "https://www.apple.com/favicon.ico")!, actualIcons[0].url)
+        XCTAssertEqual(URL(string: "https://www.apple.com/favicon.ico")!, actualIcons[0].url)
     }
 
     func testDownloading() {

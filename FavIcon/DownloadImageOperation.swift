@@ -19,7 +19,7 @@
 // `URLResult.ImageDownloaded` as the result if the
 // download was successful, and the data is in an image format
 // supported by the platform's image class.
-class DownloadImageOperation: URLRequestOperation {
+final class DownloadImageOperation: URLRequestOperation {
     override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         guard let data = data else {
             completion(.Failed(error: URLRequestError.MissingResponse))

@@ -17,7 +17,7 @@
 
 // Attempts to download the text content for a URL, and returns
 // `URLResult.TextDownloaded` as the result if it does.
-class DownloadTextOperation: URLRequestOperation {
+final class DownloadTextOperation: URLRequestOperation {
     override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()
         if mimeType == "application/json" || mimeType.hasPrefix("text/") {

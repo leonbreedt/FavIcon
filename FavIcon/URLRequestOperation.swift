@@ -17,25 +17,26 @@
 
 /// Enumerates the possible results of a `URLRequestOperation`.
 enum URLResult {
+
     /// Plain text content was downloaded successfully.
-    /// - parameters:
-    ///   - url: The actual URL the content was downloaded from, after any redirects.
-    ///   - text: The text content.
-    ///   - mimeType: The MIME type of the text content (e.g. `application/json`).
+    /// - parameter url: The actual URL the content was downloaded from, after any redirects.
+    /// - parameter text: The text content.
+    /// - parameter mimeType: The MIME type of the text content (e.g. `application/json`).
     case TextDownloaded(url: URL, text: String, mimeType: String)
+
     /// Image content was downloaded successfully.
-    /// - parameters:
-    ///   - url: The actual URL the content was downloaded from, after any redirects.
-    ///   - image: The downloaded image.
+    /// - parameter url: The actual URL the content was downloaded from, after any redirects.
+    /// - parameter image: The downloaded image.
     case ImageDownloaded(url: URL, image: ImageType)
+
     /// The URL request was successful (HTTP 200 response).
-    /// - parameters:
-    ///   - url: The actual URL, after any redirects.
+    /// - parameter url: The actual URL, after any redirects.
     case Success(url: URL)
+
     /// The URL request failed for some reason.
-    /// - parameters:
-    ///   - error: The error that occurred.
+    /// - parameter error: The error that occurred.
     case Failed(error: ErrorProtocol)
+
 }
 
 /// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
@@ -51,8 +52,7 @@ enum URLRequestError: ErrorProtocol {
     /// The request succeeded, but the MIME type of the response is not a supported image format.
     case UnsupportedImageFormat(mimeType: String)
     /// An unexpected HTTP error response was returned.
-    /// - parameters:
-    ///   - response: The `HTTPURLResponse` that can be consulted for further information.
+    /// - parameter response: The `HTTPURLResponse` that can be consulted for further information.
     case HTTPError(response: HTTPURLResponse)
 }
 

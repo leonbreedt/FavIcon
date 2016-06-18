@@ -34,14 +34,12 @@ private let kMicrosoftSizeMap: [String: IconSize] = [
     "msapplication-square310x310logo": IconSize(width: 310, height: 310),
 ]
 
-// swiftlint:disable function_body_length
-
 /// Extracts a list of icons from the `<head>` section of an HTML document.
 ///
-/// - parameters:
-///   - document: An HTML document to process.
-///   - baseURL: A base URL to combine with any relative image paths.
-/// - returns: An array of `DetectedIcon` structures.
+/// - parameter document: An HTML document to process.
+/// - parameter baseURL: A base URL to combine with any relative image paths.
+/// - parameter returns: An array of `DetectedIcon` structures.
+// swiftlint:disable function_body_length
 // swiftlint:disable cyclomatic_complexity
 func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
@@ -110,9 +108,8 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon
 
 /// Extracts a list of icons from a Web Application Manifest file
 ///
-/// - parameters:
-///   - jsonString: A JSON string containing the contents of the manifest file.
-///   - baseURL: A base URL to combine with any relative image paths.
+/// - parameter jsonString: A JSON string containing the contents of the manifest file.
+/// - parameter baseURL: A base URL to combine with any relative image paths.
 /// - returns: An array of `DetectedIcon` structures.
 func extractManifestJSONIcons(jsonString: String, baseURL: URL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
@@ -146,9 +143,8 @@ func extractManifestJSONIcons(jsonString: String, baseURL: URL) -> [DetectedIcon
 
 /// Extracts a list of icons from a Microsoft browser configuration XML document.
 ///
-/// - parameters:
-///   - document: An `XMLDocument` for the Microsoft browser configuration file.
-///   - baseURL: A base URL to combine with any relative image paths.
+/// - parameter document: An `XMLDocument` for the Microsoft browser configuration file.
+/// - parameter baseURL: A base URL to combine with any relative image paths.
 /// - returns: An array of `DetectedIcon` structures.
 func extractBrowserConfigXMLIcons(document: LBXMLDocument, baseURL: URL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
@@ -184,10 +180,9 @@ func extractBrowserConfigXMLIcons(document: LBXMLDocument, baseURL: URL) -> [Det
 
 /// Extracts the Web App Manifest URLs from an HTML document, if any.
 ///
-/// - parameters:
-///   - document: The HTML document to scan for Web App Manifest URLs
-///   - baseURL: The base URL that any 'href' attributes are relative to.
-/// - returns: An array of Web App Manifest `NSURL`s.
+/// - parameter document: The HTML document to scan for Web App Manifest URLs
+/// - parameter baseURL: The base URL that any 'href' attributes are relative to.
+/// - returns: An array of Web App Manifest `URL`s.
 func extractWebAppManifestURLs(document: HTMLDocument, baseURL: URL) -> [URL] {
     var urls: [URL] = []
     for link in document.query("/html/head/link") {
@@ -201,9 +196,8 @@ func extractWebAppManifestURLs(document: HTMLDocument, baseURL: URL) -> [URL] {
 
 /// Extracts the first browser config XML file URL from an HTML document, if any.
 ///
-/// - parameters:
-///   - document: The HTML document to scan for browser config XML file URLs.
-///   - baseURL: The base URL that any 'href' attributes are relative to.
+/// - parameter document: The HTML document to scan for browser config XML file URLs.
+/// - parameter baseURL: The base URL that any 'href' attributes are relative to.
 /// - returns: A named tuple describing the file URL or a flag indicating that the server
 ///            explicitly requested that the file not be downloaded.
 func extractBrowserConfigURL(document: HTMLDocument, baseURL: URL) -> (url: URL?, disabled: Bool) {
@@ -231,8 +225,7 @@ struct IconSize {
 
 /// Helper function for parsing a W3 `sizes` attribute value.
 ///
-/// - parameters:
-///   - string: If not `nil`, the value of the attribute to parse (e.g. `50x50 144x144`).
+/// - parameter string: If not `nil`, the value of the attribute to parse (e.g. `50x50 144x144`).
 /// - returns: An array of `IconSize` structs for each size found.
 private func parseHTMLIconSizes(string: String?) -> [IconSize] {
     var sizes: [IconSize] = []

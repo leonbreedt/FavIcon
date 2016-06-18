@@ -16,7 +16,7 @@
 //
 
 /// Checks whether a URL exists, and returns `URLResult.Success` as the result if it does.
-class CheckURLExistsOperation: URLRequestOperation {
+final class CheckURLExistsOperation: URLRequestOperation {
     override func prepareRequest() {
         urlRequest.httpMethod = "HEAD"
     }

@@ -52,12 +52,12 @@ desired size, otherwise, it will prefer the largest icon. If it has no idea of
 the size of any of the icons, it will prefer the first one it found.
 
 Of course, if this approach is too opaque for you, you can download them all
-using `downloadAll(_:completion:)`.
+using `downloadAll(url:completion:)`.
 
 Or perhaps you’d like to take a stab at downloading them yourself at a later
 time, choosing which icon you prefer based on your own criteria, in which case
-`scan(_:completion:)` will give you information about the detected icons, which
-you can feed to `download(_:completion:)` for downloading at your convenience.
+`scan(url:completion:)` will give you information about the detected icons, which
+you can feed to `download(url:completion:)` for downloading at your convenience.
 
 ## License
 Apache 2.0
