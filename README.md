@@ -65,3 +65,4 @@ you can feed to `download(url:completion:)` for downloading at your convenience.
 
 ## License
 Apache 2.0
+
