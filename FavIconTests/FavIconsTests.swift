@@ -32,9 +32,9 @@ class FavIconTests: XCTestCase {
     func testScan() {
         var actualIcons: [DetectedIcon] = []
 
-        performWebRequest("scan") { requestCompleted in
+        performWebRequest(name: "scan") { requestCompleted in
             do {
-                try FavIcon.scan("https://apple.com") { icons in
+                try FavIcon.scan(url: "https://apple.com") { icons in
                     actualIcons = icons
                     requestCompleted()
                 }
@@ -50,9 +50,9 @@ class FavIconTests: XCTestCase {
     func testDownloading() {
         var actualResults: [IconDownloadResult] = []
 
-        performWebRequest("download") { requestCompleted in
+        performWebRequest(name: "download") { requestCompleted in
             do {
-                try FavIcon.downloadAll("https://apple.com") { results in
+                try FavIcon.downloadAll(url: "https://apple.com") { results in
                     actualResults = results
                     requestCompleted()
                 }
@@ -76,49 +76,49 @@ class FavIconTests: XCTestCase {
 
     func testChooseIcon() {
         let mixedIcons = [
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Shortcut, width: 32, height: 32),
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic, width: 64, height: 64),
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .AppleIOSWebClip, width: 64, height: 64),
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .AppleOSXSafariTab, width: 144, height: 144),
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic)
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Shortcut, width: 32, height: 32),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic, width: 64, height: 64),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .AppleIOSWebClip, width: 64, height: 64),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .AppleOSXSafariTab, width: 144, height: 144),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic)
         ]
         let noSizeIcons = [
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Classic),
-            DetectedIcon(url: NSURL(string: "https://google.com/favicon.ico")!, type: .Shortcut)
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Shortcut)
         ]
 
-        var icon = FavIcon.chooseIcon(mixedIcons, width: 50, height: 50)
+        var icon = FavIcon.chooseIcon(icons: mixedIcons, width: 50, height: 50)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(64, icon!.width)
         XCTAssertEqual(64, icon!.height)
 
-        icon = FavIcon.chooseIcon(mixedIcons, width: 28, height: 28)
+        icon = FavIcon.chooseIcon(icons: mixedIcons, width: 28, height: 28)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(32, icon!.width)
         XCTAssertEqual(32, icon!.height)
 
-        icon = FavIcon.chooseIcon(mixedIcons)
+        icon = FavIcon.chooseIcon(icons: mixedIcons)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(144, icon!.width)
         XCTAssertEqual(144, icon!.height)
 
-        icon = FavIcon.chooseIcon(noSizeIcons)
+        icon = FavIcon.chooseIcon(icons: noSizeIcons)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(DetectedIconType.Shortcut.rawValue, icon!.type.rawValue)
 
-        icon = FavIcon.chooseIcon([])
+        icon = FavIcon.chooseIcon(icons: [])
 
         XCTAssertNil(icon)
     }
 
     func testHTMLHeadIconExtraction() {
-        let html = stringForContentsOfFile(pathForTestBundleResource("SampleHTMLFile.html")) ?? ""
+        let html = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleHTMLFile.html")) ?? ""
         let document = HTMLDocument(string: html)
-        let icons = extractHTMLHeadIcons(document, baseURL: NSURL(string: "https://localhost")!)
+        let icons = extractHTMLHeadIcons(document: document, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(19, icons.count)
 
@@ -219,8 +219,8 @@ class FavIconTests: XCTestCase {
     }
 
     func testManifestJSONIconExtraction() {
-        let json = stringForContentsOfFile(pathForTestBundleResource("SampleManifest.json")) ?? ""
-        let icons = extractManifestJSONIcons(json, baseURL: NSURL(string: "https://localhost")!)
+        let json = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleManifest.json")) ?? ""
+        let icons = extractManifestJSONIcons(jsonString: json, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(6, icons.count)
 
@@ -256,9 +256,9 @@ class FavIconTests: XCTestCase {
     }
 
     func testBrowserConfigXMLIconExtraction() {
-        let xml = stringForContentsOfFile(pathForTestBundleResource("SampleBrowserConfig.xml")) ?? ""
-        let document = XMLDocument(string: xml)
-        let icons = extractBrowserConfigXMLIcons(document, baseURL: NSURL(string: "https://localhost")!)
+        let xml = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleBrowserConfig.xml")) ?? ""
+        let document = LBXMLDocument(string: xml)
+        let icons = extractBrowserConfigXMLIcons(document: document, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(5, icons.count)
 
@@ -292,25 +292,25 @@ class FavIconTests: XCTestCase {
         let result = "text/html;;charset=UTF-8".parseAsHTTPContentTypeHeader()
 
         XCTAssertEqual("text/html", result.mimeType)
-        XCTAssertEqual(NSUTF8StringEncoding, result.encoding)
+        XCTAssertEqual(String.Encoding.utf8, result.encoding)
     }
 
     private func pathForTestBundleResource(fileName: String) -> String {
-        let testBundle = NSBundle(forClass: FavIconTests.self)
+        let testBundle = Bundle(for: FavIconTests.self)
         return testBundle.pathForResource(fileName, ofType: "")!
     }
 
-    private func stringForContentsOfFile(filePath: String, encoding: UInt = NSUTF8StringEncoding) -> String? {
-        return try? NSString(contentsOfFile: filePath, encoding: encoding) as String
+    private func stringForContentsOfFile(filePath: String, encoding: String.Encoding = String.Encoding.utf8) -> String? {
+        return try? String(contentsOfFile: filePath, encoding: encoding) as String
     }
 }
 
 private extension XCTestCase {
-    func performWebRequest(name: String, timeout: NSTimeInterval = 50000.0, callback: (() -> Void) -> Void) {
+    func performWebRequest(name: String, timeout: TimeInterval = 50000.0, callback: (() -> Void) -> Void) {
         FavIcon.urlSessionProvider = { return Session(cassetteName: name) }
-        let expectation = expectationWithDescription("web request - \(name)")
+        let expectation = self.expectation(withDescription: "web request - \(name)")
         callback(expectation.fulfill)
-        waitForExpectationsWithTimeout(timeout, handler: nil)
+        waitForExpectations(withTimeout: timeout, handler: nil)
     }
 }
 
