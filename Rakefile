@@ -5,7 +5,7 @@ end
 version = `git describe --tags`
 
 task :doc do
-  run "jazzy --author 'Leon Breedt' --swift-version 3.0 --module-version #{version}"
+  run "jazzy --swift-version 3.0 -o ../FavIcon-GHPages/ -a 'Leon Breedt' -u 'https://twitter.com/bitserf' -m 'FavIcon' -g 'https://github.com/bitserf/FavIcon' --module-version #{version}"
 end
 
 namespace "test" do
