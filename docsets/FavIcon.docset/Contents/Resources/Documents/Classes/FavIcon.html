@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>FavIcon Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/FavIcon" class="dashAnchor"></a>
+    <a title="FavIcon Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">FavIcon Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/bitserf/FavIcon"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">FavIcon Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        FavIcon Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/FavIcon.html">FavIcon</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/DetectedIconType.html">DetectedIconType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/IconDownloadResult.html">IconDownloadResult</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/DetectedIcon.html">DetectedIcon</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:7FavIcon9ImageType">ImageType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>FavIcon</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kt">FavIcon</span></code></pre>
+
+                </div>
+              </div>
+            <p>Responsible for detecting all of the different icons supported by a given site.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon4scanFT3urlV10Foundation3URL10completionFGSaVS_12DetectedIcon_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/scan(url:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon4scanFT3urlV10Foundation3URL10completionFGSaVS_12DetectedIcon_T__T_">scan(url:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Scans a base URL, attempting to determine all of the supported icons that can
+be used for favicon purposes.</p>
+
+<p>It will do the following to determine possible icons that can be used:</p>
+
+<ul>
+<li>Check whether or not <code>/favicon.ico</code> exists.</li>
+<li>If the base URL returns an HTML page, parse the <code>&lt;head&gt;</code> section and check for <code>&lt;link&gt;</code>
+and <code>&lt;meta&gt;</code> tags that reference icons using Apple, Microsoft and Google
+conventions.</li>
+<li>If <em>Web Application Manifest JSON</em> (<code>manifest.json</code>) files are referenced, or
+<em>Microsoft browser configuration XML</em> (<code>browserconfig.xml</code>) files
+are referenced, download and parse them to check if they reference icons.</li>
+</ul>
+
+<p>All of this work is performed in a background queue.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">scan</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">([</span><span class="kt"><a href="../Structs/DetectedIcon.html">DetectedIcon</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The base URL to scan.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when the scan has completed. The closure will be call on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon8downloadFT5iconsGSaVS_12DetectedIcon_10completionFGSaOS_18IconDownloadResult_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/download(icons:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon8downloadFT5iconsGSaVS_12DetectedIcon_10completionFGSaOS_18IconDownloadResult_T__T_">download(icons:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Downloads an array of detected icons in the background.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nv">icons</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/DetectedIcon.html">DetectedIcon</a></span><span class="p">],</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">([</span><span class="kt"><a href="../Enums/IconDownloadResult.html">IconDownloadResult</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>icons</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The icons to download.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when all download tasks have results available (successful or otherwise). The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon11downloadAllFT3urlV10Foundation3URL10completionFGSaOS_18IconDownloadResult_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/downloadAll(url:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon11downloadAllFT3urlV10Foundation3URL10completionFGSaOS_18IconDownloadResult_T__T_">downloadAll(url:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Downloads all available icons by calling <code>scan(url:)</code> to discover the available icons, and then
+performing background downloads of each icon.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">downloadAll</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">([</span><span class="kt"><a href="../Enums/IconDownloadResult.html">IconDownloadResult</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL to scan for icons.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when all download tasks have results available (successful or otherwise). The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon17downloadPreferredFzT3urlV10Foundation3URL5widthGSqSi_6heightGSqSi_10completionFOS_18IconDownloadResultT__T_"></a>
+                    <a name="//apple_ref/swift/Method/downloadPreferred(url:width:height:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon17downloadPreferredFzT3urlV10Foundation3URL5widthGSqSi_6heightGSqSi_10completionFOS_18IconDownloadResultT__T_">downloadPreferred(url:width:height:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Downloads the most preferred icon, by calling <code>scan(url:)</code> to discover available icons, and then choosing
+the most preferable available icon. If both <code>width</code> and <code>height</code> are supplied, the icon closest to the
+preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon
+has dimensions, the icons are chosen by order of their <code><a href="../Enums/DetectedIconType.html">DetectedIconType</a></code> enumeration raw value.</p>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An appropriate <code>IconError</code> if downloading was not successful.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">downloadPreferred</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span>
+                                         <span class="nv">width</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                                         <span class="nv">height</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                                         <span class="nv">completion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Enums/IconDownloadResult.html">IconDownloadResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL to scan for icons.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The preferred icon width, in pixels, or <code>nil</code>.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The preferred icon height, in pixels, or <code>nil</code>.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when the download task has produced results. The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon4scanFzT3urlSS10completionFGSaVS_12DetectedIcon_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/scan(url:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon4scanFzT3urlSS10completionFGSaVS_12DetectedIcon_T__T_">scan(url:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience overload for <code><a href="../Classes/FavIcon.html#/s:ZFC7FavIcon7FavIcon4scanFT3urlV10Foundation3URL10completionFGSaVS_12DetectedIcon_T__T_">scan(url:completion:)</a></code> that takes a <code>String</code>
+instead of a <code>URL</code> as the URL parameter. Throws an error if the URL is not a valid URL.</p>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An <code>IconError</code> if the scan failed for some reason.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">scan</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">([</span><span class="kt"><a href="../Structs/DetectedIcon.html">DetectedIcon</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The base URL to scan.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when the scan has completed. The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon11downloadAllFzT3urlSS10completionFGSaOS_18IconDownloadResult_T__T_"></a>
+                    <a name="//apple_ref/swift/Method/downloadAll(url:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon11downloadAllFzT3urlSS10completionFGSaOS_18IconDownloadResult_T__T_">downloadAll(url:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience overload for <code><a href="../Classes/FavIcon.html#/s:ZFC7FavIcon7FavIcon11downloadAllFT3urlV10Foundation3URL10completionFGSaOS_18IconDownloadResult_T__T_">downloadAll(url:completion:)</a></code> that takes a <code>String</code>
+instead of a <code>URL</code> as the URL parameter. Throws an error if the URL is not a valid URL.</p>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An <code>IconError</code> if the scan or download failed for some reason.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">downloadAll</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">([</span><span class="kt"><a href="../Enums/IconDownloadResult.html">IconDownloadResult</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL to scan for icons.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when all download tasks have results available (successful or otherwise). The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:ZFC7FavIcon7FavIcon17downloadPreferredFzT3urlSS5widthGSqSi_6heightGSqSi_10completionFOS_18IconDownloadResultT__T_"></a>
+                    <a name="//apple_ref/swift/Method/downloadPreferred(url:width:height:completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:ZFC7FavIcon7FavIcon17downloadPreferredFzT3urlSS5widthGSqSi_6heightGSqSi_10completionFOS_18IconDownloadResultT__T_">downloadPreferred(url:width:height:completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Convenience overload for <code><a href="../Classes/FavIcon.html#/s:ZFC7FavIcon7FavIcon17downloadPreferredFzT3urlV10Foundation3URL5widthGSqSi_6heightGSqSi_10completionFOS_18IconDownloadResultT__T_">downloadPreferred(url:width:height:completion:)</a></code> that takes a <code>String</code>
+instead of a <code>URL</code> as the URL parameter. Throws an error if the URL is not a valid URL.</p>
+
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An appropriate <code>IconError</code> if downloading failed for some reason.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">downloadPreferred</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span>
+                                         <span class="nv">width</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                                         <span class="nv">height</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span>
+                                         <span class="nv">completion</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Enums/IconDownloadResult.html">IconDownloadResult</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL to scan for icons.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The preferred icon width, in pixels, or <code>nil</code>.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The preferred icon height, in pixels, or <code>nil</code>.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A closure to call when the download task has produced a result. The closure will be called on the main queue.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://twitter.com/bitserf" target="_blank" rel="external">Leon Breedt</a>. All rights reserved. (Last updated: 2016-06-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

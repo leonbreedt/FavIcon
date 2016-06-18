@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/FavIcon.html">FavIcon</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/DetectedIconType.html">DetectedIconType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/IconDownloadResult.html">IconDownloadResult</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/DetectedIcon.html">DetectedIcon</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Typealiases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:7FavIcon9ImageType">ImageType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <a href='#favicon-a-href-https-raw-githubusercontent-com-bitserf-favicon-master-license-img-src-https-img-shields-io-badge-license-apache-202-0-lightgrey-svg-alt-license-a-a-href-https-travis-ci-org-bitserf-favicon-img-src-https-travis-ci-org-bitserf-favicon-svg-alt-build-status-a-a-href-https-github-com-carthage-carthage-img-src-https-img-shields-io-badge-carthage-compatible-4bc51d-svg-style-flat-alt-carthage-compatible-a-img-src-https-img-shields-io-badge-swift-3-0-orange-svg-alt-swift-3-0-img-src-https-img-shields-io-badge-platforms-ios-20-7c-20macos-20-lightgrey-svg-alt-platforms' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='favicon-a-href-https-raw-githubusercontent-com-bitserf-favicon-master-license-img-src-https-img-shields-io-badge-license-apache-202-0-lightgrey-svg-alt-license-a-a-href-https-travis-ci-org-bitserf-favicon-img-src-https-travis-ci-org-bitserf-favicon-svg-alt-build-status-a-a-href-https-github-com-carthage-carthage-img-src-https-img-shields-io-badge-carthage-compatible-4bc51d-svg-style-flat-alt-carthage-compatible-a-img-src-https-img-shields-io-badge-swift-3-0-orange-svg-alt-swift-3-0-img-src-https-img-shields-io-badge-platforms-ios-20-7c-20macos-20-lightgrey-svg-alt-platforms'>FavIcon <a href="https://raw.githubusercontent.com/bitserf/FavIcon/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg" alt="License"></a> <a href="https://travis-ci.org/bitserf/FavIcon"><img src="https://travis-ci.org/bitserf/FavIcon.svg" alt="Build Status"></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <img src="https://img.shields.io/badge/Swift-3.0-orange.svg" alt="Swift 3.0"> <img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20-lightgrey.svg" alt="platforms"></h1>
+
+<p>FavIcon is a tiny Swift library for downloading the favicon representing a website.</p>
+
+<p>Wait, why is a library needed to do this? Surely it&rsquo;s just a simple HTTP GET of
+<code>/favicon.ico</code>, right? Right?  Well. Go have a read of <a href="http://stackoverflow.com/questions/19029342/favicons-best-practices">this StackOverflow
+post</a>, and
+see how you feel afterwards.</p>
+<a href='#quick-start' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='quick-start'>Quick Start</h2>
+
+<p>The project ships with a playground in which you can try it out for yourself.
+Just be sure to build the <code>FavIcon-iOS</code> target before you try to use the
+playground, or you will get an import error when it tries to import the FavIcon
+framework.</p>
+<a href='#including-in-your-project' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='including-in-your-project'>Including in your project</h2>
+
+<ol>
+<li>Add <code>FavIcon.framework</code> to the Linked Frameworks and Libraries for your application target.</li>
+<li>If you&rsquo;re using Carthage, add <code>FavIcon.framework</code> to the Input Files for your <code>carthage copy-frameworks</code> Build Phase.</li>
+</ol>
+<a href='#features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='features'>Features</h2>
+
+<ul>
+<li>Detection of <code>/favicon.ico</code> if it exists</li>
+<li>Parsing of the HTML at a URL, and scanning for appropriate <code>&lt;link&gt;</code> or
+<code>&lt;meta&gt;</code> tags that refer to icons using Apple, Google or Microsoft
+conventions.</li>
+<li>Discovery of and parsing of Web Application manifest JSON files to obtain
+lists of icons.</li>
+<li>Discovery of and parsing of Microsoft browser configuration XML files for
+obtaining lists of icons.</li>
+</ul>
+
+<p>Yup. These are all potential ways of indicating that your website has an icon
+that can be used in user interfaces. Good work, fellow programmers. 👍</p>
+<a href='#usage-example' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage-example'>Usage Example</h2>
+
+<p>Perhaps you have a 16x16 location in your user interface where you want to put
+the icon of a website the user is currently visiting?</p>
+<pre class="highlight swift"><code><span class="k">try</span> <span class="kt">FavIcon</span><span class="o">.</span><span class="nf">downloadPreferred</span><span class="p">(</span><span class="s">"https://apple.com"</span><span class="p">,</span>
+                              <span class="nv">width</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+                              <span class="nv">height</span><span class="p">:</span> <span class="mi">16</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="k">case</span> <span class="o">.</span><span class="kt">Success</span><span class="p">(</span><span class="k">let</span> <span class="nv">image</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span> <span class="p">{</span>
+      <span class="c1">// On iOS, this is a UIImage, do something with it here.</span>
+      <span class="c1">// This closure will be executed on the main queue, so it's safe to touch</span>
+      <span class="c1">// the UI here.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will detect all of the available icons at the URL, and if it is able to
+determine their sizes, it will try to find the icon closest in size to your
+desired size, otherwise, it will prefer the largest icon. If it has no idea of
+the size of any of the icons, it will prefer the first one it found.</p>
+
+<p>Of course, if this approach is too opaque for you, you can download them all
+using <code>downloadAll(url:completion:)</code>.</p>
+
+<p>Or perhaps you’d like to take a stab at downloading them yourself at a later
+time, choosing which icon you prefer based on your own criteria, in which case
+<code>scan(url:completion:)</code> will give you information about the detected icons, which
+you can feed to <code>download(url:completion:)</code> for downloading at your convenience.</p>
+<a href='#license' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='license'>License</h2>
+
+<p>Apache 2.0</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="" target="_blank" rel="external">Leon Breedt</a>. All rights reserved. (Last updated: 2016-06-18)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
