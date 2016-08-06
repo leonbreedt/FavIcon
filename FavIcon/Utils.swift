@@ -33,7 +33,7 @@ extension String {
             // Default according to RFC is ISO-8859-1, but probably nothing obeys that, so default
             // to UTF-8 instead.
             var encoding = String.Encoding.utf8
-            if let charset = parameters["charset"], parsedEncoding = charset.parseAsStringEncoding() {
+            if let charset = parameters["charset"], let parsedEncoding = charset.parseAsStringEncoding() {
                 encoding = parsedEncoding
             }
 

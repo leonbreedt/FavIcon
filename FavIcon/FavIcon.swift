@@ -34,11 +34,11 @@ public enum IconDownloadResult {
     ///
     /// - parameter image: The `ImageType` for the downloaded icon.
     case Success(image: ImageType)
-    
+
     /// Download failed for some reason.
     ///
     /// - parameter error: The error which can be consulted to determine the root cause.
-    case Failure(error: ErrorProtocol)
+    case Failure(error: Error)
 
 }
 
@@ -46,7 +46,7 @@ public enum IconDownloadResult {
 public final class FavIcon {
 
     // swiftlint:disable function_body_length
-    
+
     /// Scans a base URL, attempting to determine all of the supported icons that can
     /// be used for favicon purposes.
     ///
@@ -66,7 +66,7 @@ public final class FavIcon {
     /// - parameter completion: A closure to call when the scan has completed. The closure will be call
     ///                         on the main queue.
     public static func scan(url: URL, completion: ([DetectedIcon]) -> Void) {
-        let queue = DispatchQueue(label: "org.bitserf.FavIcon", attributes: .serial)
+        let queue = DispatchQueue(label: "org.bitserf.FavIcon", attributes: [])
         var icons: [DetectedIcon] = []
         var additionalDownloads: [URLRequestWithCallback] = []
         let urlSession = urlSessionProvider()
@@ -100,7 +100,7 @@ public final class FavIcon {
                     }
 
                     let browserConfigResult = extractBrowserConfigURL(document: document, baseURL: url)
-                    if let browserConfigURL = browserConfigResult.url where !browserConfigResult.disabled {
+                    if let browserConfigURL = browserConfigResult.url, !browserConfigResult.disabled {
                         let downloadOperation = DownloadTextOperation(url: browserConfigURL,
                                                                       session: urlSession)
                         let download = urlRequestOperation(operation: downloadOperation) { result in
@@ -123,7 +123,7 @@ public final class FavIcon {
 
 
         let favIconURL = URL(string: "/favicon.ico", relativeTo: url as URL)!.absoluteURL
-        let checkFavIconOperation = CheckURLExistsOperation(url: favIconURL!, session: urlSession)
+        let checkFavIconOperation = CheckURLExistsOperation(url: favIconURL, session: urlSession)
         let checkFavIcon = urlRequestOperation(operation: checkFavIconOperation) { result in
             if case let .Success(actualURL) = result {
                 queue.sync {
@@ -237,14 +237,14 @@ public final class FavIcon {
     }
 
     // MARK: Test hooks
-    
+
     typealias URLSessionProvider = (Void) -> URLSession
     static var urlSessionProvider: URLSessionProvider = FavIcon.createDefaultURLSession
 
     // MARK: Internal
 
     static func createDefaultURLSession() -> URLSession {
-        return URLSession.shared()
+        return URLSession.shared
     }
 
     /// Helper function to choose an icon to use out of a set of available icons. If preferred
@@ -259,15 +259,15 @@ public final class FavIcon {
         guard icons.count > 0 else { return nil }
 
         let iconsInPreferredOrder = icons.sorted { left, right in
-            if let preferredWidth = width, preferredHeight = height,
-                   widthLeft = left.width, heightLeft = left.height,
-                   widthRight = right.width, heightRight = right.height {
+            if let preferredWidth = width, let preferredHeight = height,
+               let widthLeft = left.width, let heightLeft = left.height,
+               let widthRight = right.width, let heightRight = right.height {
                 // Which is closest to preferred size?
                 let deltaA = abs(widthLeft - preferredWidth) * abs(heightLeft - preferredHeight)
                 let deltaB = abs(widthRight - preferredWidth) * abs(heightRight - preferredHeight)
                 return deltaA < deltaB
             } else {
-                if let areaLeft = left.area, areaRight = right.area {
+                if let areaLeft = left.area, let areaRight = right.area {
                     // Which is larger?
                     return areaRight < areaLeft
                 }
@@ -294,7 +294,7 @@ public final class FavIcon {
 }
 
 /// Enumerates errors that can be thrown while detecting or downloading icons.
-enum IconError: ErrorProtocol {
+enum IconError: Error {
     /// The base URL specified is not a valid URL.
     case InvalidBaseURL
     /// At least one icon to must be specified for downloading.
@@ -351,7 +351,7 @@ extension FavIcon {
 extension DetectedIcon {
     /// The area of a detected icon, if known.
     var area: Int? {
-        if let width = width, height = height {
+        if let width = width, let height = height {
             return width * height
         }
         return nil

@@ -35,12 +35,12 @@ enum URLResult {
 
     /// The URL request failed for some reason.
     /// - parameter error: The error that occurred.
-    case Failed(error: ErrorProtocol)
+    case Failed(error: Error)
 
 }
 
 /// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
-enum URLRequestError: ErrorProtocol {
+enum URLRequestError: Error {
     /// No response was received from the server.
     case MissingResponse
     /// The file was not found (HTTP 404 response).
@@ -93,7 +93,7 @@ class URLRequestOperation: Operation {
         fatalError("must override processResult()")
     }
 
-    private func dataTaskCompletion(data: Data?, response: URLResponse?, error: NSError?) {
+    private func dataTaskCompletion(data: Data?, response: URLResponse?, error: Error?) {
         guard error == nil else {
             result = .Failed(error: error!)
             self.notifyFinished()

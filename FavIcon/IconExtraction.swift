@@ -46,14 +46,14 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon
 
     for link in document.query("/html/head/link") {
         if let rel = link.attributes["rel"],
-               href = link.attributes["href"],
-               url = URL(string: href, relativeTo: baseURL) {
+           let href = link.attributes["href"],
+           let url = URL(string: href, relativeTo: baseURL) {
             switch rel.lowercased() {
             case "shortcut icon":
-                icons.append(DetectedIcon(url: url.absoluteURL!, type:.Shortcut))
+                icons.append(DetectedIcon(url: url.absoluteURL, type:.Shortcut))
                 break
             case "icon":
-                if let type = link.attributes["type"] where type.lowercased() == "image/png" {
+                if let type = link.attributes["type"], type.lowercased() == "image/png" {
                     let sizes = parseHTMLIconSizes(string: link.attributes["sizes"])
                     if sizes.count > 0 {
                         for size in sizes {
@@ -65,20 +65,20 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon
                             }
                         }
                     } else {
-                        icons.append(DetectedIcon(url: url.absoluteURL!, type: .Classic))
+                        icons.append(DetectedIcon(url: url.absoluteURL, type: .Classic))
                     }
                 }
             case "apple-touch-icon":
                 let sizes = parseHTMLIconSizes(string: link.attributes["sizes"])
                 if sizes.count > 0 {
                     for size in sizes {
-                        icons.append(DetectedIcon(url: url.absoluteURL!,
+                        icons.append(DetectedIcon(url: url.absoluteURL,
                                                   type: .AppleIOSWebClip,
                                                   width: size.width,
                                                   height: size.height))
                     }
                 } else {
-                    icons.append(DetectedIcon(url: url.absoluteURL!,
+                    icons.append(DetectedIcon(url: url.absoluteURL,
                                               type: .AppleIOSWebClip,
                                               width: 60,
                                               height: 60))
@@ -91,9 +91,9 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon
 
     for meta in document.query("/html/head/meta") {
         if let name = meta.attributes["name"]?.lowercased(),
-               content = meta.attributes["content"],
-               url = URL(string: content, relativeTo: baseURL),
-               size = kMicrosoftSizeMap[name] {
+           let content = meta.attributes["content"],
+           let url = URL(string: content, relativeTo: baseURL),
+           let size = kMicrosoftSizeMap[name] {
             icons.append(DetectedIcon(url: url,
                                       type: .MicrosoftPinnedSite,
                                       width: size.width,
@@ -114,16 +114,15 @@ func extractHTMLHeadIcons(document: HTMLDocument, baseURL: URL) -> [DetectedIcon
 func extractManifestJSONIcons(jsonString: String, baseURL: URL) -> [DetectedIcon] {
     var icons: [DetectedIcon] = []
 
-    if let
-        data = jsonString.data(using: String.Encoding.utf8),
-        object = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()),
-        manifest = object as? NSDictionary,
-        manifestIcons = manifest["icons"] as? [NSDictionary] {
+    if let data = jsonString.data(using: String.Encoding.utf8),
+       let object = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()),
+       let manifest = object as? NSDictionary,
+       let manifestIcons = manifest["icons"] as? [NSDictionary] {
         for icon in manifestIcons {
-            if let type = icon["type"] as? String where type.lowercased() == "image/png",
-                let src = icon["src"] as? String,
-                url = URL(string: src, relativeTo: baseURL)?.absoluteURL {
-                let sizes = parseHTMLIconSizes(string: icon["sizes"] as? String)
+            if let type = icon["type"] as? String, type.lowercased() == "image/png",
+               let src = icon["src"] as? String,
+               let url = URL(string: src, relativeTo: baseURL)?.absoluteURL {
+               let sizes = parseHTMLIconSizes(string: icon["sizes"] as? String)
                 if sizes.count > 0 {
                     for size in sizes {
                         icons.append(DetectedIcon(url: url,
@@ -150,9 +149,8 @@ func extractBrowserConfigXMLIcons(document: LBXMLDocument, baseURL: URL) -> [Det
     var icons: [DetectedIcon] = []
 
     for tile in document.query("/browserconfig/msapplication/tile/*") {
-        if let
-            src = tile.attributes["src"],
-            url = URL(string: src, relativeTo: baseURL)?.absoluteURL {
+        if let src = tile.attributes["src"],
+           let url = URL(string: src, relativeTo: baseURL)?.absoluteURL {
                 switch tile.name.lowercased() {
                 case "tileimage":
                     icons.append(DetectedIcon(url: url, type: .MicrosoftPinnedSite, width: 144, height: 144))
@@ -186,8 +184,8 @@ func extractBrowserConfigXMLIcons(document: LBXMLDocument, baseURL: URL) -> [Det
 func extractWebAppManifestURLs(document: HTMLDocument, baseURL: URL) -> [URL] {
     var urls: [URL] = []
     for link in document.query("/html/head/link") {
-        if let rel = link.attributes["rel"]?.lowercased() where rel == "manifest",
-           let href = link.attributes["href"], manifestURL = URL(string: href, relativeTo: baseURL) {
+        if let rel = link.attributes["rel"]?.lowercased(), rel == "manifest",
+           let href = link.attributes["href"], let manifestURL = URL(string: href, relativeTo: baseURL) {
             urls.append(manifestURL)
         }
     }
@@ -202,7 +200,7 @@ func extractWebAppManifestURLs(document: HTMLDocument, baseURL: URL) -> [URL] {
 ///            explicitly requested that the file not be downloaded.
 func extractBrowserConfigURL(document: HTMLDocument, baseURL: URL) -> (url: URL?, disabled: Bool) {
     for meta in document.query("/html/head/meta") {
-        if let name = meta.attributes["name"]?.lowercased() where name == "msapplication-config",
+        if let name = meta.attributes["name"]?.lowercased(), name == "msapplication-config",
            let content = meta.attributes["content"] {
             if content.lowercased() == "none" {
                 // Explicitly asked us not to download the file.
@@ -229,11 +227,11 @@ struct IconSize {
 /// - returns: An array of `IconSize` structs for each size found.
 private func parseHTMLIconSizes(string: String?) -> [IconSize] {
     var sizes: [IconSize] = []
-    if let string = string?.lowercased() where string != "any" {
+    if let string = string?.lowercased(), string != "any" {
         for size in string.components(separatedBy: .whitespaces) {
             let parts = size.components(separatedBy: "x")
             if parts.count != 2 { continue }
-            if let width = Int(parts[0]), height = Int(parts[1]) {
+            if let width = Int(parts[0]), let height = Int(parts[1]) {
                 sizes.append(IconSize(width: width, height: height))
             }
         }
