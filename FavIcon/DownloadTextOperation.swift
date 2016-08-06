@@ -21,7 +21,7 @@ final class DownloadTextOperation: URLRequestOperation {
     override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
         let (mimeType, encoding) = response.contentTypeAndEncoding()
         if mimeType == "application/json" || mimeType.hasPrefix("text/") {
-            if let data = data, text = String(data: data, encoding: encoding ?? String.Encoding.utf8) {
+            if let data = data, let text = String(data: data, encoding: encoding ?? String.Encoding.utf8) {
                 completion(.TextDownloaded(url: response.url!, text: text, mimeType: mimeType))
             } else {
                 completion(.Failed(error: URLRequestError.InvalidTextEncoding))
