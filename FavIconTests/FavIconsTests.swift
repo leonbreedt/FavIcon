@@ -34,7 +34,7 @@ class FavIconTests: XCTestCase {
 
         performWebRequest(name: "scan") { requestCompleted in
             do {
-                try FavIcon.scan(url: "https://apple.com") { icons in
+                try FavIcon.scan("https://apple.com") { icons in
                     actualIcons = icons
                     requestCompleted()
                 }
@@ -52,7 +52,7 @@ class FavIconTests: XCTestCase {
 
         performWebRequest(name: "download") { requestCompleted in
             do {
-                try FavIcon.downloadAll(url: "https://apple.com") { results in
+                try FavIcon.downloadAll("https://apple.com") { results in
                     actualResults = results
                     requestCompleted()
                 }
@@ -64,11 +64,11 @@ class FavIconTests: XCTestCase {
         XCTAssertEqual(1, actualResults.count)
 
         switch actualResults[0] {
-        case .Success(let image):
+        case .success(let image):
             XCTAssertEqual(32, image.size.width)
             XCTAssertEqual(32, image.size.height)
             break
-        case .Failure(let error):
+        case .failure(let error):
             XCTFail("unexpected error returned for download: \(error)")
             break
         }
@@ -76,41 +76,41 @@ class FavIconTests: XCTestCase {
 
     func testChooseIcon() {
         let mixedIcons = [
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Shortcut, width: 32, height: 32),
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic, width: 64, height: 64),
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .AppleIOSWebClip, width: 64, height: 64),
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .AppleOSXSafariTab, width: 144, height: 144),
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic)
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .shortcut, width: 32, height: 32),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic, width: 64, height: 64),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .appleIOSWebClip, width: 64, height: 64),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .appleOSXSafariTab, width: 144, height: 144),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic)
         ]
         let noSizeIcons = [
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Classic),
-            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .Shortcut)
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic),
+            DetectedIcon(url: URL(string: "https://google.com/favicon.ico")!, type: .shortcut)
         ]
 
-        var icon = FavIcon.chooseIcon(icons: mixedIcons, width: 50, height: 50)
+        var icon = FavIcon.chooseIcon(mixedIcons, width: 50, height: 50)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(64, icon!.width)
         XCTAssertEqual(64, icon!.height)
 
-        icon = FavIcon.chooseIcon(icons: mixedIcons, width: 28, height: 28)
+        icon = FavIcon.chooseIcon(mixedIcons, width: 28, height: 28)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(32, icon!.width)
         XCTAssertEqual(32, icon!.height)
 
-        icon = FavIcon.chooseIcon(icons: mixedIcons)
+        icon = FavIcon.chooseIcon(mixedIcons)
 
         XCTAssertNotNil(icon)
         XCTAssertEqual(144, icon!.width)
         XCTAssertEqual(144, icon!.height)
 
-        icon = FavIcon.chooseIcon(icons: noSizeIcons)
+        icon = FavIcon.chooseIcon(noSizeIcons)
 
         XCTAssertNotNil(icon)
-        XCTAssertEqual(DetectedIconType.Shortcut.rawValue, icon!.type.rawValue)
+        XCTAssertEqual(DetectedIconType.shortcut.rawValue, icon!.type.rawValue)
 
-        icon = FavIcon.chooseIcon(icons: [])
+        icon = FavIcon.chooseIcon([])
 
         XCTAssertNil(icon)
     }
@@ -118,139 +118,139 @@ class FavIconTests: XCTestCase {
     func testHTMLHeadIconExtraction() {
         let html = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleHTMLFile.html")) ?? ""
         let document = HTMLDocument(string: html)
-        let icons = extractHTMLHeadIcons(document: document, baseURL: URL(string: "https://localhost")!)
+        let icons = extractHTMLHeadIcons(document, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(19, icons.count)
 
         XCTAssertEqual("https://localhost/shortcut.ico", icons[0].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.Shortcut.rawValue, icons[0].type.rawValue)
+        XCTAssertEqual(DetectedIconType.shortcut.rawValue, icons[0].type.rawValue)
         XCTAssertNil(icons[0].width)
         XCTAssertNil(icons[0].height)
 
         XCTAssertEqual("https://localhost/content/images/favicon-96x96.png", icons[1].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.GoogleTV.rawValue, icons[1].type.rawValue)
+        XCTAssertEqual(DetectedIconType.googleTV.rawValue, icons[1].type.rawValue)
         XCTAssertEqual(96, icons[1].width!)
         XCTAssertEqual(96, icons[1].height!)
 
         XCTAssertEqual("https://localhost/content/images/favicon-16x16.png", icons[2].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.Classic.rawValue, icons[2].type.rawValue)
+        XCTAssertEqual(DetectedIconType.classic.rawValue, icons[2].type.rawValue)
         XCTAssertEqual(16, icons[2].width!)
         XCTAssertEqual(16, icons[2].height!)
 
         XCTAssertEqual("https://localhost/content/images/favicon-32x32.png", icons[3].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleOSXSafariTab.rawValue, icons[3].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleOSXSafariTab.rawValue, icons[3].type.rawValue)
         XCTAssertEqual(32, icons[3].width!)
         XCTAssertEqual(32, icons[3].height!)
 
         XCTAssertEqual("https://localhost/content/icons/favicon-192x192.png", icons[4].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.GoogleAndroidChrome.rawValue, icons[4].type.rawValue)
+        XCTAssertEqual(DetectedIconType.googleAndroidChrome.rawValue, icons[4].type.rawValue)
         XCTAssertEqual(192, icons[4].width!)
         XCTAssertEqual(192, icons[4].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-57x57.png", icons[5].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[5].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[5].type.rawValue)
         XCTAssertEqual(57, icons[5].width!)
         XCTAssertEqual(57, icons[5].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-114x114.png", icons[6].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[6].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[6].type.rawValue)
         XCTAssertEqual(114, icons[6].width!)
         XCTAssertEqual(114, icons[6].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-72x72.png", icons[7].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[7].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[7].type.rawValue)
         XCTAssertEqual(72, icons[7].width!)
         XCTAssertEqual(72, icons[7].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-144x144.png", icons[8].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[8].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[8].type.rawValue)
         XCTAssertEqual(144, icons[8].width!)
         XCTAssertEqual(144, icons[8].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-60x60.png", icons[9].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[9].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[9].type.rawValue)
         XCTAssertEqual(60, icons[9].width!)
         XCTAssertEqual(60, icons[9].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-120x120.png", icons[10].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[10].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[10].type.rawValue)
         XCTAssertEqual(120, icons[10].width!)
         XCTAssertEqual(120, icons[10].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-76x76.png", icons[11].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[11].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[11].type.rawValue)
         XCTAssertEqual(76, icons[11].width!)
         XCTAssertEqual(76, icons[11].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-152x152.png", icons[12].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[12].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[12].type.rawValue)
         XCTAssertEqual(152, icons[12].width!)
         XCTAssertEqual(152, icons[12].height!)
 
         XCTAssertEqual("https://localhost/content/images/apple-touch-icon-180x180.png", icons[13].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.AppleIOSWebClip.rawValue, icons[13].type.rawValue)
+        XCTAssertEqual(DetectedIconType.appleIOSWebClip.rawValue, icons[13].type.rawValue)
         XCTAssertEqual(180, icons[13].width!)
         XCTAssertEqual(180, icons[13].height!)
 
         XCTAssertEqual("https://localhost/content/images/mstile-144x144.png", icons[14].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[14].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[14].type.rawValue)
         XCTAssertEqual(144, icons[14].width!)
         XCTAssertEqual(144, icons[14].height!)
 
         XCTAssertEqual("https://localhost/tile-tiny.png", icons[15].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[15].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[15].type.rawValue)
         XCTAssertEqual(70, icons[15].width!)
         XCTAssertEqual(70, icons[15].height!)
 
         XCTAssertEqual("https://localhost/tile-square.png", icons[16].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[16].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[16].type.rawValue)
         XCTAssertEqual(150, icons[16].width!)
         XCTAssertEqual(150, icons[16].height!)
 
         XCTAssertEqual("https://localhost/tile-wide.png", icons[17].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[17].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[17].type.rawValue)
         XCTAssertEqual(310, icons[17].width!)
         XCTAssertEqual(150, icons[17].height!)
 
         XCTAssertEqual("https://localhost/tile-large.png", icons[18].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[18].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[18].type.rawValue)
         XCTAssertEqual(310, icons[18].width!)
         XCTAssertEqual(310, icons[18].height!)
     }
 
     func testManifestJSONIconExtraction() {
         let json = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleManifest.json")) ?? ""
-        let icons = extractManifestJSONIcons(jsonString: json, baseURL: URL(string: "https://localhost")!)
+        let icons = extractManifestJSONIcons(json, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(6, icons.count)
 
         XCTAssertEqual("https://localhost/launcher-icon-0-75x.png", icons[0].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[0].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[0].type.rawValue)
         XCTAssertEqual(36, icons[0].width!)
         XCTAssertEqual(36, icons[0].height!)
 
         XCTAssertEqual("https://localhost/launcher-icon-1x.png", icons[1].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[1].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[1].type.rawValue)
         XCTAssertEqual(48, icons[1].width!)
         XCTAssertEqual(48, icons[1].height!)
 
         XCTAssertEqual("https://localhost/launcher-icon-1-5x.png", icons[2].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[2].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[2].type.rawValue)
         XCTAssertEqual(72, icons[2].width!)
         XCTAssertEqual(72, icons[2].height!)
 
         XCTAssertEqual("https://localhost/launcher-icon-2x.png", icons[3].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[3].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[3].type.rawValue)
         XCTAssertEqual(96, icons[3].width!)
         XCTAssertEqual(96, icons[3].height!)
 
         XCTAssertEqual("https://localhost/launcher-icon-3x.png", icons[4].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[4].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[4].type.rawValue)
         XCTAssertEqual(144, icons[4].width!)
         XCTAssertEqual(144, icons[4].height!)
 
         XCTAssertEqual("https://localhost/launcher-icon-4x.png", icons[5].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.WebAppManifest.rawValue, icons[5].type.rawValue)
+        XCTAssertEqual(DetectedIconType.webAppManifest.rawValue, icons[5].type.rawValue)
         XCTAssertEqual(192, icons[5].width!)
         XCTAssertEqual(192, icons[5].height!)
     }
@@ -258,32 +258,32 @@ class FavIconTests: XCTestCase {
     func testBrowserConfigXMLIconExtraction() {
         let xml = stringForContentsOfFile(filePath: pathForTestBundleResource(fileName: "SampleBrowserConfig.xml")) ?? ""
         let document = LBXMLDocument(string: xml)
-        let icons = extractBrowserConfigXMLIcons(document: document, baseURL: URL(string: "https://localhost")!)
+        let icons = extractBrowserConfigXMLIcons(document, baseURL: URL(string: "https://localhost")!)
 
         XCTAssertEqual(5, icons.count)
 
         XCTAssertEqual("https://localhost/small.png", icons[0].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[0].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[0].type.rawValue)
         XCTAssertEqual(70, icons[0].width!)
         XCTAssertEqual(70, icons[0].height!)
 
         XCTAssertEqual("https://localhost/medium.png", icons[1].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[1].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[1].type.rawValue)
         XCTAssertEqual(150, icons[1].width!)
         XCTAssertEqual(150, icons[1].height!)
 
         XCTAssertEqual("https://localhost/wide.png", icons[2].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[2].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[2].type.rawValue)
         XCTAssertEqual(310, icons[2].width!)
         XCTAssertEqual(150, icons[2].height!)
 
         XCTAssertEqual("https://localhost/large.png", icons[3].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[3].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[3].type.rawValue)
         XCTAssertEqual(310, icons[3].width!)
         XCTAssertEqual(310, icons[3].height!)
 
         XCTAssertEqual("https://localhost/tile.png", icons[4].url.absoluteString)
-        XCTAssertEqual(DetectedIconType.MicrosoftPinnedSite.rawValue, icons[4].type.rawValue)
+        XCTAssertEqual(DetectedIconType.microsoftPinnedSite.rawValue, icons[4].type.rawValue)
         XCTAssertEqual(144, icons[4].width!)
         XCTAssertEqual(144, icons[4].height!)
     }
@@ -297,7 +297,7 @@ class FavIconTests: XCTestCase {
 
     private func pathForTestBundleResource(fileName: String) -> String {
         let testBundle = Bundle(for: FavIconTests.self)
-        return testBundle.pathForResource(fileName, ofType: "")!
+        return testBundle.path(forResource: fileName, ofType: "")!
     }
 
     private func stringForContentsOfFile(filePath: String, encoding: String.Encoding = String.Encoding.utf8) -> String? {
@@ -306,11 +306,12 @@ class FavIconTests: XCTestCase {
 }
 
 private extension XCTestCase {
-    func performWebRequest(name: String, timeout: TimeInterval = 50000.0, callback: (() -> Void) -> Void) {
+    func performWebRequest(name: String, timeout: TimeInterval = 50000.0, callback: (@escaping () -> Void) -> Void) {
         FavIcon.urlSessionProvider = { return Session(cassetteName: name) }
-        let expectation = self.expectation(withDescription: "web request - \(name)")
+        let expectation = self.expectation(description: "web request - \(name)")
         callback(expectation.fulfill)
-        waitForExpectations(withTimeout: timeout, handler: nil)
+        waitForExpectations(timeout: timeout, handler: nil)
+    }
     }
 }
 

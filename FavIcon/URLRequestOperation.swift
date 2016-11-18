@@ -22,38 +22,38 @@ enum URLResult {
     /// - parameter url: The actual URL the content was downloaded from, after any redirects.
     /// - parameter text: The text content.
     /// - parameter mimeType: The MIME type of the text content (e.g. `application/json`).
-    case TextDownloaded(url: URL, text: String, mimeType: String)
+    case textDownloaded(url: URL, text: String, mimeType: String)
 
     /// Image content was downloaded successfully.
     /// - parameter url: The actual URL the content was downloaded from, after any redirects.
     /// - parameter image: The downloaded image.
-    case ImageDownloaded(url: URL, image: ImageType)
+    case imageDownloaded(url: URL, image: ImageType)
 
     /// The URL request was successful (HTTP 200 response).
     /// - parameter url: The actual URL, after any redirects.
-    case Success(url: URL)
+    case success(url: URL)
 
     /// The URL request failed for some reason.
     /// - parameter error: The error that occurred.
-    case Failed(error: Error)
+    case failed(error: Error)
 
 }
 
 /// Enumerates well known errors that may occur while executing a `URLRequestOperation`.
 enum URLRequestError: Error {
     /// No response was received from the server.
-    case MissingResponse
+    case missingResponse
     /// The file was not found (HTTP 404 response).
-    case FileNotFound
+    case fileNotFound
     /// The request succeeded, but the content was not plain text when it was expected to be.
-    case NotPlainText
+    case notPlainText
     /// The request succeeded, but the content encoding could not be determined, or was malformed.
-    case InvalidTextEncoding
+    case invalidTextEncoding
     /// The request succeeded, but the MIME type of the response is not a supported image format.
-    case UnsupportedImageFormat(mimeType: String)
+    case unsupportedImageFormat(mimeType: String)
     /// An unexpected HTTP error response was returned.
     /// - parameter response: The `HTTPURLResponse` that can be consulted for further information.
-    case HTTPError(response: HTTPURLResponse)
+    case httpError(response: HTTPURLResponse)
 }
 
 /// Base class for performing URL requests in the context of an `NSOperation`.
@@ -61,9 +61,9 @@ class URLRequestOperation: Operation {
     var urlRequest: URLRequest
     var result: URLResult?
 
-    private var task: URLSessionDataTask?
-    private let session: URLSession
-    private var semaphore: DispatchSemaphore?
+    fileprivate var task: URLSessionDataTask?
+    fileprivate let session: URLSession
+    fileprivate var semaphore: DispatchSemaphore?
 
     init(url: URL, session: URLSession) {
         self.session = session
@@ -89,36 +89,36 @@ class URLRequestOperation: Operation {
     func prepareRequest() {
     }
 
-    func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
+    func processResult(_ data: Data?, response: HTTPURLResponse, completion: @escaping (URLResult) -> Void) {
         fatalError("must override processResult()")
     }
 
-    private func dataTaskCompletion(data: Data?, response: URLResponse?, error: Error?) {
+    fileprivate func dataTaskCompletion(_ data: Data?, response: URLResponse?, error: Error?) {
         guard error == nil else {
-            result = .Failed(error: error!)
+            result = .failed(error: error!)
             self.notifyFinished()
             return
         }
 
         guard let response = response as? HTTPURLResponse else {
-            result = .Failed(error: URLRequestError.MissingResponse)
+            result = .failed(error: URLRequestError.missingResponse)
             self.notifyFinished()
             return
         }
 
         if response.statusCode == 404 {
-            result = .Failed(error: URLRequestError.FileNotFound)
+            result = .failed(error: URLRequestError.fileNotFound)
             self.notifyFinished()
             return
         }
 
         if response.statusCode < 200 || response.statusCode > 299 {
-            result = .Failed(error: URLRequestError.HTTPError(response: response))
+            result = .failed(error: URLRequestError.httpError(response: response))
             self.notifyFinished()
             return
         }
 
-        processResult(data: data, response: response) { result in
+        processResult(data, response: response) { result in
             // This block may run on another thread long after dataTaskCompletion() finishes! So
             // wait until then to signal semaphore if we get past checks above.
             self.result = result
@@ -126,7 +126,7 @@ class URLRequestOperation: Operation {
         }
     }
 
-    private func notifyFinished() {
+    fileprivate func notifyFinished() {
         if let semaphore = self.semaphore {
             semaphore.signal()
         }
@@ -135,10 +135,10 @@ class URLRequestOperation: Operation {
 
 typealias URLRequestWithCallback = (request: URLRequestOperation, completion: (URLResult) -> Void)
 
-func executeURLOperations(operations: [URLRequestOperation],
+func executeURLOperations(_ operations: [URLRequestOperation],
                           concurrency: Int = 2,
                           on queue: OperationQueue? = nil,
-                          completion: ([URLResult]) -> Void) {
+                          completion: @escaping ([URLResult]) -> Void) {
     guard operations.count > 0 else {
         completion([])
         return
@@ -160,10 +160,10 @@ func executeURLOperations(operations: [URLRequestOperation],
     queue.isSuspended = false
 }
 
-func executeURLOperations(operations: [URLRequestWithCallback],
+func executeURLOperations(_ operations: [URLRequestWithCallback],
                           concurrency: Int = 2,
                           on queue: OperationQueue? = nil,
-                          completion: () -> Void) {
+                          completion: @escaping () -> Void) {
     guard operations.count > 0 else { return }
 
     let queue = queue ?? OperationQueue()
@@ -188,7 +188,7 @@ func executeURLOperations(operations: [URLRequestWithCallback],
     queue.isSuspended = false
 }
 
-func urlRequestOperation(operation: URLRequestOperation,
-                         completion: (URLResult) -> Void) -> URLRequestWithCallback {
+func urlRequestOperation(_ operation: URLRequestOperation,
+                         completion: @escaping (URLResult) -> Void) -> URLRequestWithCallback {
     return (request: operation, completion: completion)
 }

@@ -18,21 +18,21 @@
 /// Enumerates the types of detected icons.
 public enum DetectedIconType: UInt {
     /// A shortcut icon.
-    case Shortcut
+    case shortcut
     /// A classic icon (usually in the range 16x16 to 48x48).
-    case Classic
+    case classic
     /// A Google TV icon.
-    case GoogleTV
+    case googleTV
     /// An icon used by Chrome/Android.
-    case GoogleAndroidChrome
+    case googleAndroidChrome
     /// An icon used by Safari on OS X for tabs.
-    case AppleOSXSafariTab
+    case appleOSXSafariTab
     /// An icon used iOS for Web Clips on home screen.
-    case AppleIOSWebClip
+    case appleIOSWebClip
     /// An icon used for a pinned site in Windows.
-    case MicrosoftPinnedSite
+    case microsoftPinnedSite
     /// An icon defined in a Web Application Manifest JSON file, mainly Android/Chrome.
-    case WebAppManifest
+    case webAppManifest
 }
 
 /// Represents a detected icon.
