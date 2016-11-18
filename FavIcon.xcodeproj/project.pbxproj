@@ -39,10 +39,6 @@
 		2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E18523A1BDAE5300065F877 /* FavIcon.framework */; };
 		2E4681B61BE32DDF008375AB /* FavIconsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0C31021BDB827100C88151 /* FavIconsTests.swift */; };
 		2E4681B71BE32DE2008375AB /* HTMLDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E18522A1BDAE5160065F877 /* HTMLDocumentTests.swift */; };
-		2E4681B91BE490D6008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; };
-		2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; };
-		2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681B81BE490D6008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = 2E4681BA1BE490E9008375AB /* DVR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2E7A93EB1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
 		2E7A93EC1BE4BA060004C1F3 /* scan.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93E91BE4BA000004C1F3 /* scan.json */; };
 		2E7A93F51BE4BD3E0004C1F3 /* download.json in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A93F31BE4BD3A0004C1F3 /* download.json */; };
@@ -90,7 +86,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2E29FCD21BE4CD2A000BADDF /* FavIcon.framework in Copy Embedded Frameworks */,
-				2E4681C01BE493CF008375AB /* DVR.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +97,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2E29FCD11BE4CD20000BADDF /* FavIcon.framework in Copy Embedded Frameworks */,
-				2E4681C21BE49401008375AB /* DVR.framework in Copy Embedded Frameworks */,
 			);
 			name = "Copy Embedded Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,7 +175,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E1852261BDAE5160065F877 /* FavIcon.framework in Frameworks */,
-				2E4681B91BE490D6008375AB /* DVR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +190,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E4681B31BE32BFA008375AB /* FavIcon.framework in Frameworks */,
-				2E4681BB1BE490E9008375AB /* DVR.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +408,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Leon Breedt";
 				TargetAttributes = {
 					2E18521A1BDAE5160065F877 = {
@@ -429,9 +421,11 @@
 					};
 					2E1852391BDAE5300065F877 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0810;
 					};
 					2E1852421BDAE5300065F877 = {
 						CreatedOnToolsVersion = 7.1;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -599,8 +593,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -648,8 +644,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -682,6 +680,7 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -707,6 +706,7 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -782,6 +782,7 @@
 				PRODUCT_NAME = FavIcon;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -806,6 +807,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -825,6 +827,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.bitserf.FavIconTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -845,6 +848,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
