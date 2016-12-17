@@ -17,7 +17,6 @@
 
 import XCTest
 @testable import FavIcon
-// import DVR
 
 #if os(iOS)
 import UIKit
@@ -307,10 +306,7 @@ class FavIconTests: XCTestCase {
 
 private extension XCTestCase {
     func performWebRequest(name: String, timeout: TimeInterval = 50000.0, callback: (@escaping () -> Void) -> Void) {
-        FavIcon.urlSessionProvider = {
-            // return Session(cassetteName: name)
-            return URLSession.shared
-        }
+        FavIcon.urlSessionProvider = { URLSession.shared }
         let expectation = self.expectation(description: "web request - \(name)")
         callback(expectation.fulfill)
         waitForExpectations(timeout: timeout, handler: nil)

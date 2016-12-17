@@ -6,12 +6,11 @@ Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of
 post](<http://stackoverflow.com/questions/19029342/favicons-best-practices), and
 see how you feel afterwards.
 
-## Warning
 This is the Swift 3.0 version of this library, if you are on Swift 2.2, you want release **1.0.9**.
 
 ## Quick Start
 The project ships with a playground in which you can try it out for yourself.
-Just be sure to build the `FavIcon-iOS` target before you try to use the
+Just be sure to build the `FavIcon-macOS` target before you try to use the
 playground, or you will get an import error when it tries to import the FavIcon
 framework.
 
