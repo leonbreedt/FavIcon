@@ -41,10 +41,8 @@ Perhaps you have a 16x16 location in your user interface where you want to put
 the icon of a website the user is currently visiting?
 
 ```swift
-try FavIcon.downloadPreferred("https://apple.com",
-                              width: 16,
-                              height: 16) { result in
-    if case .Success(let image) = result {
+try FavIcon.downloadPreferred("https://apple.com") { result in
+    if case let .success(image) = result {
       // On iOS, this is a UIImage, do something with it here.
       // This closure will be executed on the main queue, so it's safe to touch
       // the UI here.
