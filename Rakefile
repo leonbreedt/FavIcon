@@ -11,7 +11,7 @@ end
 namespace "test" do
   desc "Run iOS unit tests"
   task :ios do |t|
-    run "xcodebuild -project FavIcon.xcodeproj -scheme FavIcon-iOS -destination 'platform=iOS Simulator,name=iPhone 6s' clean test"
+    run "xcodebuild -project FavIcon.xcodeproj -scheme FavIcon-iOS -destination 'platform=iOS Simulator,name=iPhone 6' clean test"
   end
 
   desc "Run OS X unit tests"
