@@ -1,5 +1,3 @@
 language: objective-c
-osx_image: xcode8
-before_install: 
-  - carthage bootstrap --verbose --no-use-binaries
+osx_image: xcode8.2
 script: "rake"
