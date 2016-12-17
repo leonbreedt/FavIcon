@@ -37,7 +37,7 @@ that can be used in user interfaces. Good work, fellow programmers. 👍
 Please see the [documentation reference](http://bitserf.github.io/FavIcon/).
 
 ## Usage Example
-Perhaps you have a 16x16 location in your user interface where you want to put
+Perhaps you have a location in your user interface where you want to put
 the icon of a website the user is currently visiting?
 
 ```swift
