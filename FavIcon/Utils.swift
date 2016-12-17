@@ -88,7 +88,7 @@ extension Array {
     /// - parameter transform: A closure that will transform an array element of type `Element` into a
     ///                        `(K, V)` tuple.
     /// - returns: A dictionary having items of type `K` as keys, and type `V` as values.
-    func toDictionary<K, V>(transform: (Element) -> (K, V)) -> [K: V] {
+    func toDictionary<K, V>(_ transform: (Element) -> (K, V)) -> [K: V] {
         var dict: [K: V] = [:]
         for item in self {
             let (key, value) = transform(item)

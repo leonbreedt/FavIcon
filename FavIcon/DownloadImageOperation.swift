@@ -20,9 +20,9 @@
 // download was successful, and the data is in an image format
 // supported by the platform's image class.
 final class DownloadImageOperation: URLRequestOperation {
-    override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
+    override func processResult(_ data: Data?, response: HTTPURLResponse, completion: @escaping (URLResult) -> Void) {
         guard let data = data else {
-            completion(.Failed(error: URLRequestError.MissingResponse))
+            completion(.failed(error: URLRequestError.missingResponse))
             return
         }
 
@@ -33,15 +33,15 @@ final class DownloadImageOperation: URLRequestOperation {
             DispatchQueue.main.async {
                 var result: URLResult
                 if let image = ImageType(data: data) {
-                    result = .ImageDownloaded(url: response.url!, image: image)
+                    result = .imageDownloaded(url: response.url!, image: image)
                 } else {
-                    result = .Failed(error: URLRequestError.UnsupportedImageFormat(mimeType: mimeType))
+                    result = .failed(error: URLRequestError.unsupportedImageFormat(mimeType: mimeType))
                 }
                 completion(result)
             }
             return
         default:
-            completion(.Failed(error: URLRequestError.UnsupportedImageFormat(mimeType: mimeType)))
+            completion(.failed(error: URLRequestError.unsupportedImageFormat(mimeType: mimeType)))
             return
         }
     }

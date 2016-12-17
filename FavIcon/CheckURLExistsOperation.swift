@@ -21,7 +21,7 @@ final class CheckURLExistsOperation: URLRequestOperation {
         urlRequest.httpMethod = "HEAD"
     }
 
-    override func processResult(data: Data?, response: HTTPURLResponse, completion: (URLResult) -> Void) {
-        completion(.Success(url: response.url!))
+    override func processResult(_ data: Data?, response: HTTPURLResponse, completion: @escaping (URLResult) -> Void) {
+        completion(.success(url: response.url!))
     }
 }
