@@ -6,10 +6,10 @@
 //:
 //: First, you need to import `FavIcon` to pull in the library into the current file.
 import FavIcon
-//: We'll use `downloadPreferred(url:width:height:completion:)` first, which tries to download the "best" icon.
-//: If you know the size you want, you can provide values for the optional `width` and `height` parameters,
-//: and the icon closest to that width and height will be downloaded. Of course, if the website does not have
-//: many icons to choose from, you may not get the size you desire.
+//: We'll use `downloadPreferred(url:width:height:completion:)` first, which tries to download the "best"
+//: icon. If you know the size you want, you can provide values for the optional `width` and `height`
+//: parameters, and the icon closest to that width and height will be downloaded. Of course, if the
+//: website does not have many icons to choose from, you may not get the size you desire.
 //:
 //: Since downloads happen asynchronously, you need to provide a closure that will get
 //: called when the downloading is finished. This closure will be called on the main queue, so you can safely
@@ -39,9 +39,9 @@ try FavIcon.downloadAll("https://microsoft.com") { results in
     }
 }
 
-//: If you just want to know which icons are available, you can use the `scan(url:completion:)` method instead.
-//: Note that the width and height of the icons are not always available at time of scanning, since some
-//: methods of declaring icons don't require specifying icon width and height.
+//: If you just want to know which icons are available, you can use the `scan(url:completion:)` method
+//: instead. Note that the width and height of the icons are not always available at time of scanning,
+//: since some methods of declaring icons don't require specifying icon width and height.
 FavIcon.scan(URL(string: "https://google.com")!) { icons in
     for icon in icons {
         let details = "icon: \(icon.url), type \(icon.type), width: \(icon.width), height: \(icon.height)"
@@ -57,23 +57,7 @@ FavIcon.scan(URL(string: "https://google.com")!) { icons in
     }
 }
 
-
-
-
 //: That's it. Good luck, have fun!
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //: You don't actually need the next two lines when you're using this library, they're just here so
 //: that network requests get a chance to execute when inside a playground.

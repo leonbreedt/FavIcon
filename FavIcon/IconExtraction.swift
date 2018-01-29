@@ -31,7 +31,7 @@ private let kMicrosoftSizeMap: [String: IconSize] = [
     "msapplication-square70x70logo": IconSize(width: 70, height: 70),
     "msapplication-square150x150logo": IconSize(width: 150, height: 150),
     "msapplication-wide310x150logo": IconSize(width: 310, height: 150),
-    "msapplication-square310x310logo": IconSize(width: 310, height: 310),
+    "msapplication-square310x310logo": IconSize(width: 310, height: 310)
 ]
 
 /// Extracts a list of icons from the `<head>` section of an HTML document.
@@ -50,8 +50,7 @@ func extractHTMLHeadIcons(_ document: HTMLDocument, baseURL: URL) -> [DetectedIc
            let url = URL(string: href, relativeTo: baseURL) {
             switch rel.lowercased() {
             case "shortcut icon":
-                icons.append(DetectedIcon(url: url.absoluteURL, type:.shortcut))
-                break
+                icons.append(DetectedIcon(url: url.absoluteURL, type: .shortcut))
             case "icon":
                 if let type = link.attributes["type"], type.lowercased() == "image/png" {
                     let sizes = parseHTMLIconSizes(link.attributes["sizes"])
@@ -115,7 +114,8 @@ func extractManifestJSONIcons(_ jsonString: String, baseURL: URL) -> [DetectedIc
     var icons: [DetectedIcon] = []
 
     if let data = jsonString.data(using: String.Encoding.utf8),
-       let object = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions()),
+       let object = try? JSONSerialization.jsonObject(with: data,
+                                                      options: JSONSerialization.ReadingOptions()),
        let manifest = object as? NSDictionary,
        let manifestIcons = manifest["icons"] as? [NSDictionary] {
         for icon in manifestIcons {
@@ -154,19 +154,14 @@ func extractBrowserConfigXMLIcons(_ document: LBXMLDocument, baseURL: URL) -> [D
                 switch tile.name.lowercased() {
                 case "tileimage":
                     icons.append(DetectedIcon(url: url, type: .microsoftPinnedSite, width: 144, height: 144))
-                    break
                 case "square70x70logo":
                     icons.append(DetectedIcon(url: url, type: .microsoftPinnedSite, width: 70, height: 70))
-                    break
                 case "square150x150logo":
                     icons.append(DetectedIcon(url: url, type: .microsoftPinnedSite, width: 150, height: 150))
-                    break
                 case "wide310x150logo":
                     icons.append(DetectedIcon(url: url, type: .microsoftPinnedSite, width: 310, height: 150))
-                    break
                 case "square310x310logo":
                     icons.append(DetectedIcon(url: url, type: .microsoftPinnedSite, width: 310, height: 310))
-                    break
                 default:
                     break
                 }
@@ -239,7 +234,7 @@ private func parseHTMLIconSizes(_ string: String?) -> [IconSize] {
     return sizes
 }
 
-extension IconSize : Hashable {
+extension IconSize: Hashable {
     var hashValue: Int {
         return width.hashValue ^ height.hashValue
     }

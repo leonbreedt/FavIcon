@@ -20,7 +20,9 @@
 // download was successful, and the data is in an image format
 // supported by the platform's image class.
 final class DownloadImageOperation: URLRequestOperation {
-    override func processResult(_ data: Data?, response: HTTPURLResponse, completion: @escaping (URLResult) -> Void) {
+    override func processResult(_ data: Data?,
+                                response: HTTPURLResponse,
+                                completion: @escaping (URLResult) -> Void) {
         guard let data = data else {
             completion(.failed(error: URLRequestError.missingResponse))
             return

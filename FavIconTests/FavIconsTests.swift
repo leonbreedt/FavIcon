@@ -64,12 +64,10 @@ class FavIconTests: XCTestCase {
 
         switch actualResults[0] {
         case .success(let image):
-            XCTAssertEqual(32, image.size.width)
-            XCTAssertEqual(32, image.size.height)
-            break
+            XCTAssertEqual(64, image.size.width)
+            XCTAssertEqual(64, image.size.height)
         case .failure(let error):
             XCTFail("unexpected error returned for download: \(error)")
-            break
         }
     }
 

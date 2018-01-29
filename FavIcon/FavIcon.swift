@@ -66,7 +66,7 @@ public final class FavIcon {
     /// - parameter completion: A closure to call when the scan has completed. The closure will be call
     ///                         on the main queue.
     public static func scan(_ url: URL, completion: @escaping ([DetectedIcon]) -> Void) {
-        let queue = DispatchQueue(label: "org.bitserf.FavIcon", attributes: [])
+        let queue = DispatchQueue(label: "io.sector42.FavIcon", attributes: [])
         var icons: [DetectedIcon] = []
         var additionalDownloads: [URLRequestWithCallback] = []
         let urlSession = urlSessionProvider()
@@ -121,7 +121,6 @@ public final class FavIcon {
             }
         }
 
-
         let favIconURL = URL(string: "/favicon.ico", relativeTo: url as URL)!.absoluteURL
         let checkFavIconOperation = CheckURLExistsOperation(url: favIconURL, session: urlSession)
         let checkFavIcon = urlRequestOperation(checkFavIconOperation) { result in
@@ -154,7 +153,8 @@ public final class FavIcon {
     /// - parameter completion: A closure to call when all download tasks have
     ///                         results available (successful or otherwise). The closure
     ///                         will be called on the main queue.
-    public static func download(_ icons: [DetectedIcon], completion: @escaping ([IconDownloadResult]) -> Void) {
+    public static func download(_ icons: [DetectedIcon],
+                                completion: @escaping ([IconDownloadResult]) -> Void) {
         let urlSession = urlSessionProvider()
         let operations: [DownloadImageOperation] =
             icons.map { DownloadImageOperation(url: $0.url, session: urlSession) }
@@ -189,16 +189,17 @@ public final class FavIcon {
         }
     }
 
-    /// Downloads the most preferred icon, by calling `scan(url:)` to discover available icons, and then choosing
-    /// the most preferable available icon. If both `width` and `height` are supplied, the icon closest to the
-    /// preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon
-    /// has dimensions, the icons are chosen by order of their `DetectedIconType` enumeration raw value.
+    /// Downloads the most preferred icon, by calling `scan(url:)` to discover available icons, and then
+    /// choosing the most preferred available icon. If both `width` and `height` are supplied, the icon
+    /// closest to the preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are
+    /// known. If no icon has dimensions, the icons are chosen by order of their `DetectedIconType`
+    /// enumeration raw value.
     ///
     /// - parameter url: The URL to scan for icons.
     /// - parameter width: The preferred icon width, in pixels, or `nil`.
     /// - parameter height: The preferred icon height, in pixels, or `nil`.
-    /// - parameter completion: A closure to call when the download task has produced results. The closure will
-    ///                         be called on the main queue.
+    /// - parameter completion: A closure to call when the download task has produced results. The closure
+    ///                         will be called on the main queue.
     /// - throws: An appropriate `IconError` if downloading was not successful.
     public static func downloadPreferred(_ url: URL,
                                          width: Int? = nil,
@@ -238,7 +239,7 @@ public final class FavIcon {
 
     // MARK: Test hooks
 
-    typealias URLSessionProvider = (Void) -> URLSession
+    typealias URLSessionProvider = () -> URLSession
     static var urlSessionProvider: URLSessionProvider = FavIcon.createDefaultURLSession
 
     // MARK: Internal
@@ -325,7 +326,8 @@ extension FavIcon {
     /// - parameter completion: A closure to call when all download tasks have results available
     ///                         (successful or otherwise). The closure will be called on the main queue.
     /// - throws: An `IconError` if the scan or download failed for some reason.
-    public static func downloadAll(_ url: String, completion: @escaping ([IconDownloadResult]) -> Void) throws {
+    public static func downloadAll(_ url: String,
+                                   completion: @escaping ([IconDownloadResult]) -> Void) throws {
         guard let url = URL(string: url) else { throw IconError.invalidBaseURL }
         downloadAll(url, completion: completion)
     }
@@ -336,8 +338,8 @@ extension FavIcon {
     /// - parameter url: The URL to scan for icons.
     /// - parameter width: The preferred icon width, in pixels, or `nil`.
     /// - parameter height: The preferred icon height, in pixels, or `nil`.
-    /// - parameter completion: A closure to call when the download task has produced a result. The closure will
-    ///                         be called on the main queue.
+    /// - parameter completion: A closure to call when the download task has produced a result.
+    ///                         The closure will be called on the main queue.
     /// - throws: An appropriate `IconError` if downloading failed for some reason.
     public static func downloadPreferred(_ url: String,
                                          width: Int? = nil,
