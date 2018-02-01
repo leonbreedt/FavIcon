@@ -1,0 +1,458 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3519DB722021C3A80078D172 /* ContentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6C2021C3A80078D172 /* ContentTypes.swift */; };
+		3519DB732021C3A80078D172 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6D2021C3A80078D172 /* Icon.swift */; };
+		3519DB742021C3A80078D172 /* IconType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6E2021C3A80078D172 /* IconType.swift */; };
+		3519DB752021C3A80078D172 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6F2021C3A80078D172 /* Download.swift */; };
+		3519DB762021C3A80078D172 /* FavIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB702021C3A80078D172 /* FavIcon.swift */; };
+		3519DB7C2021C3C90078D172 /* Clibxml2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB7B2021C3C90078D172 /* Clibxml2.c */; };
+		3519DB7E2021D0CB0078D172 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB7D2021D0CB0078D172 /* HTML.swift */; };
+		353096F020230594006B32D9 /* HTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353096EF20230594006B32D9 /* HTMLTests.swift */; };
+		353096F220230727006B32D9 /* HTML.html in Resources */ = {isa = PBXBuildFile; fileRef = 353096EE2023057A006B32D9 /* HTML.html */; };
+		353096F520230991006B32D9 /* Detection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353096F320230935006B32D9 /* Detection.swift */; };
+		353096F820231018006B32D9 /* XML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353096F620230F6F006B32D9 /* XML.swift */; };
+		353096FB2023122F006B32D9 /* Manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 353096F92023122E006B32D9 /* Manifest.json */; };
+		353096FC2023122F006B32D9 /* BrowserConfig.xml in Resources */ = {isa = PBXBuildFile; fileRef = 353096FA2023122E006B32D9 /* BrowserConfig.xml */; };
+		353096FE20231263006B32D9 /* DetectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353096FD20231263006B32D9 /* DetectionTests.swift */; };
+		359BE1D22021A8F600D20A30 /* FavIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359BE1D02021A81400D20A30 /* FavIconTests.swift */; };
+		OBJ_29 /* DownloadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* DownloadTests.swift */; };
+		OBJ_31 /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "FavIcon::FavIcon::Product" /* FavIcon.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		359BE1CA201F1F7500D20A30 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = OBJ_1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = "FavIcon::FavIcon";
+			remoteInfo = FavIcon;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3519DB6C2021C3A80078D172 /* ContentTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentTypes.swift; sourceTree = "<group>"; };
+		3519DB6D2021C3A80078D172 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		3519DB6E2021C3A80078D172 /* IconType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconType.swift; sourceTree = "<group>"; };
+		3519DB6F2021C3A80078D172 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		3519DB702021C3A80078D172 /* FavIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIcon.swift; sourceTree = "<group>"; };
+		3519DB712021C3A80078D172 /* FavIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavIcon.h; sourceTree = "<group>"; };
+		3519DB792021C3C90078D172 /* Clibxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clibxml2.h; sourceTree = "<group>"; };
+		3519DB7A2021C3C90078D172 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		3519DB7B2021C3C90078D172 /* Clibxml2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Clibxml2.c; sourceTree = "<group>"; };
+		3519DB7D2021D0CB0078D172 /* HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
+		353096EE2023057A006B32D9 /* HTML.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = HTML.html; sourceTree = "<group>"; };
+		353096EF20230594006B32D9 /* HTMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTests.swift; sourceTree = "<group>"; };
+		353096F320230935006B32D9 /* Detection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Detection.swift; sourceTree = "<group>"; };
+		353096F620230F6F006B32D9 /* XML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XML.swift; sourceTree = "<group>"; };
+		353096F92023122E006B32D9 /* Manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Manifest.json; sourceTree = "<group>"; };
+		353096FA2023122E006B32D9 /* BrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BrowserConfig.xml; sourceTree = "<group>"; };
+		353096FD20231263006B32D9 /* DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionTests.swift; sourceTree = "<group>"; };
+		359BE1D02021A81400D20A30 /* FavIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
+		"FavIcon::FavIcon::Product" /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		"FavIcon::FavIconTests::Product" /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		OBJ_13 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
+		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_30 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				OBJ_31 /* FavIcon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3519DB6B2021C3A80078D172 /* FavIcon */ = {
+			isa = PBXGroup;
+			children = (
+				3519DB6C2021C3A80078D172 /* ContentTypes.swift */,
+				353096F320230935006B32D9 /* Detection.swift */,
+				3519DB6F2021C3A80078D172 /* Download.swift */,
+				3519DB712021C3A80078D172 /* FavIcon.h */,
+				3519DB702021C3A80078D172 /* FavIcon.swift */,
+				3519DB7D2021D0CB0078D172 /* HTML.swift */,
+				3519DB6D2021C3A80078D172 /* Icon.swift */,
+				3519DB6E2021C3A80078D172 /* IconType.swift */,
+				353096F620230F6F006B32D9 /* XML.swift */,
+			);
+			path = FavIcon;
+			sourceTree = "<group>";
+		};
+		3519DB772021C3C90078D172 /* Clibxml2 */ = {
+			isa = PBXGroup;
+			children = (
+				3519DB782021C3C90078D172 /* include */,
+				3519DB7B2021C3C90078D172 /* Clibxml2.c */,
+			);
+			path = Clibxml2;
+			sourceTree = "<group>";
+		};
+		3519DB782021C3C90078D172 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				3519DB792021C3C90078D172 /* Clibxml2.h */,
+				3519DB7A2021C3C90078D172 /* module.modulemap */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		OBJ_11 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_12 /* FavIconTests */,
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_12 /* FavIconTests */ = {
+			isa = PBXGroup;
+			children = (
+				353096FA2023122E006B32D9 /* BrowserConfig.xml */,
+				353096F92023122E006B32D9 /* Manifest.json */,
+				353096FD20231263006B32D9 /* DetectionTests.swift */,
+				OBJ_13 /* DownloadTests.swift */,
+				359BE1D02021A81400D20A30 /* FavIconTests.swift */,
+				353096EE2023057A006B32D9 /* HTML.html */,
+				353096EF20230594006B32D9 /* HTMLTests.swift */,
+			);
+			name = FavIconTests;
+			path = Tests/FavIconTests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_15 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"FavIcon::FavIconTests::Product" /* FavIconTests.xctest */,
+				"FavIcon::FavIcon::Product" /* FavIcon.framework */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_6 /* Package.swift */,
+				OBJ_7 /* Sources */,
+				OBJ_11 /* Tests */,
+				OBJ_15 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				3519DB772021C3C90078D172 /* Clibxml2 */,
+				3519DB6B2021C3A80078D172 /* FavIcon */,
+			);
+			path = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"FavIcon::FavIcon" /* FavIcon-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_34 /* Build configuration list for PBXNativeTarget "FavIcon-macOS" */;
+			buildPhases = (
+				OBJ_37 /* Sources */,
+				OBJ_41 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "FavIcon-macOS";
+			productName = FavIcon;
+			productReference = "FavIcon::FavIcon::Product" /* FavIcon.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		"FavIcon::FavIconTests" /* FavIcon-macOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_25 /* Build configuration list for PBXNativeTarget "FavIcon-macOSTests" */;
+			buildPhases = (
+				OBJ_28 /* Sources */,
+				OBJ_30 /* Frameworks */,
+				353096F12023071F006B32D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				OBJ_32 /* PBXTargetDependency */,
+			);
+			name = "FavIcon-macOSTests";
+			productName = FavIconTests;
+			productReference = "FavIcon::FavIconTests::Product" /* FavIconTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 9999;
+				TargetAttributes = {
+					"FavIcon::FavIcon" = {
+						LastSwiftMigration = 0920;
+					};
+					"FavIcon::FavIconTests" = {
+						LastSwiftMigration = 0920;
+					};
+				};
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "FavIcon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5;
+			productRefGroup = OBJ_15 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"FavIcon::FavIcon" /* FavIcon-macOS */,
+				"FavIcon::FavIconTests" /* FavIcon-macOSTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		353096F12023071F006B32D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				353096FB2023122F006B32D9 /* Manifest.json in Resources */,
+				353096FC2023122F006B32D9 /* BrowserConfig.xml in Resources */,
+				353096F220230727006B32D9 /* HTML.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_28 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				359BE1D22021A8F600D20A30 /* FavIconTests.swift in Sources */,
+				353096FE20231263006B32D9 /* DetectionTests.swift in Sources */,
+				353096F020230594006B32D9 /* HTMLTests.swift in Sources */,
+				OBJ_29 /* DownloadTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		OBJ_37 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				3519DB7E2021D0CB0078D172 /* HTML.swift in Sources */,
+				353096F520230991006B32D9 /* Detection.swift in Sources */,
+				3519DB752021C3A80078D172 /* Download.swift in Sources */,
+				3519DB732021C3A80078D172 /* Icon.swift in Sources */,
+				3519DB7C2021C3C90078D172 /* Clibxml2.c in Sources */,
+				3519DB742021C3A80078D172 /* IconType.swift in Sources */,
+				3519DB762021C3A80078D172 /* FavIcon.swift in Sources */,
+				353096F820231018006B32D9 /* XML.swift in Sources */,
+				3519DB722021C3A80078D172 /* ContentTypes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		OBJ_32 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = "FavIcon::FavIcon" /* FavIcon-macOS */;
+			targetProxy = 359BE1CA201F1F7500D20A30 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_26 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FavIconTests;
+			};
+			name = Debug;
+		};
+		OBJ_27 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FavIconTests;
+			};
+			name = Release;
+		};
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = FavIcon;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2/include";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FavIcon;
+			};
+			name = Debug;
+		};
+		OBJ_36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = Sources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = FavIcon;
+				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2/include";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
+				TARGET_NAME = FavIcon;
+			};
+			name = Release;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator watchos watchsimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = SWIFT_PACKAGE;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_2 /* Build configuration list for PBXProject "FavIcon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_25 /* Build configuration list for PBXNativeTarget "FavIcon-macOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_26 /* Debug */,
+				OBJ_27 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		OBJ_34 /* Build configuration list for PBXNativeTarget "FavIcon-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_35 /* Debug */,
+				OBJ_36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}
