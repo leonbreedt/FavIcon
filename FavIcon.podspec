@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'FavIcon'
-  s.version      = '2.0.0'
+  s.version      = '3.0.0'
   s.summary      = 'A library for downloading website icons'
   s.homepage     = 'https://github.com/leonbreedt/FavIcon'
   s.license      = { :type => 'Apache', :file => 'LICENSE' }
