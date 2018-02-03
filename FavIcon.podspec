@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     :tag => "#{s.version}"
   }
 
-  s.source_files  = "Sources/FavIcon/*.swift"
+  s.source_files  = "Sources/**/*.swift"
   s.libraries = 'xml2'
 
   s.ios.deployment_target = "9.0"
