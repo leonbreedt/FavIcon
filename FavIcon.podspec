@@ -11,11 +11,8 @@ Pod::Spec.new do |s|
     :tag => "#{s.version}"
   }
 
-  s.source_files  = "Sources/FavIcon/*.{h,swift}"
+  s.source_files  = "Sources/FavIcon/*.swift"
   s.libraries = 'xml2'
-
-  s.preserve_path = 'Sources/Clibxml2/module.modulemap'
-  s.module_map = 'Sources/Clibxml2/module.modulemap'
 
   s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
