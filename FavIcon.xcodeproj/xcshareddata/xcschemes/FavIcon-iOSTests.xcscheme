@@ -17,22 +17,13 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FavIcon::FavIconTests"
+               BlueprintIdentifier = "3530971E202EE5B5006B32D9"
                BuildableName = "FavIconTests.xctest"
-               BlueprintName = "FavIcon-macOSTests"
+               BlueprintName = "FavIcon-iOSTests"
                ReferencedContainer = "container:FavIcon.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "FavIcon::FavIconPackageTests::ProductTarget"
-            BuildableName = "FavIconPackageTests"
-            BlueprintName = "FavIconPackageTests"
-            ReferencedContainer = "container:FavIcon.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
