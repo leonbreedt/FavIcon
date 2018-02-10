@@ -1,4 +1,4 @@
-# FavIcon [![License](https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg)](https://raw.githubusercontent.com/bitserf/FavIcon/master/LICENSE) [![Build Status](https://travis-ci.org/bitserf/FavIcon.svg)](https://travis-ci.org/bitserf/FavIcon) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20-lightgrey.svg)
+# FavIcon [![License](https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg)](https://raw.githubusercontent.com/leonbreedt/FavIcon/master/LICENSE) [![Build Status](https://travis-ci.org/leonbreedt/FavIcon.svg)](https://travis-ci.org/bitserf/FavIcon) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20-lightgrey.svg)
 FavIcon is a tiny Swift library for downloading the favicon representing a website.
 
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of
@@ -8,15 +8,24 @@ see how you feel afterwards.
 
 ## Quick Start
 
-The project ships with a playground in which you can try it out for yourself.
-Just be sure to build the `FavIcon-macOS` target before you try to use the
-playground, or you will get an import error when it tries to import the FavIcon
-framework.
+### CocoaPods
 
-## Including in your project
+*Note:* CocoaPods (1.4.0 or later) is required.
 
-1. Add `FavIcon.framework` to the Linked Frameworks and Libraries for your application target.
-2. If you're using Carthage, add `FavIcon.framework` to the Input Files for your `carthage copy-frameworks` Build Phase.
+Add it to your `Podfile`:
+
+```ruby
+use_frameworks!
+pod 'FavIcon', '~> 3.0.0'
+```
+
+### Carthage
+
+Add it to your `Cartfile`:
+
+```ogdl
+github "leonbreedt/FavIcon" ~> 3.0.0
+```
 
 ## Features
 - Detection of `/favicon.ico` if it exists
@@ -30,10 +39,6 @@ framework.
 
 Yup. These are all potential ways of indicating that your website has an icon
 that can be used in user interfaces. Good work, fellow programmers. 👍
-
-## Reference Documentation
-
-Please see the [documentation reference](http://bitserf.github.io/FavIcon/).
 
 ## Usage Example
 Perhaps you have a location in your user interface where you want to put
@@ -63,5 +68,6 @@ time, choosing which icon you prefer based on your own criteria, in which case
 you can feed to `download(url:completion:)` for downloading at your convenience.
 
 ## License
+
 Apache 2.0
 
