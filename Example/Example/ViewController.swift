@@ -38,9 +38,5 @@ class ViewController: UIViewController {
             print("failed to download preferred favicon for apple.com: \(error)")
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 }
 
