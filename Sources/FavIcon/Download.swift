@@ -58,28 +58,34 @@ func downloadURLs(_ urls: [URL], method: String = "GET", completion: @escaping (
                 addResult(index, .error(error!))
                 return
             }
-            guard let response = response as? HTTPURLResponse else {
+
+            guard let response = response else {
                 addResult(index, .error(DownloadError.invalidResponse))
                 return
             }
 
-            if response.statusCode == 404 {
-                addResult(index, .error(DownloadError.notFound))
-                return
-            }
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 404 {
+                    addResult(index, .error(DownloadError.notFound))
+                    return
+                }
 
-            if response.statusCode < 200 || response.statusCode > 299 {
-                addResult(index, .error(DownloadError.serverError(code: response.statusCode)))
-                return
-            }
+                if httpResponse.statusCode < 200 || httpResponse.statusCode > 299 {
+                    addResult(index, .error(DownloadError.serverError(code: httpResponse.statusCode)))
+                    return
+                }
 
-            if method.lowercased() == "head" {
-                addResult(index, .exists)
-                return
+                if method.lowercased() == "head" {
+                    addResult(index, .exists)
+                    return
+                }
             }
 
             if let data = data {
-                let (mimeType, encoding) = response.mimeTypeAndEncoding()
+                let mimeType = response.mimeType ?? "application/octet-stream"
+                let encoding: String.Encoding = response.textEncodingName != nil
+                    ? parseStringEncoding(response.textEncodingName!) ?? .utf8
+                    : .utf8
                 if mimeType.starts(with: "text/") || mimeType == "application/json" {
                     guard let text = String(data: data, encoding: encoding) else {
                         addResult(index, .error(DownloadError.invalidTextResponse))

@@ -96,7 +96,7 @@ class DetectionTests: XCTestCase {
         let document = HTMLDocument(string: html)
         let icons = detectHTMLHeadIcons(document, baseURL: URL(string: "https://localhost")!)
 
-        XCTAssertEqual(19, icons.count)
+        XCTAssertEqual(20, icons.count)
 
         XCTAssertEqual("https://localhost/shortcut.ico", icons[0].url.absoluteString)
         XCTAssertEqual(IconType.shortcut.rawValue, icons[0].type.rawValue)
@@ -168,30 +168,35 @@ class DetectionTests: XCTestCase {
         XCTAssertEqual(180, icons[13].width!)
         XCTAssertEqual(180, icons[13].height!)
 
-        XCTAssertEqual("https://localhost/content/images/mstile-144x144.png", icons[14].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[14].type.rawValue)
-        XCTAssertEqual(144, icons[14].width!)
-        XCTAssertEqual(144, icons[14].height!)
+        XCTAssertTrue(icons[14].url.absoluteString.starts(with: "data:"))
+        XCTAssertEqual(IconType.shortcut.rawValue, icons[14].type.rawValue)
+        XCTAssertNil(icons[14].width)
+        XCTAssertNil(icons[14].height)
 
-        XCTAssertEqual("https://localhost/tile-tiny.png", icons[15].url.absoluteString)
+        XCTAssertEqual("https://localhost/content/images/mstile-144x144.png", icons[15].url.absoluteString)
         XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[15].type.rawValue)
-        XCTAssertEqual(70, icons[15].width!)
-        XCTAssertEqual(70, icons[15].height!)
+        XCTAssertEqual(144, icons[15].width!)
+        XCTAssertEqual(144, icons[15].height!)
 
-        XCTAssertEqual("https://localhost/tile-square.png", icons[16].url.absoluteString)
+        XCTAssertEqual("https://localhost/tile-tiny.png", icons[16].url.absoluteString)
         XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[16].type.rawValue)
-        XCTAssertEqual(150, icons[16].width!)
-        XCTAssertEqual(150, icons[16].height!)
+        XCTAssertEqual(70, icons[16].width!)
+        XCTAssertEqual(70, icons[16].height!)
 
-        XCTAssertEqual("https://localhost/tile-wide.png", icons[17].url.absoluteString)
+        XCTAssertEqual("https://localhost/tile-square.png", icons[17].url.absoluteString)
         XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[17].type.rawValue)
-        XCTAssertEqual(310, icons[17].width!)
+        XCTAssertEqual(150, icons[17].width!)
         XCTAssertEqual(150, icons[17].height!)
 
-        XCTAssertEqual("https://localhost/tile-large.png", icons[18].url.absoluteString)
+        XCTAssertEqual("https://localhost/tile-wide.png", icons[18].url.absoluteString)
         XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[18].type.rawValue)
         XCTAssertEqual(310, icons[18].width!)
-        XCTAssertEqual(310, icons[18].height!)
+        XCTAssertEqual(150, icons[18].height!)
+
+        XCTAssertEqual("https://localhost/tile-large.png", icons[19].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[19].type.rawValue)
+        XCTAssertEqual(310, icons[19].width!)
+        XCTAssertEqual(310, icons[19].height!)
     }
 
     func testIssue6_ContentTypeWithEmptyComponent() {
