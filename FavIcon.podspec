@@ -11,7 +11,9 @@ Pod::Spec.new do |s|
     :tag => "v#{s.version}"
   }
 
-  s.source_files  = "Sources/**/*.swift"
+  s.source_files = 'Sources/**/*.swift'
+  s.preserve_paths = 'Sources/Clibxml2/*'
+  
   s.libraries = 'xml2'
 
   s.ios.deployment_target = "9.0"
@@ -22,10 +24,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.pod_target_xcconfig = {
-    'SWIFT_VERSION' => '4.0', 
-    'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/FavIcon/Clibxml2'
+    'SWIFT_VERSION' => '4.0',
+    'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
   }
   s.xcconfig = {
-    'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2 $(PODS_ROOT)/FavIcon/Clibxml2'
+    'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources/Clibxml2'
   }
 end
