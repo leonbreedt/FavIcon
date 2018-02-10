@@ -17,12 +17,12 @@
 
 import Foundation
 
-#if os(iOS)
-    import UIKit
-    public typealias ImageType = UIImage
-#elseif os(OSX)
+#if os(OSX)
     import Cocoa
     public typealias ImageType = NSImage
+#else
+    import UIKit
+    public typealias ImageType = UIImage
 #endif
 
 /// The result of downloading an icon.
