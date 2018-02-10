@@ -67,6 +67,11 @@ time, choosing which icon you prefer based on your own criteria, in which case
 `scan(url:completion:)` will give you information about the detected icons, which
 you can feed to `download(url:completion:)` for downloading at your convenience.
 
+
+## Example Project
+
+See the iOS project in `Example/` for a simple example of how to use the library.
+
 ## License
 
 Apache 2.0
