@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.source       = {
     :git => "https://github.com/leonbreedt/FavIcon.git",
-    :tag => "v#{s.version}"
+    :tag => "#{s.version}"
   }
 
   s.source_files = 'Sources/**/*.swift'
