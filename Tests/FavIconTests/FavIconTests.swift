@@ -21,27 +21,93 @@ import XCTest
 import Foundation
 
 class FavIconTests: XCTestCase {
-    func testDownloadIcons() {
-        guard let icons = performScan(url: "https://apple.com") else {
-            XCTFail("expected non-null icons")
-            return
-        }
+    func testScan() {
+        let url = "https://apple.com"
+        var actualIcons: [Icon]!
 
-        XCTAssertEqual(1, icons.count)
-        XCTAssertEqual(IconType.classic, icons[0].type)
+        let completed = expectation(description: "scan: \(url)")
+        do {
+            try FavIcon.scan(url) { icons in
+                actualIcons = icons
+                completed.fulfill()
+            }
+        } catch let error {
+            XCTFail("failed to scan for icons: \(error)")
+        }
+        wait(for: [completed], timeout: 15)
+
+        XCTAssertNotNil(actualIcons)
+        XCTAssertEqual(1, actualIcons.count)
+        XCTAssertEqual(URL(string: "https://apple.com/favicon.ico")!, actualIcons[0].url)
     }
 
-    private func performScan(url: String, timeout: TimeInterval = 15.0) -> [Icon]? {
-        var actualIcons: [Icon]?
+    func testDownloading() {
+        let url = "https://apple.com"
+        var actualResults: [IconDownloadResult]!
 
-        let scanCompleted = expectation(description: "scan: \(url)")
-        FavIcon.scan(URL(string: url)!) { icons in
-            actualIcons = icons
-            scanCompleted.fulfill()
+        let completed = expectation(description: "download: \(url)")
+        do {
+            try FavIcon.downloadAll(url) { results in
+                actualResults = results
+                completed.fulfill()
+            }
+        } catch let error {
+            XCTFail("failed to download icons: \(error)")
         }
-        wait(for: [scanCompleted], timeout: timeout)
+        wait(for: [completed], timeout: 15)
 
-        return actualIcons
+        XCTAssertEqual(1, actualResults.count)
+
+        switch actualResults[0] {
+        case .success(let image):
+            XCTAssertEqual(64, image.size.width)
+            XCTAssertEqual(64, image.size.height)
+            break
+        case .failure(let error):
+            XCTFail("unexpected error returned for download: \(error)")
+            break
+        }
+    }
+
+    func testChooseIcon() {
+        let mixedIcons = [
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .shortcut, width: 32, height: 32),
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic, width: 64, height: 64),
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .appleIOSWebClip, width: 64, height: 64),
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .appleOSXSafariTab, width: 144, height: 144),
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic)
+        ]
+        let noSizeIcons = [
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .classic),
+            Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .shortcut)
+        ]
+
+        var icon = FavIcon.chooseIcon(mixedIcons, width: 50, height: 50)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(64, icon!.width)
+        XCTAssertEqual(64, icon!.height)
+
+        icon = FavIcon.chooseIcon(mixedIcons, width: 28, height: 28)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(32, icon!.width)
+        XCTAssertEqual(32, icon!.height)
+
+        icon = FavIcon.chooseIcon(mixedIcons)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(144, icon!.width)
+        XCTAssertEqual(144, icon!.height)
+
+        icon = FavIcon.chooseIcon(noSizeIcons)
+
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(IconType.shortcut.rawValue, icon!.type.rawValue)
+
+        icon = FavIcon.chooseIcon([])
+
+        XCTAssertNil(icon)
     }
 }
 

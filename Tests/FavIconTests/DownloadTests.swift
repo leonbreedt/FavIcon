@@ -71,7 +71,7 @@ class DownloadTests: XCTestCase {
         var actualResults: [DownloadResult]?
 
         let downloadsCompleted = expectation(description: "download: \(urls)")
-        download(urls: urls.map { URL(string: $0)!}) { results in
+        downloadURLs(urls.map { URL(string: $0)!}) { results in
             actualResults = results
             downloadsCompleted.fulfill()
         }
@@ -84,7 +84,7 @@ class DownloadTests: XCTestCase {
         var actualResult: DownloadResult?
 
         let downloadCompleted = expectation(description: "download: \(url)")
-        download(url: URL(string: url)!) { result in
+        downloadURL(URL(string: url)!) { result in
             actualResult = result
             downloadCompleted.fulfill()
         }
