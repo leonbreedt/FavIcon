@@ -34,7 +34,7 @@ enum DownloadError: Error {
 
 private let downloadSession = URLSession(configuration: .ephemeral)
 
-func download(urls: [URL], method: String = "GET", completion: @escaping ([DownloadResult]) -> Void) {
+func downloadURLs(_ urls: [URL], method: String = "GET", completion: @escaping ([DownloadResult]) -> Void) {
     let anyNonHTTPUrls = urls.first(where: { $0.scheme != "http" && $0.scheme != "https" }) != nil
     assert(!anyNonHTTPUrls, "only HTTP/HTTPS URLs are supported for downloading")
 
@@ -112,8 +112,8 @@ func download(urls: [URL], method: String = "GET", completion: @escaping ([Downl
     }
 }
 
-func download(url: URL, method: String = "GET", completion: @escaping (DownloadResult) -> Void) {
-    download(urls: [url], method: method) { results in
+func downloadURL(_ url: URL, method: String = "GET", completion: @escaping (DownloadResult) -> Void) {
+    downloadURLs([url], method: method) { results in
         completion(results.first!)
     }
 }
