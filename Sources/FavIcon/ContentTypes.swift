@@ -17,8 +17,6 @@
 
 import Foundation
 
-/// Parses an HTTP Content-Type header value.
-/// - returns: A tuple containing the MIME type and string, if this could be determined.
 func parseHTTPContentType(_ headerValue: String) -> (mimeType: String, encoding: String.Encoding) {
     let headerComponents = headerValue
         .components(separatedBy: ";")
@@ -69,8 +67,6 @@ func parseStringEncoding(_ value: String) -> String.Encoding? {
 }
 
 extension HTTPURLResponse {
-    /// Parses the `Content-Type` header in this response.
-    /// - returns: A `(mimeType: String, encoding: String.Encoding)` tuple.
     func mimeTypeAndEncoding() -> (mimeType: String, encoding: String.Encoding) {
         if let contentType = allHeaderFields["Content-Type"] as? String {
             return parseHTTPContentType(contentType)

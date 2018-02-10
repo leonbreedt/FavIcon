@@ -25,20 +25,47 @@ import Foundation
     public typealias ImageType = NSImage
 #endif
 
+/// The result of downloading an icon.
 public enum IconDownloadResult {
+    /// The icon was downloaded successfully.
+    /// - parameter image: The downloaded icon image.
     case success(image: ImageType)
+    /// The icon failed to download
+    /// - parameter error: The error causing the download to fail.
     case failure(error: Error)
 }
 
+/// Enumerates errors that could occur while scanning or downloading.
 enum IconError: Error {
+    /// Invalid URL specified.
     case invalidBaseURL
-    case atLeastOneOneIconRequired
+    /// An invalid response was received while attempting to download an icon.
     case invalidDownloadResponse
+    /// No icons were detected at the supplied URL.
     case noIconsDetected
+    /// The icon image was corrupt, or is not of a supported file format.
     case corruptImage
 }
 
 public final class FavIcon {
+    /// Scans a base URL, attempting to determine all of the supported icons that can
+    /// be used for favicon purposes.
+    ///
+    /// It will do the following to determine possible icons that can be used:
+    ///
+    /// - Check whether or not `/favicon.ico` exists.
+    /// - If the base URL returns an HTML page, parse the `<head>` section and check for `<link>`
+    ///   and `<meta>` tags that reference icons using Apple, Microsoft and Google
+    ///   conventions.
+    /// - If _Web Application Manifest JSON_ (`manifest.json`) files are referenced, or
+    ///   _Microsoft browser configuration XML_ (`browserconfig.xml`) files
+    ///   are referenced, download and parse them to check if they reference icons.
+    ///
+    ///  All of this work is performed in a background queue.
+    ///
+    /// - parameter url: The base URL to scan.
+    /// - parameter completion: A closure to call when the scan has completed. The closure will be call
+    ///                         on the main queue.
     public static func scan(_ url: URL,
                             completion: @escaping ([Icon]) -> Void) {
         let htmlURL = url
@@ -97,11 +124,35 @@ public final class FavIcon {
         }
     }
 
+    /// Scans a base URL, attempting to determine all of the supported icons that can
+    /// be used for favicon purposes.
+    ///
+    /// It will do the following to determine possible icons that can be used:
+    ///
+    /// - Check whether or not `/favicon.ico` exists.
+    /// - If the base URL returns an HTML page, parse the `<head>` section and check for `<link>`
+    ///   and `<meta>` tags that reference icons using Apple, Microsoft and Google
+    ///   conventions.
+    /// - If _Web Application Manifest JSON_ (`manifest.json`) files are referenced, or
+    ///   _Microsoft browser configuration XML_ (`browserconfig.xml`) files
+    ///   are referenced, download and parse them to check if they reference icons.
+    ///
+    ///  All of this work is performed in a background queue.
+    ///
+    /// - parameter url: The base URL to scan.
+    /// - parameter completion: A closure to call when the scan has completed. The closure will be call
+    ///                         on the main queue.
     public static func scan(_ url: String, completion: @escaping ([Icon]) -> Void) throws {
         guard let url = URL(string: url) else { throw IconError.invalidBaseURL }
         scan(url, completion: completion)
     }
 
+    /// Downloads an array of detected icons in the background.
+    ///
+    /// - parameter icons: The icons to download.
+    /// - parameter completion: A closure to call when all download tasks have
+    ///                         results available (successful or otherwise). The closure
+    ///                         will be called on the main queue.
     public static func download(_ icons: [Icon],
                                 completion: @escaping ([IconDownloadResult]) -> Void) {
         let urls = icons.map { $0.url }
@@ -127,17 +178,40 @@ public final class FavIcon {
         }
     }
 
+    /// Downloads all available icons by calling `scan(url:)` to discover the available icons, and then
+    /// performing background downloads of each icon.
+    ///
+    /// - parameter url: The URL to scan for icons.
+    /// - parameter completion: A closure to call when all download tasks have results available
+    ///                         (successful or otherwise). The closure will be called on the main queue.
     public static func downloadAll(_ url: URL, completion: @escaping ([IconDownloadResult]) -> Void) {
         scan(url) { icons in
             download(icons, completion: completion)
         }
     }
 
+    /// Downloads all available icons by calling `scan(url:)` to discover the available icons, and then
+    /// performing background downloads of each icon.
+    ///
+    /// - parameter url: The URL to scan for icons.
+    /// - parameter completion: A closure to call when all download tasks have results available
+    ///                         (successful or otherwise). The closure will be called on the main queue.
     public static func downloadAll(_ url: String, completion: @escaping ([IconDownloadResult]) -> Void) throws {
         guard let url = URL(string: url) else { throw IconError.invalidBaseURL }
         downloadAll(url, completion: completion)
     }
 
+    /// Downloads the most preferred icon, by calling `scan(url:)` to discover available icons, and then choosing
+    /// the most preferable available icon. If both `width` and `height` are supplied, the icon closest to the
+    /// preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon
+    /// has dimensions, the icons are chosen by order of their `DetectedIconType` enumeration raw value.
+    ///
+    /// - parameter url: The URL to scan for icons.
+    /// - parameter width: The preferred icon width, in pixels, or `nil`.
+    /// - parameter height: The preferred icon height, in pixels, or `nil`.
+    /// - parameter completion: A closure to call when the download task has produced results. The closure will
+    ///                         be called on the main queue.
+    /// - throws: An appropriate `IconError` if downloading was not successful.
     public static func downloadPreferred(_ url: URL,
                                          width: Int? = nil,
                                          height: Int? = nil,
@@ -165,6 +239,17 @@ public final class FavIcon {
         }
     }
 
+    /// Downloads the most preferred icon, by calling `scan(url:)` to discover available icons, and then choosing
+    /// the most preferable available icon. If both `width` and `height` are supplied, the icon closest to the
+    /// preferred size is chosen. Otherwise, the largest icon is chosen, if dimensions are known. If no icon
+    /// has dimensions, the icons are chosen by order of their `DetectedIconType` enumeration raw value.
+    ///
+    /// - parameter url: The URL to scan for icons.
+    /// - parameter width: The preferred icon width, in pixels, or `nil`.
+    /// - parameter height: The preferred icon height, in pixels, or `nil`.
+    /// - parameter completion: A closure to call when the download task has produced results. The closure will
+    ///                         be called on the main queue.
+    /// - throws: An appropriate `IconError` if downloading was not successful.
     public static func downloadPreferred(_ url: String,
                                          width: Int? = nil,
                                          height: Int? = nil,
