@@ -1,7 +1,7 @@
 UNAME = ${shell uname}
 SCHEME = FavIcon-macOS
 CONFIGURATION = Debug
-XCPRETTY = tee #xcpretty || tee
+XCPRETTY = xcpretty || tee
 XCODEBUILD = xcodebuild -scheme ${SCHEME} -configuration ${CONFIGURATION}
 
 .PHONY: all test build clean

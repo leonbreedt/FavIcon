@@ -12,10 +12,14 @@ Pod::Spec.new do |s|
   }
 
   s.source_files = 'Sources/**/*.swift'
-  s.preserve_paths = 'Sources/Clibxml2/*'
-  
-  s.libraries = 'xml2'
+  s.preserve_paths = 'Sources/Clibxml2/*', 'Support/*.sh'
 
+  s.script_phase = {
+    :name => 'Generate ModuleMap',
+    :script => 'bash $PODS_TARGET_SRCROOT/Support/Generate-ModuleMap.sh $PODS_TARGET_SRCROOT/Sources/Clibxml2/module.modulemap',
+    :execution_position => :before_compile
+  }
+  
   s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
   s.tvos.deployment_target = "9.0"
