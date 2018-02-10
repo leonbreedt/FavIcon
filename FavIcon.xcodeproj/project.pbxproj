@@ -12,7 +12,6 @@
 		3519DB742021C3A80078D172 /* IconType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6E2021C3A80078D172 /* IconType.swift */; };
 		3519DB752021C3A80078D172 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB6F2021C3A80078D172 /* Download.swift */; };
 		3519DB762021C3A80078D172 /* FavIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB702021C3A80078D172 /* FavIcon.swift */; };
-		3519DB7C2021C3C90078D172 /* Clibxml2.c in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB7B2021C3C90078D172 /* Clibxml2.c */; };
 		3519DB7E2021D0CB0078D172 /* HTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3519DB7D2021D0CB0078D172 /* HTML.swift */; };
 		353096F020230594006B32D9 /* HTMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 353096EF20230594006B32D9 /* HTMLTests.swift */; };
 		353096F220230727006B32D9 /* HTML.html in Resources */ = {isa = PBXBuildFile; fileRef = 353096EE2023057A006B32D9 /* HTML.html */; };
@@ -43,9 +42,6 @@
 		3519DB6F2021C3A80078D172 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		3519DB702021C3A80078D172 /* FavIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavIcon.swift; sourceTree = "<group>"; };
 		3519DB712021C3A80078D172 /* FavIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavIcon.h; sourceTree = "<group>"; };
-		3519DB792021C3C90078D172 /* Clibxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clibxml2.h; sourceTree = "<group>"; };
-		3519DB7A2021C3C90078D172 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		3519DB7B2021C3C90078D172 /* Clibxml2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Clibxml2.c; sourceTree = "<group>"; };
 		3519DB7D2021D0CB0078D172 /* HTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTML.swift; sourceTree = "<group>"; };
 		353096EE2023057A006B32D9 /* HTML.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = HTML.html; sourceTree = "<group>"; };
 		353096EF20230594006B32D9 /* HTMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLTests.swift; sourceTree = "<group>"; };
@@ -54,11 +50,12 @@
 		353096F92023122E006B32D9 /* Manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Manifest.json; sourceTree = "<group>"; };
 		353096FA2023122E006B32D9 /* BrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BrowserConfig.xml; sourceTree = "<group>"; };
 		353096FD20231263006B32D9 /* DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionTests.swift; sourceTree = "<group>"; };
+		35309702202E806A006B32D9 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		35309703202E80B6006B32D9 /* FavIcon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = FavIcon.xcconfig; path = Sources/FavIcon.xcconfig; sourceTree = "<group>"; };
 		359BE1D02021A81400D20A30 /* FavIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
 		"FavIcon::FavIcon::Product" /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FavIcon::FavIconTests::Product" /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
-		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,22 +93,12 @@
 			path = FavIcon;
 			sourceTree = "<group>";
 		};
-		3519DB772021C3C90078D172 /* Clibxml2 */ = {
+		35309700202E806A006B32D9 /* Clibxml2 */ = {
 			isa = PBXGroup;
 			children = (
-				3519DB782021C3C90078D172 /* include */,
-				3519DB7B2021C3C90078D172 /* Clibxml2.c */,
+				35309702202E806A006B32D9 /* module.modulemap */,
 			);
 			path = Clibxml2;
-			sourceTree = "<group>";
-		};
-		3519DB782021C3C90078D172 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				3519DB792021C3C90078D172 /* Clibxml2.h */,
-				3519DB7A2021C3C90078D172 /* module.modulemap */,
-			);
-			path = include;
 			sourceTree = "<group>";
 		};
 		OBJ_11 /* Tests */ = {
@@ -149,8 +136,8 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
-				OBJ_6 /* Package.swift */,
 				OBJ_7 /* Sources */,
+				35309703202E80B6006B32D9 /* FavIcon.xcconfig */,
 				OBJ_11 /* Tests */,
 				OBJ_15 /* Products */,
 			);
@@ -159,7 +146,7 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3519DB772021C3C90078D172 /* Clibxml2 */,
+				35309700202E806A006B32D9 /* Clibxml2 */,
 				3519DB6B2021C3A80078D172 /* FavIcon */,
 			);
 			path = Sources;
@@ -172,6 +159,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = OBJ_34 /* Build configuration list for PBXNativeTarget "FavIcon-macOS" */;
 			buildPhases = (
+				35309705202E81B3006B32D9 /* ShellScript */,
 				OBJ_37 /* Sources */,
 				OBJ_41 /* Frameworks */,
 			);
@@ -249,6 +237,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		35309705202E81B3006B32D9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "$SRCROOT/Support/Generate-ModuleMap.sh $SRCROOT/Sources/Clibxml2/module.modulemap\n$SRCROOT/Support/Generate-XCConfig.sh $SRCROOT/Sources/FavIcon.xcconfig";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		OBJ_28 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -269,7 +273,6 @@
 				353096F520230991006B32D9 /* Detection.swift in Sources */,
 				3519DB752021C3A80078D172 /* Download.swift in Sources */,
 				3519DB732021C3A80078D172 /* Icon.swift in Sources */,
-				3519DB7C2021C3C90078D172 /* Clibxml2.c in Sources */,
 				3519DB742021C3A80078D172 /* IconType.swift in Sources */,
 				3519DB762021C3A80078D172 /* FavIcon.swift in Sources */,
 				353096F820231018006B32D9 /* XML.swift in Sources */,
@@ -301,6 +304,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIconTests;
@@ -320,6 +324,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
+				SUPPORTED_PLATFORMS = macosx;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIconTests;
@@ -328,6 +333,7 @@
 		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -336,6 +342,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = "$(LIBXML2_INCLUDE_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
@@ -356,10 +363,7 @@
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/usr/include/libxml2",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -368,7 +372,8 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2/include";
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIcon;
@@ -383,10 +388,7 @@
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 				);
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SDKROOT)/usr/include/libxml2",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
 				OTHER_LDFLAGS = "$(inherited)";
@@ -395,7 +397,8 @@
 				PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2/include";
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIcon;
@@ -404,6 +407,7 @@
 		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -411,6 +415,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = "$(LIBXML2_INCLUDE_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";

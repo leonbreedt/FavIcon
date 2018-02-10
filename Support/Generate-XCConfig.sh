@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MODULEMAP_FILE="$1"
+XCCONFIG_FILE="$1"
 
-[ -z "${MODULEMAP_FILE}" ] && {
+[ -z "${XCCONFIG_FILE}" ] && {
     echo "usage: $0 OUTPUT-FILE" >&2
     exit 1
 }
@@ -28,29 +28,22 @@ done
     exit 1
 }
 
-MODULEMAP="$(cat <<END
-module Clibxml2 [system] {
-  header "${INCLUDE_DIR}/libxml/tree.h"
-  header "${INCLUDE_DIR}/libxml/HTMLparser.h"
-  header "${INCLUDE_DIR}/libxml/xpath.h"
-  header "${INCLUDE_DIR}/libxml/xpathInternals.h"
-  link "xml2"
-  export *
-}
+XCCONFIG="$(cat <<END
+LIBXML2_INCLUDE_DIR = ${INCLUDE_DIR}
 END
 )"
 
-if [ -f "${MODULEMAP_FILE}" ]; then
-    EXISTING="$(cat ${MODULEMAP_FILE})"
-    if [ "${EXISTING}" = "${MODULEMAP}" ]; then
-        echo "${MODULEMAP_FILE} up to date, not changing."
+if [ -f "${XCCONFIG_FILE}" ]; then
+    EXISTING="$(cat ${XCCONFIG_FILE})"
+    if [ "${EXISTING}" = "${XCCONFIG}" ]; then
+        echo "${XCCONFIG_FILE} up to date, not changing."
         exit 0
     else
-        echo "${MODULEMAP_FILE} out of date, updating."
+        echo "${XCCONFIG_FILE} out of date, updating."
     fi
 else
-    echo "${MODULEMAP_FILE} does not exist, creating."
+    echo "${XCCONFIG_FILE} does not exist, creating."
 fi
 
-rm -f "${MODULEMAP_FILE}"
-echo "${MODULEMAP}" >"${MODULEMAP_FILE}"
+rm -f "${XCCONFIG_FILE}"
+echo "${XCCONFIG}" >"${XCCONFIG_FILE}"
