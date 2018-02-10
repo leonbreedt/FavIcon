@@ -27,6 +27,7 @@ final class HTMLDocument {
     }
 
     init(data: Data) {
+        ensureLibXMLErrorHandlingSuppressed()
         _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> htmlDocPtr in
             return htmlReadMemory(p, Int32(data.count), nil, nil, 0)
         }

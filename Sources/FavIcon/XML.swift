@@ -29,6 +29,7 @@ final class XMLDocument {
     }
 
     init(data: Data) {
+        ensureLibXMLErrorHandlingSuppressed()
         _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> htmlDocPtr in
             return xmlReadMemory(p, Int32(data.count), nil, nil, 0)
         }
@@ -199,4 +200,14 @@ final class XMLElement {
         _children = nil
         _attributes = nil
     }
+}
+
+private let suppress: () = {
+    initGenericErrorDefaultFunc(nil)
+    xmlSetStructuredErrorFunc(nil) { (data, error) in }
+    xmlKeepBlanksDefault(0)
+}()
+
+func ensureLibXMLErrorHandlingSuppressed() {
+    suppress
 }

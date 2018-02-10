@@ -8,12 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		352CDCD8202EFC8100F296CD /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CDCD9202EFC8100F296CD /* FavIcon.framework */; };
+		352CDCF8202F017600F296CD /* FavIcon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352CDCD9202EFC8100F296CD /* FavIcon.framework */; };
+		352CDCF9202F017600F296CD /* FavIcon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 352CDCD9202EFC8100F296CD /* FavIcon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3530973F202EFB3E006B32D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3530973E202EFB3E006B32D9 /* AppDelegate.swift */; };
 		35309741202EFB3E006B32D9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35309740202EFB3E006B32D9 /* ViewController.swift */; };
 		35309744202EFB3E006B32D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35309742202EFB3E006B32D9 /* Main.storyboard */; };
 		35309746202EFB3E006B32D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35309745202EFB3E006B32D9 /* Assets.xcassets */; };
 		35309749202EFB3E006B32D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 35309747202EFB3E006B32D9 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		352CDCFA202F017700F296CD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				352CDCF9202F017600F296CD /* FavIcon.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		352CDCD9202EFC8100F296CD /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -32,6 +48,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				352CDCD8202EFC8100F296CD /* FavIcon.framework in Frameworks */,
+				352CDCF8202F017600F296CD /* FavIcon.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +103,7 @@
 				35309737202EFB3E006B32D9 /* Sources */,
 				35309738202EFB3E006B32D9 /* Frameworks */,
 				35309739202EFB3E006B32D9 /* Resources */,
+				352CDCFA202F017700F296CD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
