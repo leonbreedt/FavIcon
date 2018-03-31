@@ -12,14 +12,8 @@ Pod::Spec.new do |s|
   }
 
   s.source_files = 'Sources/**/*.swift'
-  s.preserve_paths = 'Sources/Clibxml2/*', 'Support/*.sh'
+  s.preserve_paths = 'Sources/Modules/*', 'Support/*.sh'
 
-  s.script_phase = {
-    :name => 'Generate ModuleMap',
-    :script => 'bash $PODS_TARGET_SRCROOT/Support/Generate-ModuleMap.sh $PODS_TARGET_SRCROOT/Sources/Clibxml2/module.modulemap',
-    :execution_position => :before_compile
-  }
-  
   s.ios.deployment_target = "9.0"
   s.osx.deployment_target = "10.10"
   s.tvos.deployment_target = "9.0"
@@ -32,7 +26,7 @@ Pod::Spec.new do |s|
     'SWIFT_WHOLE_MODULE_OPTIMIZATION' => 'YES',
   }
   s.xcconfig = {
-    'HEADER_SEARCH_PATHS' => '$(SDKROOT)/usr/include/libxml2',
-    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources/Clibxml2'
+    'HEADER_SEARCH_PATHS' => '/usr/include/libxml2',
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sources/Modules'
   }
 end

@@ -73,7 +73,6 @@
 		353096F92023122E006B32D9 /* Manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Manifest.json; sourceTree = "<group>"; };
 		353096FA2023122E006B32D9 /* BrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BrowserConfig.xml; sourceTree = "<group>"; };
 		353096FD20231263006B32D9 /* DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionTests.swift; sourceTree = "<group>"; };
-		35309702202E806A006B32D9 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		35309703202E80B6006B32D9 /* FavIcon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = FavIcon.xcconfig; path = Sources/FavIcon.xcconfig; sourceTree = "<group>"; };
 		3530970B202EE427006B32D9 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3530971F202EE5B5006B32D9 /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,14 +132,6 @@
 			path = FavIcon;
 			sourceTree = "<group>";
 		};
-		35309700202E806A006B32D9 /* Clibxml2 */ = {
-			isa = PBXGroup;
-			children = (
-				35309702202E806A006B32D9 /* module.modulemap */,
-			);
-			path = Clibxml2;
-			sourceTree = "<group>";
-		};
 		OBJ_11 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,7 +179,6 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				35309700202E806A006B32D9 /* Clibxml2 */,
 				3519DB6B2021C3A80078D172 /* FavIcon */,
 			);
 			path = Sources;
@@ -247,7 +237,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = OBJ_34 /* Build configuration list for PBXNativeTarget "FavIcon-macOS" */;
 			buildPhases = (
-				35309705202E81B3006B32D9 /* ShellScript */,
 				OBJ_37 /* Sources */,
 				OBJ_41 /* Frameworks */,
 			);
@@ -354,22 +343,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		35309705202E81B3006B32D9 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "$SRCROOT/Support/Generate-ModuleMap.sh $SRCROOT/Sources/Clibxml2/module.modulemap\n$SRCROOT/Support/Generate-XCConfig.sh $SRCROOT/Sources/FavIcon.xcconfig";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		35309706202EE427006B32D9 /* Sources */ = {
@@ -493,7 +466,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sector42.FavIcon;
@@ -502,7 +475,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -560,7 +533,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = io.sector42.FavIcon;
@@ -568,7 +541,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -747,6 +720,7 @@
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(LIBXML2_INCLUDE_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DXcode";
@@ -770,6 +744,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = FavIcon;
@@ -777,7 +752,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIcon;
@@ -795,6 +770,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Sources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(TOOLCHAIN_DIR)/usr/lib/swift/macosx";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = FavIcon;
@@ -802,7 +778,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Clibxml2";
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGET_NAME = FavIcon;
@@ -820,6 +796,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_OPTIMIZATION_LEVEL = s;
 				HEADER_SEARCH_PATHS = "$(LIBXML2_INCLUDE_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				OTHER_SWIFT_FLAGS = "-DXcode";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -18,7 +18,7 @@
 import Foundation
 
 import Foundation
-import Clibxml2
+import libxmlFavicon
 
 final class XMLDocument {
     fileprivate var _document: xmlDocPtr!
