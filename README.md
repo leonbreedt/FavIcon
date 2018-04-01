@@ -3,7 +3,7 @@ FavIcon is a tiny Swift library for downloading the favicon representing a websi
 
 Wait, why is a library needed to do this? Surely it's just a simple HTTP GET of
 `/favicon.ico`, right? Right?  Well. Go have a read of [this StackOverflow
-post](<http://stackoverflow.com/questions/19029342/favicons-best-practices), and
+post](http://stackoverflow.com/questions/19029342/favicons-best-practices), and
 see how you feel afterwards.
 
 ## Quick Start
