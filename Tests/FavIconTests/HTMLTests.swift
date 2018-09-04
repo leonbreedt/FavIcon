@@ -81,5 +81,13 @@ class HTMLDocumentTests: XCTestCase {
         XCTAssertEqual("/images/branding/product/ico/googleg_lodp.ico", links[0].attributes["href"])
         XCTAssertEqual("shortcut icon", links[0].attributes["rel"])
     }
+    
+    func testIssue20_EmptyHTML() {
+        let document = HTMLDocument(string: "")
+        
+        XCTAssertEqual(0, document.children.count)
+        XCTAssertEqual(0, document.query(xpath: "/html").count)
+        XCTAssertEqual(0, document.query(xpath: "").count)
+    }
 }
 

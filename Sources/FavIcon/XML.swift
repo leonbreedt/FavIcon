@@ -30,6 +30,9 @@ final class XMLDocument {
 
     init(data: Data) {
         ensureLibXMLErrorHandlingSuppressed()
+        
+        guard data.count > 0 else { return }
+        
         _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> htmlDocPtr in
             return xmlReadMemory(p, Int32(data.count), nil, nil, 0)
         }
@@ -58,8 +61,9 @@ final class XMLDocument {
 
     func query(xpath: String) -> [XMLElement] {
         var results = [XMLElement]()
-
-        guard let context = xmlXPathNewContext(_document) else {
+        
+        guard let document = _document else { return results }
+        guard let context = xmlXPathNewContext(document) else {
             return results
         }
         defer { xmlXPathFreeContext(context) }
@@ -107,7 +111,10 @@ final class XMLElement {
         if let name = _name {
             return name
         }
-        return _node.pointee.name.withMemoryRebound(to: Int8.self, capacity: 1) { ptr in
+        
+        guard let node = _node else { return "" }
+        
+        return node.pointee.name.withMemoryRebound(to: Int8.self, capacity: 1) { ptr in
             let newName = (NSString(utf8String: ptr) ?? "") as String
             _name = newName as String
             return newName as String
@@ -119,8 +126,10 @@ final class XMLElement {
             return attributes
         }
         var newAttributes = [String: String]()
+        
+        guard let node = _node else { return [:] }
 
-        var currentAttr = _node.pointee.properties
+        var currentAttr = node.pointee.properties
         while currentAttr != nil {
             let name = currentAttr!.pointee.name.withMemoryRebound(to: Int8.self, capacity: 1) { ptr in
                 return (NSString(utf8String: ptr) ?? "") as String
@@ -167,8 +176,9 @@ final class XMLElement {
 
     func query(xpath: String) -> [XMLElement] {
         var results = [XMLElement]()
-
-        guard let context = xmlXPathNewContext(_document._document) else {
+        
+        guard let document = _document else { return results }
+        guard let context = xmlXPathNewContext(document._document) else {
             return results
         }
         defer { xmlXPathFreeContext(context) }
@@ -187,7 +197,7 @@ final class XMLElement {
         let nodeCount = object!.pointee.nodesetval.pointee.nodeNr
         for i in 0..<nodeCount {
             if let node = object!.pointee.nodesetval.pointee.nodeTab.advanced(by: Int(i)).pointee {
-                results.append(XMLElement(document: _document, node: node))
+                results.append(XMLElement(document: document, node: node))
             }
         }
 
