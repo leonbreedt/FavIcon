@@ -173,7 +173,7 @@ public final class FavIcon {
                     }
                 }
 
-                completion(downloadResults)
+                completion(sortResults(downloadResults))
             }
         }
     }
@@ -217,17 +217,19 @@ public final class FavIcon {
                                          height: Int? = nil,
                                          completion: @escaping (IconDownloadResult) -> Void) throws {
         scan(url) { icons in
-            guard let icon = chooseIcon(icons, width: width, height: height) else {
+            let sortedIcons = sortIcons(icons, preferredWidth: width, preferredHeight: height)
+            if sortedIcons.count == 0 {
                 DispatchQueue.main.async {
                     completion(.failure(error: IconError.noIconsDetected))
                 }
                 return
             }
 
-            download([icon]) { results in
+            download(sortedIcons) { results in
                 let downloadResult: IconDownloadResult
-                if results.count > 0 {
-                    downloadResult = results[0]
+                let sortedResults = sortResults(results, preferredWidth: width, preferredHeight: height)
+                if sortedResults.count > 0 {
+                    downloadResult = sortedResults[0]
                 } else {
                     downloadResult = .failure(error: IconError.noIconsDetected)
                 }
@@ -257,12 +259,13 @@ public final class FavIcon {
         guard let url = URL(string: url) else { throw IconError.invalidBaseURL }
         try downloadPreferred(url, width: width, height: height, completion: completion)
     }
-
-    static func chooseIcon(_ icons: [Icon], width: Int? = nil, height: Int? = nil) -> Icon? {
-        guard icons.count > 0 else { return nil }
+    
+    static func sortIcons(_ icons: [Icon], preferredWidth: Int? = nil, preferredHeight: Int? = nil) -> [Icon] {
+        guard icons.count > 0 else { return [] }
 
         let iconsInPreferredOrder = icons.sorted { left, right in
-            if let preferredWidth = width, let preferredHeight = height,
+            // Fall back to comparing dimensions.
+            if let preferredWidth = preferredWidth, let preferredHeight = preferredHeight,
                 let widthLeft = left.width, let heightLeft = left.height,
                 let widthRight = right.width, let heightRight = right.height {
                 // Which is closest to preferred size?
@@ -289,7 +292,43 @@ public final class FavIcon {
             return left.type.rawValue < right.type.rawValue
         }
 
-        return iconsInPreferredOrder.first!
+        return iconsInPreferredOrder
+    }
+    
+    static func sortResults(_ results: [IconDownloadResult], preferredWidth: Int? = nil, preferredHeight: Int? = nil) -> [IconDownloadResult] {
+        guard results.count > 0 else { return [] }
+        
+        let resultsInPreferredOrder = results.sorted { left, right in
+            switch (left, right) {
+            case (.success(let leftImage), .success(let rightImage)):
+                if let preferredWidth = preferredWidth, let preferredHeight = preferredHeight {
+                    let widthLeft = leftImage.size.width
+                    let heightLeft = leftImage.size.height
+                    let widthRight = rightImage.size.width
+                    let heightRight = rightImage.size.height
+                    
+                    // Which is closest to preferred size?
+                    let deltaA = abs(widthLeft - CGFloat(preferredWidth)) * abs(heightLeft - CGFloat(preferredHeight))
+                    let deltaB = abs(widthRight - CGFloat(preferredWidth)) * abs(heightRight - CGFloat(preferredHeight))
+                    
+                    return deltaA < deltaB
+                } else {
+                    // Fall back to largest image.
+                    return leftImage.area > rightImage.area
+                }
+            case (.success, .failure):
+                // An image is better than none.
+                return true
+            case (.failure, .success):
+                // An image is better than none.
+                return false
+            default:
+                return true
+            }
+        }
+        
+        return resultsInPreferredOrder
+
     }
 }
 
@@ -302,3 +341,8 @@ extension Icon {
     }
 }
 
+extension ImageType {
+    var area: CGFloat {
+        return size.width * size.height
+    }
+}

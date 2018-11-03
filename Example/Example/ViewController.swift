@@ -21,21 +21,26 @@ import FavIcon
 class ViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var statusLabel: UILabel!
+    
+    let url = "https://youtube.com"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         statusLabel.text = "Loading..."
         do {
-            try FavIcon.downloadPreferred("https://apple.com") { result in
+            try FavIcon.downloadPreferred(url) { result in
                 if case let .success(image) = result {
-                    self.statusLabel.text = "Loaded."
+                    self.statusLabel.text = "Loaded (\(image.size.width)x\(image.size.height))"
                     self.imageView.image = image
+                } else if case let .failure(error) = result {
+                    self.statusLabel.text = "Failed: \(error.localizedDescription)."
+                    print("failed to download preferred favicon for \(self.url): \(error)")
                 }
             }
         } catch let error {
             statusLabel.text = "Failed."
-            print("failed to download preferred favicon for apple.com: \(error)")
+            print("failed to download preferred favicon for \(self.url): \(error)")
         }
     }
 }

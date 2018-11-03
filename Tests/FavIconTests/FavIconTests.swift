@@ -37,8 +37,36 @@ class FavIconTests: XCTestCase {
         wait(for: [completed], timeout: 15)
 
         XCTAssertNotNil(actualIcons)
-        XCTAssertEqual(1, actualIcons.count)
+        XCTAssertEqual(2, actualIcons.count)
         XCTAssertEqual(URL(string: "https://apple.com/favicon.ico")!, actualIcons[0].url)
+    }
+    
+    func testIssue24_LowResIcons() {
+        let url = "https://www.facebook.com"
+        var actualResult: IconDownloadResult!
+        
+        let completed = expectation(description: "download: \(url)")
+        do {
+            try FavIcon.downloadPreferred(url) { result in
+                actualResult = result
+                completed.fulfill()
+            }
+        } catch let error {
+            XCTFail("failed to download icons: \(error)")
+        }
+        wait(for: [completed], timeout: 15)
+        
+        XCTAssertNotNil(actualResult)
+        
+        switch actualResult! {
+        case .success(let image):
+            XCTAssertEqual(325.0, image.size.width)
+            XCTAssertEqual(325.0, image.size.height)
+            break
+        case .failure(let error):
+            XCTFail("unexpected error returned for download: \(error)")
+            break
+        }
     }
 
     func testDownloading() {
@@ -56,12 +84,12 @@ class FavIconTests: XCTestCase {
         }
         wait(for: [completed], timeout: 15)
 
-        XCTAssertEqual(1, actualResults.count)
+        XCTAssertEqual(2, actualResults.count)
 
         switch actualResults[0] {
         case .success(let image):
-            XCTAssertEqual(64, image.size.width)
-            XCTAssertEqual(64, image.size.height)
+            XCTAssertEqual(1200, image.size.width)
+            XCTAssertEqual(630, image.size.height)
             break
         case .failure(let error):
             XCTFail("unexpected error returned for download: \(error)")
@@ -82,32 +110,36 @@ class FavIconTests: XCTestCase {
             Icon(url: URL(string: "https://google.com/favicon.ico")!, type: .shortcut)
         ]
 
-        var icon = FavIcon.chooseIcon(mixedIcons, width: 50, height: 50)
+        var sortedIcons = FavIcon.sortIcons(mixedIcons, preferredWidth: 50, preferredHeight: 50)
+        var icon = sortedIcons[0]
 
         XCTAssertNotNil(icon)
-        XCTAssertEqual(64, icon!.width)
-        XCTAssertEqual(64, icon!.height)
+        XCTAssertEqual(64, icon.width)
+        XCTAssertEqual(64, icon.height)
 
-        icon = FavIcon.chooseIcon(mixedIcons, width: 28, height: 28)
-
-        XCTAssertNotNil(icon)
-        XCTAssertEqual(32, icon!.width)
-        XCTAssertEqual(32, icon!.height)
-
-        icon = FavIcon.chooseIcon(mixedIcons)
+        sortedIcons = FavIcon.sortIcons(mixedIcons, preferredWidth: 28, preferredHeight: 28)
+        icon = sortedIcons[0]
 
         XCTAssertNotNil(icon)
-        XCTAssertEqual(144, icon!.width)
-        XCTAssertEqual(144, icon!.height)
+        XCTAssertEqual(32, icon.width)
+        XCTAssertEqual(32, icon.height)
 
-        icon = FavIcon.chooseIcon(noSizeIcons)
+        sortedIcons = FavIcon.sortIcons(mixedIcons)
+        icon = sortedIcons[0]
 
         XCTAssertNotNil(icon)
-        XCTAssertEqual(IconType.shortcut.rawValue, icon!.type.rawValue)
+        XCTAssertEqual(144, icon.width)
+        XCTAssertEqual(144, icon.height)
 
-        icon = FavIcon.chooseIcon([])
+        sortedIcons = FavIcon.sortIcons(noSizeIcons)
+        icon = sortedIcons[0]
 
-        XCTAssertNil(icon)
+        XCTAssertNotNil(icon)
+        XCTAssertEqual(IconType.shortcut.rawValue, icon.type.rawValue)
+
+        sortedIcons = FavIcon.sortIcons([])
+
+        XCTAssertEqual(0, sortedIcons.count)
     }
 }
 

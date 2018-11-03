@@ -38,6 +38,8 @@ public enum IconType: UInt {
     case microsoftPinnedSite
     /// An icon defined in a Web Application Manifest JSON file, mainly Android/Chrome.
     case webAppManifest
+    /// An icon defined by the og:image meta property.
+    case openGraphImage
 }
 
 

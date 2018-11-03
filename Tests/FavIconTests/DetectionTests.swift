@@ -96,7 +96,7 @@ class DetectionTests: XCTestCase {
         let document = HTMLDocument(string: html)
         let icons = detectHTMLHeadIcons(document, baseURL: URL(string: "https://localhost")!)
 
-        XCTAssertEqual(20, icons.count)
+        XCTAssertEqual(21, icons.count)
 
         XCTAssertEqual("https://localhost/shortcut.ico", icons[0].url.absoluteString)
         XCTAssertEqual(IconType.shortcut.rawValue, icons[0].type.rawValue)
@@ -197,6 +197,11 @@ class DetectionTests: XCTestCase {
         XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[19].type.rawValue)
         XCTAssertEqual(310, icons[19].width!)
         XCTAssertEqual(310, icons[19].height!)
+
+        XCTAssertEqual("https://www.facebook.com/images/fb_icon_325x325.png", icons[20].url.absoluteString)
+        XCTAssertEqual(IconType.openGraphImage.rawValue, icons[20].type.rawValue)
+        XCTAssertNil(icons[20].width)
+        XCTAssertNil(icons[20].height)
     }
 
     func testIssue6_ContentTypeWithEmptyComponent() {
@@ -221,7 +226,7 @@ class DetectionTests: XCTestCase {
         XCTAssertEqual(0, document.query(xpath: "/BrowserConfig").count)
         XCTAssertEqual(0, document.query(xpath: "").count)
     }
-
+    
     private func pathForTestBundleResource(fileName: String) -> String {
         let testBundle = Bundle(for: FavIconTests.self)
         return testBundle.path(forResource: fileName, ofType: "")!
