@@ -279,6 +279,7 @@
 					3530970A202EE427006B32D9 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = EX3M59X54A;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Automatic;
 					};
 					3530971E202EE5B5006B32D9 = {

@@ -31,7 +31,7 @@ final class HTMLDocument {
         
         guard data.count > 0 else { return }
         
-        _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> htmlDocPtr in
+        _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> htmlDocPtr? in
             return htmlReadMemory(p, Int32(data.count), nil, nil, 0)
         }
     }

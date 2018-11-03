@@ -213,6 +213,14 @@ class DetectionTests: XCTestCase {
         XCTAssertEqual(0, document.query(xpath: "/BrowserConfig").count)
         XCTAssertEqual(0, document.query(xpath: "").count)
     }
+    
+    func testIssue23_InvalidXMLDoesNotCrash() {
+        let document = XMLDocument(string: "<not valid xml!!!")
+
+        XCTAssertEqual(0, document.children.count)
+        XCTAssertEqual(0, document.query(xpath: "/BrowserConfig").count)
+        XCTAssertEqual(0, document.query(xpath: "").count)
+    }
 
     private func pathForTestBundleResource(fileName: String) -> String {
         let testBundle = Bundle(for: FavIconTests.self)

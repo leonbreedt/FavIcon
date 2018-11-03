@@ -89,5 +89,13 @@ class HTMLDocumentTests: XCTestCase {
         XCTAssertEqual(0, document.query(xpath: "/html").count)
         XCTAssertEqual(0, document.query(xpath: "").count)
     }
+    
+    func testIssue23_InvalidHTMLDoesNotCrash() {
+        let document = HTMLDocument(string: "<invalid !#!@OI!M> html")
+        
+        XCTAssertEqual(1, document.children.count)
+        XCTAssertEqual(1, document.query(xpath: "/html").count)
+        XCTAssertEqual(0, document.query(xpath: "").count)
+    }
 }
 
