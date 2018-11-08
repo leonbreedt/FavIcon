@@ -45,8 +45,6 @@ func detectHTMLHeadIcons(_ document: HTMLDocument, baseURL: URL) -> [Icon] {
         case "shortcut icon":
             icons.append(Icon(url: url.absoluteURL, type: .shortcut))
         case "icon":
-            guard let type = link.attributes["type"] else { continue }
-            guard type.lowercased() == "image/png" else { continue }
             let sizes = parseHTMLIconSizes(link.attributes["sizes"])
             if sizes.count > 0 {
                 for size in sizes {
