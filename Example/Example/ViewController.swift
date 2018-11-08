@@ -29,7 +29,7 @@ class ViewController: UIViewController {
 
         statusLabel.text = "Loading..."
         do {
-            try FavIcon.downloadPreferred(url) { result in
+            try FavIcon.downloadPreferred(url, width: 200, height: 200) { result in
                 if case let .success(image) = result {
                     self.statusLabel.text = "Loaded (\(image.size.width)x\(image.size.height))"
                     self.imageView.image = image
@@ -39,7 +39,7 @@ class ViewController: UIViewController {
                 }
             }
         } catch let error {
-            statusLabel.text = "Failed."
+            statusLabel.text = "Failed: \(error.localizedDescription)."
             print("failed to download preferred favicon for \(self.url): \(error)")
         }
     }
