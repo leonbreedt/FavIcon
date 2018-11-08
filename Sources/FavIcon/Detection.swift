@@ -48,7 +48,7 @@ func detectHTMLHeadIcons(_ document: HTMLDocument, baseURL: URL) -> [Icon] {
             let sizes = parseHTMLIconSizes(link.attributes["sizes"])
             if sizes.count > 0 {
                 for size in sizes {
-                    guard let type = iconSizeTypeHints[size] else { continue }
+                    let type = iconSizeTypeHints[size] ?? .classic
                     icons.append(Icon(url: url, type: type, width: size.width, height: size.height))
                 }
             } else {

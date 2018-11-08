@@ -96,7 +96,7 @@ class DetectionTests: XCTestCase {
         let document = HTMLDocument(string: html)
         let icons = detectHTMLHeadIcons(document, baseURL: URL(string: "https://localhost")!)
 
-        XCTAssertEqual(21, icons.count)
+        XCTAssertEqual(26, icons.count)
 
         XCTAssertEqual("https://localhost/shortcut.ico", icons[0].url.absoluteString)
         XCTAssertEqual(IconType.shortcut.rawValue, icons[0].type.rawValue)
@@ -172,36 +172,61 @@ class DetectionTests: XCTestCase {
         XCTAssertEqual(IconType.shortcut.rawValue, icons[14].type.rawValue)
         XCTAssertNil(icons[14].width)
         XCTAssertNil(icons[14].height)
+        
+        XCTAssertEqual("https://s.ytimg.com/yts/img/favicon-vfl8qSV2F.ico", icons[15].url.absoluteString)
+        XCTAssertEqual(IconType.shortcut.rawValue, icons[15].type.rawValue)
+        XCTAssertNil(icons[15].width)
+        XCTAssertNil(icons[15].height)
+        
+        XCTAssertEqual("https://s.ytimg.com/yts/img/favicon_32-vflOogEID.png", icons[16].url.absoluteString)
+        XCTAssertEqual(IconType.appleOSXSafariTab.rawValue, icons[16].type.rawValue)
+        XCTAssertEqual(32, icons[16].width!)
+        XCTAssertEqual(32, icons[16].height!)
+        
+        XCTAssertEqual("https://s.ytimg.com/yts/img/favicon_48-vflVjB_Qk.png", icons[17].url.absoluteString)
+        XCTAssertEqual(IconType.classic.rawValue, icons[17].type.rawValue)
+        XCTAssertEqual(48, icons[17].width!)
+        XCTAssertEqual(48, icons[17].height!)
+        
+        XCTAssertEqual("https://s.ytimg.com/yts/img/favicon_96-vflW9Ec0w.png", icons[18].url.absoluteString)
+        XCTAssertEqual(IconType.googleTV.rawValue, icons[18].type.rawValue)
+        XCTAssertEqual(96, icons[18].width!)
+        XCTAssertEqual(96, icons[18].height!)
+        
+        XCTAssertEqual("https://s.ytimg.com/yts/img/favicon_144-vfliLAfaB.png", icons[19].url.absoluteString)
+        XCTAssertEqual(IconType.classic.rawValue, icons[19].type.rawValue)
+        XCTAssertEqual(144, icons[19].width!)
+        XCTAssertEqual(144, icons[19].height!)
+        
+        XCTAssertEqual("https://localhost/content/images/mstile-144x144.png", icons[20].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[20].type.rawValue)
+        XCTAssertEqual(144, icons[20].width!)
+        XCTAssertEqual(144, icons[20].height!)
 
-        XCTAssertEqual("https://localhost/content/images/mstile-144x144.png", icons[15].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[15].type.rawValue)
-        XCTAssertEqual(144, icons[15].width!)
-        XCTAssertEqual(144, icons[15].height!)
+        XCTAssertEqual("https://localhost/tile-tiny.png", icons[21].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[21].type.rawValue)
+        XCTAssertEqual(70, icons[21].width!)
+        XCTAssertEqual(70, icons[21].height!)
 
-        XCTAssertEqual("https://localhost/tile-tiny.png", icons[16].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[16].type.rawValue)
-        XCTAssertEqual(70, icons[16].width!)
-        XCTAssertEqual(70, icons[16].height!)
+        XCTAssertEqual("https://localhost/tile-square.png", icons[22].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[22].type.rawValue)
+        XCTAssertEqual(150, icons[22].width!)
+        XCTAssertEqual(150, icons[22].height!)
 
-        XCTAssertEqual("https://localhost/tile-square.png", icons[17].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[17].type.rawValue)
-        XCTAssertEqual(150, icons[17].width!)
-        XCTAssertEqual(150, icons[17].height!)
+        XCTAssertEqual("https://localhost/tile-wide.png", icons[23].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[23].type.rawValue)
+        XCTAssertEqual(310, icons[23].width!)
+        XCTAssertEqual(150, icons[23].height!)
 
-        XCTAssertEqual("https://localhost/tile-wide.png", icons[18].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[18].type.rawValue)
-        XCTAssertEqual(310, icons[18].width!)
-        XCTAssertEqual(150, icons[18].height!)
+        XCTAssertEqual("https://localhost/tile-large.png", icons[24].url.absoluteString)
+        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[24].type.rawValue)
+        XCTAssertEqual(310, icons[24].width!)
+        XCTAssertEqual(310, icons[24].height!)
 
-        XCTAssertEqual("https://localhost/tile-large.png", icons[19].url.absoluteString)
-        XCTAssertEqual(IconType.microsoftPinnedSite.rawValue, icons[19].type.rawValue)
-        XCTAssertEqual(310, icons[19].width!)
-        XCTAssertEqual(310, icons[19].height!)
-
-        XCTAssertEqual("https://www.facebook.com/images/fb_icon_325x325.png", icons[20].url.absoluteString)
-        XCTAssertEqual(IconType.openGraphImage.rawValue, icons[20].type.rawValue)
-        XCTAssertNil(icons[20].width)
-        XCTAssertNil(icons[20].height)
+        XCTAssertEqual("https://www.facebook.com/images/fb_icon_325x325.png", icons[25].url.absoluteString)
+        XCTAssertEqual(IconType.openGraphImage.rawValue, icons[25].type.rawValue)
+        XCTAssertNil(icons[25].width)
+        XCTAssertNil(icons[25].height)
     }
 
     func testIssue6_ContentTypeWithEmptyComponent() {
