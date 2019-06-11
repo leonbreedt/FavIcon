@@ -33,8 +33,9 @@ final class XMLDocument {
         
         guard data.count > 0 else { return }
         
-        _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> xmlDocPtr? in
-            return xmlReadMemory(p, Int32(data.count), nil, nil, 0)
+        data.withUnsafeBytes { ptr in
+             guard let baseAddress = ptr.baseAddress else { return }
+            _document = xmlReadMemory(baseAddress.assumingMemoryBound(to: Int8.self), Int32(data.count), nil, nil, 0)
         }
     }
 

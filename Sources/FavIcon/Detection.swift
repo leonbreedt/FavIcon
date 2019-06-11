@@ -185,8 +185,9 @@ private func parseHTMLIconSizes(_ string: String?) -> [IconSize] {
 }
 
 extension IconSize: Hashable {
-    var hashValue: Int {
-        return width.hashValue ^ height.hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(width)
+        hasher.combine(height)
     }
 }
 
