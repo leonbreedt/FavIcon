@@ -30,7 +30,7 @@ let package = Package(
         .library(name: "FavIcon", targets: ["FavIcon"])
     ],
     targets: [
-        .target(name: "FavIcon", dependencies: [], path: "Sources/FavIcon"),
-        .testTarget(name: "FavIconTests", dependencies: ["FavIcon"], path: "Tests/FavIconTests")
+        .target(name: "FavIcon", dependencies: []),
+        .testTarget(name: "FavIconTests", dependencies: ["FavIcon"])
     ]
 )
