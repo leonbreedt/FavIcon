@@ -1,3 +1,5 @@
+// swift-tools-version:5.1
+
 //
 // FavIcon
 // Copyright © 2019 Leon Breedt
@@ -15,13 +17,20 @@
 // limitations under the License.
 //
 
-import UIKit
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-    var window: UIWindow?
+import PackageDescription
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        return true
-    }
-}
+let package = Package(
+    name: "FavIcon",
+    platforms: [
+        .macOS("10.10"),
+        .iOS("9.0")
+    ],
+    products: [
+        .library(name: "FavIcon", targets: ["FavIcon"])
+    ],
+    targets: [
+        .target(name: "FavIcon", dependencies: [], path: "Sources/FavIcon"),
+        .testTarget(name: "FavIconTests", dependencies: ["FavIcon"], path: "Tests/FavIconTests")
+    ]
+)
