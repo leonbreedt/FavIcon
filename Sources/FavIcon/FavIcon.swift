@@ -29,7 +29,8 @@ import Foundation
 public enum IconDownloadResult {
     /// The icon was downloaded successfully.
     /// - parameter image: The downloaded icon image.
-    case success(image: ImageType)
+    /// - parameter url: The url for the downloaded icon image.
+    case success(image: ImageType, url: URL)
     /// The icon failed to download
     /// - parameter error: The error causing the download to fail.
     case failure(error: Error)
@@ -160,9 +161,9 @@ public final class FavIcon {
             DispatchQueue.main.async {
                 let downloadResults: [IconDownloadResult] = results.map { result in
                     switch result {
-                    case .binary(let data, _, _):
+                    case .binary(let data, _, let url):
                         if let image = ImageType(data: data) {
-                            return .success(image: image)
+                            return .success(image: image, url: url)
                         } else {
                             return .failure(error: IconError.corruptImage)
                         }
@@ -300,7 +301,7 @@ public final class FavIcon {
         
         let resultsInPreferredOrder = results.sorted { left, right in
             switch (left, right) {
-            case (.success(let leftImage), .success(let rightImage)):
+            case (.success(let leftImage, _), .success(let rightImage, _)):
                 if let preferredWidth = preferredWidth, let preferredHeight = preferredHeight {
                     let widthLeft = leftImage.size.width
                     let heightLeft = leftImage.size.height
