@@ -1,17 +1,11 @@
 # FavIcon [![License](https://img.shields.io/badge/license-Apache%202.0-lightgrey.svg)](https://raw.githubusercontent.com/leonbreedt/FavIcon/master/LICENSE) [![Build Status](https://travis-ci.org/leonbreedt/FavIcon.svg)](https://travis-ci.org/leonbreedt/FavIcon) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20-lightgrey.svg)
 
-<aside class="warning">
-As of Xcode 11, this library can no longer build using Swift Package Manager. 
-
-Quoting Apple:
-
-> Unfortunately there is no way to properly reference libxml2 in a Swift package, but we are aware of this issue.
-> I am afraid the only workaround right now is copying and patching the libxml headers but that might cause other issues if your copy of headers get out-of-sync with the ones in SDK :(
-
-You can read the discussion here: https://forums.swift.org/t/referring-to-libxml2-in-swift-package-description/28880
-
-Until Apple decides to fix this, this library is basically kneecapped :(
-</aside>
+> ⚠️ As of Xcode 11, this library can no longer build using Swift Package Manager. 
+> Quoting Apple:
+>> Unfortunately there is no way to properly reference libxml2 in a Swift package, but we are aware of this issue.
+>> I am afraid the only workaround right now is copying and patching the libxml headers but that might cause other issues if your copy of headers get out-of-sync with the ones in SDK :(
+> You can read the discussion here: https://forums.swift.org/t/referring-to-libxml2-in-swift-package-description/28880
+> Until Apple decides to fix this, this library is basically unbuildable :(
 
 FavIcon is a tiny Swift library for downloading the favicon representing a website.
 
