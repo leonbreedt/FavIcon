@@ -4,7 +4,9 @@
 > Quoting Apple:
 >> Unfortunately there is no way to properly reference libxml2 in a Swift package, but we are aware of this issue.
 >> I am afraid the only workaround right now is copying and patching the libxml headers but that might cause other issues if your copy of headers get out-of-sync with the ones in SDK :(
+>
 > You can read the discussion here: https://forums.swift.org/t/referring-to-libxml2-in-swift-package-description/28880
+>
 > Until Apple decides to fix this, this library is basically unbuildable :(
 
 FavIcon is a tiny Swift library for downloading the favicon representing a website.
