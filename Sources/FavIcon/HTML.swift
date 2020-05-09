@@ -16,7 +16,7 @@
 //
 
 import Foundation
-import libxmlFavicon
+import libxml2
 
 final class HTMLDocument {
     fileprivate var _document: htmlDocPtr!
