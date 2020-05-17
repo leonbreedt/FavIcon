@@ -73,7 +73,6 @@
 		353096F92023122E006B32D9 /* Manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Manifest.json; sourceTree = "<group>"; };
 		353096FA2023122E006B32D9 /* BrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BrowserConfig.xml; sourceTree = "<group>"; };
 		353096FD20231263006B32D9 /* DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionTests.swift; sourceTree = "<group>"; };
-		35309703202E80B6006B32D9 /* FavIcon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = FavIcon.xcconfig; sourceTree = "<group>"; };
 		3530970B202EE427006B32D9 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3530971F202EE5B5006B32D9 /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359BE1D02021A81400D20A30 /* FavIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
@@ -171,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				35A00D4C22AFC4FD0093E161 /* Package.swift */,
-				35309703202E80B6006B32D9 /* FavIcon.xcconfig */,
 				OBJ_7 /* Sources */,
 				OBJ_11 /* Tests */,
 				OBJ_15 /* Products */,
@@ -713,7 +711,6 @@
 		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -815,7 +812,6 @@
 		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
