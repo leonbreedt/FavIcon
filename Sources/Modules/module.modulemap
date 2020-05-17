@@ -1,6 +1,0 @@
-module libxmlFavicon [system] {
-    link "xml2"
-    umbrella header "libxml2-favicon.h"
-    export *
-    module * { export * }
-}

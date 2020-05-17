@@ -73,10 +73,10 @@
 		353096F92023122E006B32D9 /* Manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Manifest.json; sourceTree = "<group>"; };
 		353096FA2023122E006B32D9 /* BrowserConfig.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = BrowserConfig.xml; sourceTree = "<group>"; };
 		353096FD20231263006B32D9 /* DetectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetectionTests.swift; sourceTree = "<group>"; };
-		35309703202E80B6006B32D9 /* FavIcon.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = FavIcon.xcconfig; path = Sources/FavIcon.xcconfig; sourceTree = "<group>"; };
 		3530970B202EE427006B32D9 /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3530971F202EE5B5006B32D9 /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359BE1D02021A81400D20A30 /* FavIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavIconTests.swift; sourceTree = "<group>"; };
+		35A00D4C22AFC4FD0093E161 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		"FavIcon::FavIcon::Product" /* FavIcon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FavIcon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		"FavIcon::FavIconTests::Product" /* FavIconTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = FavIconTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_13 /* DownloadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadTests.swift; sourceTree = "<group>"; };
@@ -169,8 +169,8 @@
 		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
+				35A00D4C22AFC4FD0093E161 /* Package.swift */,
 				OBJ_7 /* Sources */,
-				35309703202E80B6006B32D9 /* FavIcon.xcconfig */,
 				OBJ_11 /* Tests */,
 				OBJ_15 /* Products */,
 			);
@@ -274,33 +274,35 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				TargetAttributes = {
 					3530970A202EE427006B32D9 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = EX3M59X54A;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 					};
 					3530971E202EE5B5006B32D9 = {
 						CreatedOnToolsVersion = 9.2;
 						DevelopmentTeam = EX3M59X54A;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 					};
 					"FavIcon::FavIcon" = {
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1100;
 					};
 					"FavIcon::FavIconTests" = {
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 1100;
 					};
 				};
 			};
 			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "FavIcon" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = OBJ_5;
 			productRefGroup = OBJ_15 /* Products */;
@@ -476,8 +478,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -542,8 +543,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -606,7 +606,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGET_NAME = FavIconTests;
 			};
@@ -662,7 +662,7 @@
 				PRODUCT_NAME = FavIconTests;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGET_NAME = FavIconTests;
 				VALIDATE_PRODUCT = YES;
@@ -683,8 +683,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FavIconTests;
 			};
 			name = Debug;
@@ -703,16 +702,15 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FavIconTests;
 			};
 			name = Release;
 		};
 		OBJ_3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -779,10 +777,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FavIcon;
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -805,17 +802,16 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = macosx;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Sources/Modules";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGET_NAME = FavIcon;
+				VALID_ARCHS = "arm64 x86_64";
 			};
 			name = Release;
 		};
 		OBJ_4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35309703202E80B6006B32D9 /* FavIcon.xcconfig */;
 			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;

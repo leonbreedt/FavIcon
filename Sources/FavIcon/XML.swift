@@ -1,6 +1,6 @@
 //
 // FavIcon
-// Copyright © 2018 Leon Breedt
+// Copyright © 2020 Leon Breedt
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 //
 
 import Foundation
-
-import Foundation
-import libxmlFavicon
+import libxml2
 
 final class XMLDocument {
     fileprivate var _document: xmlDocPtr!
@@ -33,8 +31,9 @@ final class XMLDocument {
         
         guard data.count > 0 else { return }
         
-        _document = data.withUnsafeBytes { (p: UnsafePointer<Int8>) -> xmlDocPtr? in
-            return xmlReadMemory(p, Int32(data.count), nil, nil, 0)
+        data.withUnsafeBytes { ptr in
+             guard let baseAddress = ptr.baseAddress else { return }
+            _document = xmlReadMemory(baseAddress.assumingMemoryBound(to: Int8.self), Int32(data.count), nil, nil, 0)
         }
     }
 

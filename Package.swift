@@ -1,3 +1,5 @@
+// swift-tools-version:5.1
+
 //
 // FavIcon
 // Copyright © 2020 Leon Breedt
@@ -15,10 +17,20 @@
 // limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
 
-//! Project version number for FavIcon.
-FOUNDATION_EXPORT double FavIconVersionNumber;
+import PackageDescription
 
-//! Project version string for FavIcon.
-FOUNDATION_EXPORT const unsigned char FavIconVersionString[];
+let package = Package(
+    name: "FavIcon",
+    platforms: [
+        .macOS("10.10"),
+        .iOS("9.0")
+    ],
+    products: [
+        .library(name: "FavIcon", targets: ["FavIcon"])
+    ],
+    targets: [
+        .target(name: "FavIcon", dependencies: []),
+        .testTarget(name: "FavIconTests", dependencies: ["FavIcon"])
+    ]
+)
